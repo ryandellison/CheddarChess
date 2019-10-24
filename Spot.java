@@ -11,6 +11,7 @@ public class Spot{
     locInt = num;
     locString = name;
     color = c;
+    //this is a test for committing
   }
   
   public void occupy(){
