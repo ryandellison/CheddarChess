@@ -9,6 +9,6 @@ public abstract class Piece{
     name = n;
     color = c;
   }
-  public abstract Square move();
+  //public abstract Square move();
   
 }
