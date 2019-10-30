@@ -7,7 +7,23 @@ import javax.swing.JFrame;
 
 public class BoardGui extends JFrame {
 
+	private static final String LIGHT_QUEEN = "\u2654";
+	private static final String LIGHT_BISHOP = "\u2658";
+	private static final String LIGHT_KNIGHT = "\u2657";
+	private static final String LIGHT_KING = "\u2655";
+	private static final String LIGHT_PAWN = "\u2659";
+	private static final String LIGHT_ROOK = "\u2656";
+
+	private static final String DARK_QUEEN = "\u265A";
+	private static final String DARK_BISHOP = "\u265D";
+	private static final String DARK_KNIGHT = "\u265E";
+	private static final String DARK_KING = "\u265B";
+	private static final String DARK_PAWN = "\u265f";
+	private static final String DARK_ROOK = "\u265C";
+
+	private static final String EMPTY_PIECE = "";
 	private BoardSpot[] pieces;
+
 
 	@SuppressWarnings("WeakerAccess")
 	public void display()
@@ -37,32 +53,32 @@ public class BoardGui extends JFrame {
 	{
 		pieces = new BoardSpot[] {
 
-			new BoardSpot("\u2656"), new BoardSpot("\u2658"), new BoardSpot("\u2657"),
-			new BoardSpot("\u2655"), new BoardSpot("\u2654"), new BoardSpot("\u2657"),
-			new BoardSpot("\u2658"), new BoardSpot("\u2656"), new BoardSpot("\u2659"),
-			new BoardSpot("\u2659"), new BoardSpot("\u2659"), new BoardSpot("\u2659"),
-			new BoardSpot("\u2659"), new BoardSpot("\u2659"), new BoardSpot("\u2659"),
-			new  BoardSpot("\u2659"),
+				new BoardSpot(LIGHT_ROOK), new BoardSpot(LIGHT_KNIGHT), new BoardSpot(LIGHT_BISHOP),
+				new BoardSpot(LIGHT_KING), new BoardSpot(LIGHT_QUEEN), new BoardSpot(LIGHT_BISHOP),
+				new BoardSpot(LIGHT_KNIGHT), new BoardSpot(LIGHT_BISHOP), new BoardSpot(LIGHT_PAWN),
+				new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN),
+				new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN),
+				new  BoardSpot(LIGHT_PAWN),
 
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""), new BoardSpot(""),
-			new BoardSpot(""), new BoardSpot(""),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
+				new BoardSpot(EMPTY_PIECE), new BoardSpot(EMPTY_PIECE),
 
-			new BoardSpot("\u265F"), new BoardSpot("\u265F"), new BoardSpot("\u265F"),
-			new BoardSpot("\u265F"), new BoardSpot("\u265F"), new BoardSpot("\u265F"),
-			new BoardSpot("\u265F"), new BoardSpot("\u265F"), new BoardSpot("\u265C"),
-			new BoardSpot("\u265E"), new BoardSpot("\u265D"), new BoardSpot("\u265B"),
-			new BoardSpot("\u265A"), new BoardSpot("\u265D"), new BoardSpot("\u265E"),
-			new BoardSpot("\u265C")
-	};
+				new BoardSpot(DARK_PAWN), new BoardSpot(DARK_PAWN), new BoardSpot(DARK_PAWN),
+				new BoardSpot(DARK_PAWN), new BoardSpot(DARK_PAWN), new BoardSpot(DARK_PAWN),
+				new BoardSpot(DARK_PAWN), new BoardSpot(DARK_PAWN), new BoardSpot(DARK_ROOK),
+				new BoardSpot(DARK_KNIGHT), new BoardSpot(DARK_BISHOP), new BoardSpot(DARK_KING),
+				new BoardSpot(DARK_QUEEN), new BoardSpot(DARK_BISHOP), new BoardSpot(DARK_KNIGHT),
+				new BoardSpot(DARK_ROOK)
+		};
 	}
 
 	public static void main(String[] args)
