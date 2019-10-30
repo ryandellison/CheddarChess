@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 
 
-public class Board extends JFrame {
+public class BoardGui extends JFrame {
 
 	private BoardSpot[] pieces;
 
@@ -67,6 +67,6 @@ public class Board extends JFrame {
 
 	public static void main(String[] args)
 	{
-		new Board().display();
+		new BoardGui().display();
 	}
 }
