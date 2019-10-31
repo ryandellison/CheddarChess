@@ -7,12 +7,20 @@ public class Square{
   private Color display;
   private Color color;
   private boolean occupied;
-  
+  private Piece piece;
+
   public Square(int num, String name, Color c){
     locInt = num;
     locString = name;
     color = c;
+    piece = null;
     //this is a test for committing
+  }
+  public Square(int num, String name, Color c, Piece p){
+    locInt = num;
+    locString = name;
+    color = c;
+    piece = p;
   }
   
   public void occupy(){

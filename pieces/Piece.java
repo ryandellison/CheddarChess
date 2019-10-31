@@ -10,6 +10,6 @@ public abstract class Piece{
     name = n;
     color = c;
   }
-  public abstract Set<Square> move();
+  public abstract Set<Square> move(Pair coord);
   
 }
