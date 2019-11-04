@@ -1,5 +1,6 @@
 package pieces;
 import java.util.HashSet;
+import java.util.Set;
 
 
 public class Bishop extends Piece{
@@ -9,7 +10,8 @@ public class Bishop extends Piece{
     }
 
     public HashSet<Square> move(Pair coord){
-        Set<Square>ans = new HashSet<Square>();
+        Set<Square> ans = new HashSet<Square>();
+        int i,j;
         for(i = coord.getX(); i >= 0; i--){
             for(j = coord.getY(); j >= 0; j--){
 
@@ -30,6 +32,7 @@ public class Bishop extends Piece{
 
             }
         }
+        return null;
     }
 
 
