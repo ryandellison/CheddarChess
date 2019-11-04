@@ -1,9 +1,9 @@
 package pieces;
-class Pair
+public class Pair
 {
 
-    int x;//the first element of the pair
-    int y;//the second element of the pair
+    private int x;//the first element of the pair
+    private int y;//the second element of the pair
 
     public Pair(int v1, int v2)
     {//pair constructor allowing two objects of two different types to be an element of the pair
