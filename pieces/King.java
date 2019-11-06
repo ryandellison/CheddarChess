@@ -10,7 +10,7 @@ public class King extends Piece
 		super(color,name);
 	}
 	@Override
-	public Set<Square> move(Pair coord)
+	public Set<Pair> move(Pair coord)
 	{
 		return null;
 	}

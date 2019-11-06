@@ -9,7 +9,7 @@ public class Bishop extends Piece{
         super(color, name);
     }
 
-    public HashSet<Square> move(Pair coord){
+    public Set<Pair> move(Pair coord){
         Set<Square> ans = new HashSet<Square>();
         int i,j;
         for(i = coord.getX(); i >= 0; i--){

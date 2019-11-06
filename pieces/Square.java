@@ -9,7 +9,7 @@ public class Square{
   private boolean occupied;
   private Piece piece;
 
-  public Square(int num, String name, Color c){
+  public Square(int num, String name, Color c, Pair coord){
     locInt = num;
     locString = name;
     color = c;
