@@ -10,29 +10,13 @@ public class Bishop extends Piece{
     }
 
     public Set<Pair> move(Pair coord){
-        Set<Square> ans = new HashSet<Square>();
-        int i,j;
-        for(i = coord.getX(); i >= 0; i--){
-            for(j = coord.getY(); j >= 0; j--){
-
-            }
+        Set<Pair> possibleSpots = new HashSet<>();
+        int x = coord.getX();
+        int y = coord.getY();
+        for(int i = -7; i < 7; i++){
+            possibleSpots.add(new Pair(x + i, y + i));
         }
-        for(i = coord.getX(); i >= 0; i--){
-            for(j = coord.getY(); j < 8; j++){
-
-            }
-        }
-        for(i = coord.getX(); i < 8; i++){
-            for(j = coord.getY(); j >= 0; j--){
-
-            }
-        }
-        for(i = coord.getX(); i < 8; ){
-            for(j = coord.getY(); j < 8; j++){
-
-            }
-        }
-        return null;
+        return possibleSpots;
     }
 
 
