@@ -1,7 +1,5 @@
 package pieces;
-public class Pair
-{
-
+public class Pair{
     private int x;//the first element of the pair
     private int y;//the second element of the pair
 

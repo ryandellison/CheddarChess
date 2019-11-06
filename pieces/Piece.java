@@ -1,5 +1,4 @@
 package pieces;
-import java.awt.Color;
 import java.util.Set;
 
 public abstract class Piece{
@@ -10,6 +9,14 @@ public abstract class Piece{
     name = n;
     color = c;
   }
-  public abstract Set<Square> move(Pair coord);
+  public boolean getColor(){
+    return color;
+  }
+
+  public String getName(){
+    return name;
+  }
+
+  public abstract Set<Pair> move(Pair coord);
   
 }

@@ -1,9 +1,7 @@
-import pieces.Square;
+/*public class Board {
+    private Sqaure[][] squares = new Square[8][8];
 
-public class BoardLogic {
-    private Square[][] squares = new Square[8][8];
-
-    public BoardLogic(){
+    public Board(){
         Square sq;
         for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -12,4 +10,4 @@ public class BoardLogic {
         }
     }
 
-}
+}*/
