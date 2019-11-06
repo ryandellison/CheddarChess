@@ -12,10 +12,12 @@ public class BoardSpot extends JButton {
 	private static final Color DARK_SPOT = new Color(139, 69, 19);
 	private Font font;
 	private boolean isEmpty;
+	private String piece;
 
 	BoardSpot(String piece)
 	{
 		super(piece);
+		this.piece = piece;
 		isEmpty = piece.isEmpty(); // refers to if the spot has a piece in it or not.
 		font = new Font("Ariel", Font.PLAIN, 35);
 
@@ -27,6 +29,11 @@ public class BoardSpot extends JButton {
 		setOpaque(true);
 		setBackground((index+row)%2 == 0 ? DARK_SPOT : LIGHT_SPOT);
 		setHorizontalAlignment(SwingConstants.CENTER );
+	}
+
+	public String getPiece()
+	{
+		return piece;
 	}
 
 	boolean isEmpty()

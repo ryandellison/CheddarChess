@@ -24,6 +24,8 @@ public class BoardGui extends JFrame {
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[] pieces;
 
+	private GridLayout gridLayout;
+
 
 	@SuppressWarnings("WeakerAccess")
 	public void display()
@@ -33,7 +35,7 @@ public class BoardGui extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		Container contentPane = getContentPane();
-		GridLayout gridLayout = new GridLayout(8, 8);
+		gridLayout = new GridLayout(8, 8);
 
 		contentPane.setLayout(gridLayout);
 
@@ -49,13 +51,19 @@ public class BoardGui extends JFrame {
 		setVisible(true);
 	}
 
+	public void movePiece(int x, int y)
+	{
+
+
+	}
+
 	private void defaultBoardLayout()
 	{
 		pieces = new BoardSpot[] {
 
-				new BoardSpot(LIGHT_ROOK), new BoardSpot(LIGHT_KNIGHT), new BoardSpot(LIGHT_BISHOP),
+				new BoardSpot(LIGHT_ROOK), new BoardSpot(LIGHT_BISHOP), new BoardSpot(LIGHT_BISHOP),
 				new BoardSpot(LIGHT_KING), new BoardSpot(LIGHT_QUEEN), new BoardSpot(LIGHT_BISHOP),
-				new BoardSpot(LIGHT_KNIGHT), new BoardSpot(LIGHT_BISHOP), new BoardSpot(LIGHT_PAWN),
+				new BoardSpot(LIGHT_KNIGHT), new BoardSpot(LIGHT_ROOK), new BoardSpot(LIGHT_PAWN),
 				new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN),
 				new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN), new BoardSpot(LIGHT_PAWN),
 				new  BoardSpot(LIGHT_PAWN),
@@ -83,6 +91,9 @@ public class BoardGui extends JFrame {
 
 	public static void main(String[] args)
 	{
-		new BoardGui().display();
+		BoardGui boardGui = new BoardGui();
+		boardGui.display();
+
+
 	}
 }

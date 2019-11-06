@@ -1,5 +1,6 @@
 package pieces;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends Piece
@@ -10,8 +11,14 @@ public class Pawn extends Piece
 		super(color,name);
 	}
 	@Override
-	public Set<Square> move(Pair coord)
+	public HashSet<Square> move(Pair coord)
 	{
-		return null;
+		HashSet<Square> possibleSpots = new HashSet<>();
+
+
+
+
+		return possibleSpots;
 	}
+
 }
