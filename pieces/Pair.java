@@ -1,22 +1,24 @@
 package pieces;
+
 public class Pair{
-    private int x;//the first element of the pair
-    private int y;//the second element of the pair
+
+    private int x;	//the first element of the pair
+    private int y;	//the second element of the pair
 
     public Pair(int v1, int v2)
-    {//pair constructor allowing two objects of two different types to be an element of the pair
-        this.x = v1;
-        this.y = v2;
+    {        
+	x = v1;
+        y = v2;
     }
 
     public int getX()
     {
-        return this.x;
+        return x;
     }
 
     public int getY()
     {
-        return this.y;
+        return y;
     }
 
     // Return string representation of a pair
@@ -26,7 +28,7 @@ public class Pair{
         return "<" + x + "," + y + ">";
     }
 
-    // @SuppressWarnings("unchecked") dont know if we'll need this in the future
+    
     public boolean equals(Object o)
     {
         if (o instanceof Pair) {//checks to make sure o is a pair
