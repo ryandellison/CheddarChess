@@ -1,6 +1,12 @@
 package board;
 
-import pieces.*;
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Queen;
+import pieces.Rook;
+
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
@@ -34,7 +40,7 @@ public class Board
 
 		for(col = 0; col < 8; col++)
 		{
-			String letter = Character.toString('A' + col);
+			String letter = Character.toString('A') + col;
 
 			if(col % 2 == 0)
 				board[1][col] = new Square(letter + "7", DARK, new Pawn(DARK, "Pawn"));
@@ -47,7 +53,7 @@ public class Board
 
 			for(col = 0; col < 8; col++)
 			{
-				String letter = Character.toString('A' + col);
+				String letter = Character.toString('A') + col;
 				if(alternator)
 				{
 					board[row][col] = new Square(letter + Integer.toString(6 - (row - 2)), LIGHT, null);
@@ -65,7 +71,7 @@ public class Board
 
 		for(col = 0; col < 8; col++)
 		{
-			String letter = Character.toString('A' + col);
+			String letter = Character.toString('A') + col;
 
 			if(col % 2 == 0)
 				board[6][col] = new Square(letter + "2", LIGHT, new Pawn(LIGHT, "Pawn"));
