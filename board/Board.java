@@ -42,7 +42,6 @@ public class Board
 		for(col = 0; col < 8; col++)
 		{
 			String letter = Character.toString((char)((int)('A')+col));
-			//String letter = Character.toString('A' );
 
 			if(col % 2 == 0)
 				board[1][col] = new Square(letter + "7", DARK, new Pawn(DARK, "Pawn"));
@@ -55,7 +54,6 @@ public class Board
 
 			for(col = 0; col < 8; col++)
 			{
-				//String letter = Character.toString('A') + col;
 				String letter = Character.toString((char)((int)('A')+col));
 				if(alternator)
 				{
@@ -74,7 +72,6 @@ public class Board
 
 		for(col = 0; col < 8; col++)
 		{
-			//String letter = Character.toString('A') + col;
 			String letter = Character.toString((char)((int)('A')+col));
 
 			if(col % 2 == 0)
