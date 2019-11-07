@@ -16,6 +16,7 @@ public class Bishop extends Piece{
         for(int i = -7; i < 7; i++){
             moves.addMove(new Pair(x + i, y + i));
         }
+        moves.checkBounds();
         return moves;
     }
 

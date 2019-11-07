@@ -26,6 +26,7 @@ public class Queen extends Piece
 		for(int i = -7; i < 7; i++){
 			moves.addMove(new Pair(x, y+i));
 		}
+		moves.checkBounds();
 		return moves;
 
 	}

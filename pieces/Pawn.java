@@ -36,9 +36,7 @@ public class Pawn extends Piece
 			}
 			moves.addMove(new Pair(x-1, y));
 		}
-
-		moves.validateMoves();
-
+		moves.checkBounds();
 		return moves;
 	}
 
