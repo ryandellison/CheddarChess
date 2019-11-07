@@ -126,9 +126,6 @@ public class Moves
 			else
 				i++;
 		}
-
 		isInBounds = true;
 	}
-
-
 }
