@@ -16,7 +16,7 @@ import java.util.*;
 public class Moves
 {
 	private LinkedList<Pair> moves;	// the linkedlist of Pair moves
-	private boolean isValid;	// indicates whether or not the moves are valid
+	private boolean isInBounds;	// indicates whether or not the moves are valid
 
 	/*
 	 * Moves()
@@ -29,7 +29,7 @@ public class Moves
 	public Moves()
 	{
 		moves = new LinkedList<Pair>();
-		isValid = false;
+		isInBounds = false;
 	}
 
 	/*
@@ -49,7 +49,7 @@ public class Moves
 	public void addMove(Pair p)
 	{
 		moves.add(p);
-		isValid = false;
+		isInBounds = false;
 	}
 
 	/*
@@ -71,7 +71,7 @@ public class Moves
 	}
 
 	/*
-	 * getValidity()
+	 * getInBounds()
 	 *
 	 * The purpose of this method is to return the validity of
 	 * the moves.
@@ -80,19 +80,19 @@ public class Moves
 	 * 	N/A
 	 *
 	 * Output:
-	 * 	boolean isValid	// indicates whether or not the moves are valid
+	 * 	boolean getInBounds	// indicates whether or not the moves are valid
 	 *
 	 */
 	
-	public boolean getValidity()
+	public boolean getInBounds()
 	{
-		return isValid;
+		return isInBounds;
 	}
 
 	/*
-	 * validateMoves()
+	 * checkBounds()
 	 *
-	 * The purpose of this method is to validate the current moves.
+	 * The purpose of this method is to make sure the current moves are in bounds.
 	 * This method checks if each pair is in range of our chess board,
 	 * meaning the x and y coordinates must both be between 0 and 7.
 	 * The move is removed if it is not in range.
@@ -105,7 +105,7 @@ public class Moves
 	 *
 	 */
 
-	public void validateMoves()
+	public void checkBounds()
 	{
 		int i;
 		Pair currentPair;
@@ -126,9 +126,6 @@ public class Moves
 			else
 				i++;
 		}
-
-		isValid = true;
+		isInBounds = true;
 	}
-
-
 }

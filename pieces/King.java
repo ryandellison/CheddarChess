@@ -24,6 +24,7 @@ public class King extends Piece
 		moves.addMove(new Pair(x+1, y+1));
 		moves.addMove(new Pair(x+1, y-1));
 		moves.addMove(new Pair(x-1, y+1));
+		moves.checkBounds();
 	return moves;
 	}
 }
