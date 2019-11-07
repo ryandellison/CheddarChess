@@ -1,48 +1,42 @@
-package pieces;
-import java.awt.Color;
+package board;
 
-public class Square{
-  private String locString;
-  private int locInt;
-  private Color display;
-  private Color color;
-  private boolean occupied;
-  private Piece piece;
+import pieces.*;
+import constant.Colors;
 
-  public Square(int num, String name, Color c, Pair coord){
-    locInt = num;
-    locString = name;
-    color = c;
-    piece = null;
-    //this is a test for committing
-  }
-  public Square(int num, String name, Color c, Piece p){
-    locInt = num;
-    locString = name;
-    color = c;
-    piece = p;
-  }
-  
-  public void occupy(){
-    occupied = true; 
-  }
-  
-  public void vacate(){
-    occupied = false; 
-  }
-  
-  public void highlight(){
-    if(!occupied){
-      display = Color.green;
-    }
-    else{
-      display = Color.red;
-    }
-  }
-  
-  public void unhighlight(){
-     display = color; 
-  }
+public class Square
+{
+	private String alias;
+	private boolean color;
+	private Piece piece;
+
+	public Square(String alias, boolean color)
+	{
+		this.alias = alias;
+		this.color = color;
+		piece = null;
+  	}
+  	
+	public Square(String alias, boolean color, Piece piece)
+	{
+    		this.alias = alias;
+		this.color = color;
+		this.piece = piece;
+  	}
+
+	public String getAlias()
+	{
+		return alias;
+	}
+
+	public boolean getColor()
+	{
+		return color;
+	}
+
+	public Piece getPiece()
+	{
+		return piece;
+	}
   
   
 }

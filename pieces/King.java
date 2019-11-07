@@ -11,19 +11,19 @@ public class King extends Piece
 		super(color,name);
 	}
 	@Override
-	public Set<Pair> move(Pair coord)
+	public Moves move(Pair coord)
 	{
-		Set<Pair>possibleSpots = new HashSet<>();
+		Moves moves = new Moves();
 		int x = coord.getX();
 		int y = coord.getY();
-		possibleSpots.add(new Pair(x+1, y));
-		possibleSpots.add(new Pair(x-1, y));
-		possibleSpots.add(new Pair(x, y+1));
-		possibleSpots.add(new Pair(x, y-1));
-		possibleSpots.add(new Pair(x-1, y-1));
-		possibleSpots.add(new Pair(x+1, y+1));
-		possibleSpots.add(new Pair(x+1, y-1));
-		possibleSpots.add(new Pair(x-1, y+1));
-	return possibleSpots;
+		moves.addMove(new Pair(x+1, y));
+		moves.addMove(new Pair(x-1, y));
+		moves.addMove(new Pair(x, y+1));
+		moves.addMove(new Pair(x, y-1));
+		moves.addMove(new Pair(x-1, y-1));
+		moves.addMove(new Pair(x+1, y+1));
+		moves.addMove(new Pair(x+1, y-1));
+		moves.addMove(new Pair(x-1, y+1));
+	return moves;
 	}
 }

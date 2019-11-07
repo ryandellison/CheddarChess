@@ -2,21 +2,22 @@ package pieces;
 import java.util.Set;
 
 public abstract class Piece{
-  private String name;
-  private boolean color;
+	private String name;
+	private boolean owner;
   
-  public Piece(boolean c, String n){
-    name = n;
-    color = c;
-  }
-  public boolean getColor(){
-    return color;
-  }
+	public Piece(boolean o, String n){
+		owner = o;
+		name = n;
+	}
+  
+	public boolean getOwner(){
+		return owner;
+	}
 
-  public String getName(){
-    return name;
-  }
+	public String getName(){
+		return name;
+	}
 
-  public abstract Set<Pair> move(Pair coord);
+	public abstract Moves move(Pair coord);
   
 }

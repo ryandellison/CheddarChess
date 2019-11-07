@@ -11,17 +11,17 @@ public class Rook extends Piece
 		super(color,name);
 	}
 	@Override
-	public Set<Pair> move(Pair coord)
+	public Moves move(Pair coord)
 	{
-		Set<Pair>possibleSpots = new HashSet<>();
+		Moves moves = new Moves();
 		int x = coord.getX();
 		int y = coord.getY();
 		for(int i = -7; i < 7; i++){
-			possibleSpots.add(new Pair(x + i, y));
+			moves.addMove(new Pair(x + i, y));
 		}
 		for(int i = -7; i < 7; i++){
-			possibleSpots.add(new Pair(x, y+i));
+			moves.addMove(new Pair(x, y+i));
 		}
-		return possibleSpots;
+		return moves;
 	}
 }

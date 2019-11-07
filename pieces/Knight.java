@@ -11,15 +11,15 @@ public class Knight extends Piece
 	}
 
 	@Override
-	public Set<Pair> move(Pair coord)
+	public Moves move(Pair coord)
 	{
-		Set<Pair>possibleSpots = new HashSet<>();
+		Moves moves = new Moves();
 		int x = coord.getX();
 		int y = coord.getY();
-		possibleSpots.add(new Pair(x+2, y-1));
-		possibleSpots.add(new Pair(x+2, y+1));
-		possibleSpots.add(new Pair(x-2,y+1));
-		possibleSpots.add(new Pair(x-2, y-1));
-		return possibleSpots;
+		moves.addMove(new Pair(x+2, y-1));
+		moves.addMove(new Pair(x+2, y+1));
+		moves.addMove(new Pair(x-2,y+1));
+		moves.addMove(new Pair(x-2, y-1));
+		return moves;
 	}
 }

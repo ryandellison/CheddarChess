@@ -9,14 +9,14 @@ public class Bishop extends Piece{
         super(color, name);
     }
 
-    public Set<Pair> move(Pair coord){
-        Set<Pair> possibleSpots = new HashSet<>();
+    public Moves move(Pair coord){
+        Moves moves = new Moves();
         int x = coord.getX();
         int y = coord.getY();
         for(int i = -7; i < 7; i++){
-            possibleSpots.add(new Pair(x + i, y + i));
+            moves.addMove(new Pair(x + i, y + i));
         }
-        return possibleSpots;
+        return moves;
     }
 
 
