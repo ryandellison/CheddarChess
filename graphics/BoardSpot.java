@@ -1,4 +1,4 @@
-package board;
+package graphics;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -14,7 +14,7 @@ public class BoardSpot extends JButton {
 	private boolean isEmpty;
 	private String piece;
 
-	BoardSpot(String piece)
+	public BoardSpot(String piece)
 	{
 		super(piece);
 		this.piece = piece;
@@ -23,7 +23,7 @@ public class BoardSpot extends JButton {
 
 	}
 
-	void set(int index, int row)
+	public void set(int index, int row)
 	{
 		setFont(font);
 		setOpaque(true);

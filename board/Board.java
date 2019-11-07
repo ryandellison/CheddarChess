@@ -38,9 +38,11 @@ public class Board
 		board[0][6] = new Square("G8", LIGHT, new Knight(DARK, "Knight"));
 		board[0][7] = new Square("H8", DARK, new Rook(DARK, "Rook"));
 
+
 		for(col = 0; col < 8; col++)
 		{
-			String letter = Character.toString('A') + col;
+			String letter = Character.toString((char)((int)('A')+col));
+			//String letter = Character.toString('A' );
 
 			if(col % 2 == 0)
 				board[1][col] = new Square(letter + "7", DARK, new Pawn(DARK, "Pawn"));
@@ -53,7 +55,8 @@ public class Board
 
 			for(col = 0; col < 8; col++)
 			{
-				String letter = Character.toString('A') + col;
+				//String letter = Character.toString('A') + col;
+				String letter = Character.toString((char)((int)('A')+col));
 				if(alternator)
 				{
 					board[row][col] = new Square(letter + Integer.toString(6 - (row - 2)), LIGHT, null);
@@ -71,7 +74,8 @@ public class Board
 
 		for(col = 0; col < 8; col++)
 		{
-			String letter = Character.toString('A') + col;
+			//String letter = Character.toString('A') + col;
+			String letter = Character.toString((char)((int)('A')+col));
 
 			if(col % 2 == 0)
 				board[6][col] = new Square(letter + "2", LIGHT, new Pawn(LIGHT, "Pawn"));
