@@ -70,6 +70,43 @@ public class Moves
 		return moves;
 	}
 
+
+	/*
+	 * getSize()
+	 *
+	 * The purpose of this method is to return the size of the list of moves.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	int moves.size()
+	 *
+	 */
+
+	public int getSize()
+	{
+		return moves.size();
+	}
+
+    /*
+     * getPair()
+     *
+     * The purpose of this method is to return the Pair at a given index of the list of moves.
+     *
+     * Input:
+     * 	int index
+     *
+     * Output:
+     * 	Pair
+     *
+     */
+
+    public Pair getPair(int index)
+    {
+        return this.moves.get(index);
+    }
+
 	/*
 	 * getInBounds()
 	 *

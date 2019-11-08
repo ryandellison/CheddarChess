@@ -19,7 +19,6 @@ public class Player {//creates a player for the chess game
         graveyard = new ArrayList<>();
     }
 
-
     public int getNumPoints() {
         return numPoints;
     }

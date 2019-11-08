@@ -8,7 +8,6 @@ public class Square
 	private String alias;
 	private boolean color;
 	private Piece piece;
-
 	public Square(String alias, boolean color)
 	{
 		this.alias = alias;
@@ -18,7 +17,7 @@ public class Square
   	
 	public Square(String alias, boolean color, Piece piece)
 	{
-    		this.alias = alias;
+		this.alias = alias;
 		this.color = color;
 		this.piece = piece;
   	}

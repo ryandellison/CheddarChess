@@ -1,12 +1,6 @@
 package board;
 
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Queen;
-import pieces.Rook;
-
+import pieces.*;
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
@@ -122,7 +116,7 @@ public class Board
 				if(board[row][col].getPiece() != null)
 				{
 					pieceName = board[row][col].getPiece().getName();
-					pieceColBool = board[row][col].getPiece().getOwner();
+					pieceColBool = board[row][col].getPiece().getColor();
 					
 					if(pieceColBool == LIGHT)
 						pieceColStr = "LIGHT";
@@ -150,5 +144,65 @@ public class Board
 
 		System.out.println("\n");
 	}
+    /*
+        Moves getValidMoves(Square s);
 
+        the purpose of this method is to validate the moves of the piece at a Square
+
+        DEBUG: could not develop a condition in which moves for rooks, bishops, and the queen
+               that would invalidate moves in a space after which passing through a player owned piece
+               (i.e. a queen at the beginning of the game would have valid moves)
+     */
+	public Moves getValidMoves(Square s) {
+		Piece p = s.getPiece();
+		String alias = s.getAlias();
+		Moves validMoves = new Moves();
+		int r = -1;
+		char row = alias.charAt(0);
+		//for getting the row of the square
+		switch (row) {
+			case 'A':
+				r = 0;
+				break;
+			case 'B':
+				r = 1;
+				break;
+			case 'C':
+				r = 2;
+				break;
+			case 'D':
+				r = 3;
+				break;
+			case 'E':
+				r = 4;
+				break;
+			case 'F':
+				r = 5;
+				break;
+			case 'G':
+				r = 6;
+				break;
+			case 'H':
+				r = 7;
+				break;
+		}
+		if (p == null) {
+			return null;
+		}
+		int c = Character.getNumericValue(alias.charAt(1));
+		Pair coord = new Pair(r, c);
+		Moves allMoves = p.move(coord);
+		for (int i = 0; i < allMoves.getSize(); i++) {
+			Pair pa = allMoves.getPair(i);
+			Piece other = this.board[pa.getX()][pa.getY()].getPiece();
+			if (other == null) {
+				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
+			} else if (other.getColor() && p.getColor()) {
+				continue;
+			} else if (!(other.getColor() && p.getColor())) {
+				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
+			}
+		}
+		return validMoves;
+	}
 }

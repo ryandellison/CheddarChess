@@ -19,9 +19,12 @@ public class Queen extends Piece
 		for(int i = -7; i < 7; i++){//bishop moves
 			moves.addMove(new Pair(x + i, y + i));
 		}
+		for(int i = -7; i < 7; i++){
+			moves.addMove(new Pair(x - i, y + i));
+		}
 		//rook moves
 		for(int i = -7; i < 7; i++){
-		moves.addMove(new Pair(x + i, y));
+			moves.addMove(new Pair(x + i, y));
 	}
 		for(int i = -7; i < 7; i++){
 			moves.addMove(new Pair(x, y+i));

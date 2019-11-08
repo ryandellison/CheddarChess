@@ -3,16 +3,14 @@ import java.util.Set;
 
 public abstract class Piece{
 	private String name;
-	private boolean owner;
+	private boolean color;
   
-	public Piece(boolean o, String n){
-		owner = o;
-		name = n;
+	public Piece(boolean c, String n){
+		this.color = c;
+		this.name = n;
 	}
   
-	public boolean getOwner(){
-		return owner;
-	}
+	public boolean getColor(){ return color; }
 
 	public String getName(){
 		return name;
