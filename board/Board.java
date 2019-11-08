@@ -145,7 +145,7 @@ public class Board
 		System.out.println("\n");
 	}
     /*
-        Moves getValidMoves(Square s);
+        Moves getValidMovesFromSquare(Square s);
 
         the purpose of this method is to validate the moves of the piece at a Square
 
@@ -153,7 +153,7 @@ public class Board
                that would invalidate moves in a space after which passing through a player owned piece
                (i.e. a queen at the beginning of the game would have valid moves)
      */
-	public Moves getValidMoves(Square s) {
+	public Moves getValidMovesFromSquare(Square s) {
 		Piece p = s.getPiece();
 		String alias = s.getAlias();
 		Moves validMoves = new Moves();
@@ -192,15 +192,15 @@ public class Board
 		int c = Character.getNumericValue(alias.charAt(1));
 		Pair coord = new Pair(r, c);
 		Moves allMoves = p.move(coord);
-		allMoves.checkBounds();
+		allMoves.checkBounds();//gets the possible moves and makes sure that they are all in bounds
 		for (int i = 0; i < allMoves.getSize(); i++) {
 			Pair pa = allMoves.getPair(i);
 			Piece other = this.board[pa.getX()][pa.getY()].getPiece();
-			if (other == null) {
+			if (other == null) {//if the square is empty, we can move there
 				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
-			} else if (other.getColor() && p.getColor()) {
+			} else if (other.getColor() && p.getColor()) {//if its the same color, continue
 				continue;
-			} else if (!(other.getColor() && p.getColor())) {
+			} else if (!(other.getColor() && p.getColor())) {//if its a different color, we can move there
 				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
 			}
 		}
