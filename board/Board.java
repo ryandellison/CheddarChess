@@ -203,6 +203,12 @@ public class Board
 			} else if (!(other.getColor() && p.getColor())) {//if its a different color, we can move there
 				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
 			}
+			if(other instanceof Rook || other instanceof Queen){
+
+            }
+			if(other instanceof Bishop || other instanceof Queen){
+
+            }
 		}
 		return validMoves;
 	}
