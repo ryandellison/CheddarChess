@@ -20,6 +20,10 @@ public class Knight extends Piece
 		moves.addMove(new Pair(x+2, y+1));
 		moves.addMove(new Pair(x-2,y+1));
 		moves.addMove(new Pair(x-2, y-1));
+		moves.addMove(new Pair(x+1, y+2));
+		moves.addMove(new Pair(x+1, y-2));
+		moves.addMove(new Pair(x-1, y+2));
+		moves.addMove(new Pair(x-1, y-2));
 		moves.checkBounds();
 		return moves;
 	}
