@@ -192,6 +192,7 @@ public class Board
 		int c = Character.getNumericValue(alias.charAt(1));
 		Pair coord = new Pair(r, c);
 		Moves allMoves = p.move(coord);
+		allMoves.checkBounds();
 		for (int i = 0; i < allMoves.getSize(); i++) {
 			Pair pa = allMoves.getPair(i);
 			Piece other = this.board[pa.getX()][pa.getY()].getPiece();
