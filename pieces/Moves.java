@@ -53,6 +53,25 @@ public class Moves
 	}
 
 	/*
+	 * removeMove()
+	 *
+	 * The purpose of this method is to remove a move (Pair) from the list of moves.
+	 *
+	 * Input:
+	 * 	Pair p	// the move to insert
+	 *
+	 * Output:
+	 * 	N/A
+	 *
+	 */
+
+	public void removeMove(Pair p)
+	{
+		moves.remove(p);
+		isInBounds = false;
+	}
+
+	/*
 	 * getMoves()
 	 *
 	 * The purpose of this method is to return the list of moves.

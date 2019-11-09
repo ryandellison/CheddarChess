@@ -161,7 +161,7 @@ public class Board
 
 		if (p == null) 
 		{
-			return null;
+			return validMoves;
 		}
 		int r = Character.getNumericValue(alias.charAt(1));
 		Pair coord = new Pair(r, c);
