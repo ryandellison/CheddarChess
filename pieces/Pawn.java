@@ -19,22 +19,22 @@ public class Pawn extends Piece
 	public Moves move(Pair current)
 	{
 		Moves moves = new Moves();
-		int x = current.getX();
-		int y = current.getY();
+		int row = current.getRow();
+		int col = current.getCol();
 		
 		if(color){
 			if(firstMove){
-				moves.addMove(new Pair(x+2, y));
+				moves.addMove(new Pair(row+2, col));
 				firstMove = false;
 			}
-			moves.addMove(new Pair(x+1, y));
+			moves.addMove(new Pair(row+1, col));
 		}
 		else{
 			if(firstMove){
-				moves.addMove(new Pair(x-2, y));
+				moves.addMove(new Pair(row-2, col));
 				firstMove = false;
 			}
-			moves.addMove(new Pair(x-1, y));
+			moves.addMove(new Pair(row-1, col));
 		}
 		moves.checkBounds();
 		return moves;

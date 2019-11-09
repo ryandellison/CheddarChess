@@ -25,7 +25,7 @@ public class ChessGame {
 		Board board = new Board();
 		board.printBoard();
 
-		boardgui.display(board);
+		// boardgui.display(board);
 	}
 
 	public void highlightMoves(Moves moves) {
@@ -64,7 +64,7 @@ public class ChessGame {
 				else if(p.getColor() != kingColor)
 				{//if the piece on this spot has a valid move to where the king is located, we go into check
 					Moves m = board.getValidMovesFromSquare(board.getSquare(i,j));
-					if(m.findPair(kingLoc.getX(),kingLoc.getY()) != -1)
+					if(m.findPair(kingLoc.getRow(),kingLoc.getCol()) != -1)
 					{
 						ans = true;
 					}
@@ -82,7 +82,7 @@ public class ChessGame {
 		boolean tracker = true;
 		Pair kingLoc = findKing(kingColor);
 		Pair attackDest;
-		Square kingSquare = board.getSquare(kingLoc.getX(),kingLoc.getY());
+		Square kingSquare = board.getSquare(kingLoc.getRow(),kingLoc.getCol());
 		Moves kingMoves = board.getValidMovesFromSquare(kingSquare);
 		Moves attackMoves;
 		//this will only go thru if the king is already in check
@@ -108,11 +108,11 @@ public class ChessGame {
 						{
 							for (int x = 0; x < attackMoves.getSize(); x++) {
 								attackDest = attackMoves.getPair(x);
-								if(kingMoves.findPair(attackDest.getX(),attackDest.getY()) != -1)//for the valid
+								if(kingMoves.findPair(attackDest.getRow(),attackDest.getCol()) != -1)//for the valid
 								    //king moves, if the attacker can move to an available move, remove that move from
 								    //the possible king moves
 								{
-                                    kingMoves.removeMove(new Pair(attackDest.getX(),attackDest.getY()));
+                                    kingMoves.removeMove(new Pair(attackDest.getRow(),attackDest.getCol()));
 								}
 							}
 						}

@@ -175,9 +175,9 @@ public class Moves
 			currentPair = moves.get(i);
 			
 			// validate the move and remove it if necessary
-			if(currentPair.getX() < 0 || currentPair.getX() > 7)
+			if(currentPair.getRow() < 0 || currentPair.getRow() > 7)
 				moves.remove(i);
-			else if(currentPair.getY() < 0 || currentPair.getY() > 7)
+			else if(currentPair.getCol() < 0 || currentPair.getCol() > 7)
 				moves.remove(i);
 			else
 				i++;
@@ -192,15 +192,15 @@ public class Moves
 	 * coordinates and return its index. Returns -1 if not in moves.
 	 *
 	 * Input:
-	 * 	int x	// x coordinate
-	 * 	int y	// y coordinate
+	 * 	int row	// row
+	 * 	int col	// col
 	 *
 	 * Output:
 	 * 	int index	// location
 	 *
 	 */
 
-	public int findPair(int x, int y)
+	public int findPair(int row, int col)
 	{
 		Pair currentPair;
 		int index;
@@ -212,7 +212,7 @@ public class Moves
 		{
 			currentPair = moves.get(i);
 
-			if((currentPair.getX() == x) && (currentPair.getY() == y))
+			if((currentPair.getRow() == row) && (currentPair.getCol() == col))
 			{
 				index = i;
 				i = moves.size();

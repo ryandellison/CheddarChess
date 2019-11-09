@@ -2,30 +2,30 @@ package pieces;
 
 public class Pair{
 
-    private int x;	//the first element of the pair
-    private int y;	//the second element of the pair
+    private int row;	//the first element of the pair
+    private int col;	//the second element of the pair
 
     public Pair(int v1, int v2)
     {        
-	x = v1;
-        y = v2;
+	row = v1;
+        col = v2;
     }
 
-    public int getX()
+    public int getRow()
     {
-        return x;
+        return row;
     }
 
-    public int getY()
+    public int getCol()
     {
-        return y;
+        return col;
     }
 
     // Return string representation of a pair
     // as <first,second> with no spaces
     public String toString()
     {
-        return "<" + x + "," + y + ">";
+        return "<" + row + "," + col + ">";
     }
 
     
@@ -33,7 +33,7 @@ public class Pair{
     {
         if (o instanceof Pair) {//checks to make sure o is a pair
             Pair other = (Pair) o;//casts it to a pair
-            if ((other.x) == (this.x) && ((other.y) == (this.y))) {//makes sure the first and
+            if ((other.row) == (this.row) && ((other.col) == (this.col))) {//makes sure the first and
                 //second elements of both pairs are the same in order to return true
                 return true;
             }

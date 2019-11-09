@@ -85,9 +85,57 @@ public class Board
 
 	}
 
+	public void highlightSquares(Moves moves)
+	{
+		Pair p;
+		int size;
+		int i;
+
+		size = moves.getSize();
+
+		for(i = 0; i < size; i++)
+		{
+			p = moves.getPair(i);
+
+			board[p.getRow()][p.getCol()].setHighlighted(true);
+		}
+		
+	}
+
+	public void unhighlight()
+	{
+		int i, j;
+
+		for(i = 0; i < 8; i++)
+			for(j = 0; j < 8; j++)
+				board[i][j].setHighlighted(false);
+
+	}
+
 	public Square getSquare(int i, int j)
 	{
 		return board[i][j];
+	}
+
+	public void enablePiecesByColor(boolean color)
+	{
+		Piece p;
+		int i, j;
+
+		for(i = 0; i < 8; i++)
+		{
+			for(j = 0; j < 8; j++)
+			{
+				p = board[i][j].getPiece();
+				if(p != null)
+				{
+					if(p.getColor() == color)
+						board[i][j].enable();
+					else
+						board[i][j].disable();
+				}
+			}
+		}
 	}
 
 	/*
@@ -169,10 +217,10 @@ public class Board
 		for (int i = 0; i < allMoves.getSize(); i++) 
 		{
 			Pair pa = allMoves.getPair(i);
-			Piece other = this.board[pa.getX()][pa.getY()].getPiece();
+			Piece other = this.board[pa.getRow()][pa.getCol()].getPiece();
 			if (other == null) 
 			{//if the square is empty, we can move there
-				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
+				validMoves.addMove(new Pair(pa.getRow(), pa.getCol()));
 			}
 			else if (other.getColor() == p.getColor()) 
 			{//if its the same color, continue
@@ -180,7 +228,7 @@ public class Board
 			} 
 			else if (!(other.getColor() == p.getColor())) 
 			{//if its a different color, we can move there
-				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
+				validMoves.addMove(new Pair(pa.getRow(), pa.getCol()));
 			}
 			if(other instanceof Rook || other instanceof Queen)
 			{

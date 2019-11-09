@@ -14,16 +14,16 @@ public class Knight extends Piece
 	public Moves move(Pair coord)
 	{
 		Moves moves = new Moves();
-		int x = coord.getX();
-		int y = coord.getY();
-		moves.addMove(new Pair(x+2, y-1));
-		moves.addMove(new Pair(x+2, y+1));
-		moves.addMove(new Pair(x-2,y+1));
-		moves.addMove(new Pair(x-2, y-1));
-		moves.addMove(new Pair(x+1, y+2));
-		moves.addMove(new Pair(x+1, y-2));
-		moves.addMove(new Pair(x-1, y+2));
-		moves.addMove(new Pair(x-1, y-2));
+		int row = coord.getRow();
+		int col = coord.getCol();
+		moves.addMove(new Pair(row+2, col-1));
+		moves.addMove(new Pair(row+2, col+1));
+		moves.addMove(new Pair(row-2,col+1));
+		moves.addMove(new Pair(row-2, col-1));
+		moves.addMove(new Pair(row+1, col+2));
+		moves.addMove(new Pair(row+1, col-2));
+		moves.addMove(new Pair(row-1, col+2));
+		moves.addMove(new Pair(row-1, col-2));
 		moves.checkBounds();
 		return moves;
 	}

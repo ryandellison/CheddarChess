@@ -14,16 +14,16 @@ public class King extends Piece
 	public Moves move(Pair coord)
 	{
 		Moves moves = new Moves();
-		int x = coord.getX();
-		int y = coord.getY();
-		moves.addMove(new Pair(x+1, y));
-		moves.addMove(new Pair(x-1, y));
-		moves.addMove(new Pair(x, y+1));
-		moves.addMove(new Pair(x, y-1));
-		moves.addMove(new Pair(x-1, y-1));
-		moves.addMove(new Pair(x+1, y+1));
-		moves.addMove(new Pair(x+1, y-1));
-		moves.addMove(new Pair(x-1, y+1));
+		int row = coord.getRow();
+		int col = coord.getCol();
+		moves.addMove(new Pair(row+1, col));
+		moves.addMove(new Pair(row-1, col));
+		moves.addMove(new Pair(row, col+1));
+		moves.addMove(new Pair(row, col-1));
+		moves.addMove(new Pair(row-1, col-1));
+		moves.addMove(new Pair(row+1, col+1));
+		moves.addMove(new Pair(row+1, col-1));
+		moves.addMove(new Pair(row-1, col+1));
 		moves.checkBounds();
 	return moves;
 	}
