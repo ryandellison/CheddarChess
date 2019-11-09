@@ -1,3 +1,4 @@
+package player;
 import pieces.Piece;
 
 public class Player {//creates a player for the chess game

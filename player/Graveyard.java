@@ -1,3 +1,4 @@
+package player;
 import pieces.*;
 import java.util.ArrayList;
 
