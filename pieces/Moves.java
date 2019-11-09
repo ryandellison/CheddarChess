@@ -165,4 +165,42 @@ public class Moves
 		}
 		isInBounds = true;
 	}
+
+	/*
+	 * findPair()
+	 *
+	 * The purpose of this method is to find a Pair with the given
+	 * coordinates and return its index. Returns -1 if not in moves.
+	 *
+	 * Input:
+	 * 	int x	// x coordinate
+	 * 	int y	// y coordinate
+	 *
+	 * Output:
+	 * 	int index	// location
+	 *
+	 */
+
+	public int findPair(int x, int y)
+	{
+		Pair currentPair;
+		int index;
+		int i;
+
+		index = -1;
+
+		for(i = 0; i < moves.size(); i++)
+		{
+			currentPair = moves.get(i);
+
+			if((currentPair.getX() == x) && (currentPair.getY() == y))
+			{
+				index = i;
+				i = moves.size();
+			}
+		}
+
+		return index;
+
+	}
 }
