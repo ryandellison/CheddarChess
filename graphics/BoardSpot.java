@@ -31,11 +31,6 @@ public class BoardSpot extends JButton {
 		setHorizontalAlignment(SwingConstants.CENTER );
 	}
 
-	public String getPiece()
-	{
-		return piece;
-	}
-
 	boolean isEmpty()
 	{
 		return isEmpty;
