@@ -97,9 +97,6 @@ public class Board
 	{
 		int row;
 		int col;
-		String alias;
-		String squareColStr;
-		boolean squareColBool;
 		String pieceName;
 		String pieceColStr;
 		boolean pieceColBool;
@@ -110,8 +107,6 @@ public class Board
 		{
 			for(col = 0; col < 8; col++)
 			{
-				alias = board[row][col].getAlias();
-				squareColBool = board[row][col].getColor();
 				
 				if(board[row][col].getPiece() != null)
 				{
@@ -119,23 +114,18 @@ public class Board
 					pieceColBool = board[row][col].getPiece().getColor();
 					
 					if(pieceColBool == LIGHT)
-						pieceColStr = "LIGHT";
+						pieceColStr = "L";
 					else
-						pieceColStr = "DARK";
+						pieceColStr = "D";
 				}
 				else
 				{
-					pieceName = "NONE";
-					pieceColStr = "NONE";
+					pieceName = "NO";
+					pieceColStr = "NO";
 				}
 
-				if(squareColBool == LIGHT)
-					squareColStr = "LIGHT";
-				else
-					squareColStr = "DARK";
 
-
-				System.out.printf("(%s, %s, %s, %s)    ", alias, squareColStr, pieceName, pieceColStr);
+				System.out.printf("(%s, %s)    ", pieceName, pieceColStr);
 			}
 
 			System.out.printf("\n");
@@ -153,62 +143,48 @@ public class Board
                that would invalidate moves in a space after which passing through a player owned piece
                (i.e. a queen at the beginning of the game would have valid moves)
      */
-	public Moves getValidMovesFromSquare(Square s) {
+	public Moves getValidMovesFromSquare(Square s) 
+	{
 		Piece p = s.getPiece();
 		String alias = s.getAlias();
 		Moves validMoves = new Moves();
-		int r = -1;
-		char row = alias.charAt(0);
-		//for getting the row of the square
-		switch (row) {
-			case 'A':
-				r = 0;
-				break;
-			case 'B':
-				r = 1;
-				break;
-			case 'C':
-				r = 2;
-				break;
-			case 'D':
-				r = 3;
-				break;
-			case 'E':
-				r = 4;
-				break;
-			case 'F':
-				r = 5;
-				break;
-			case 'G':
-				r = 6;
-				break;
-			case 'H':
-				r = 7;
-				break;
-		}
-		if (p == null) {
+		int c = -1;
+		char col = alias.charAt(0);
+		
+		// for getting the col of the square
+		c = (char) Math.abs('A' - col);
+
+		if (p == null) 
+		{
 			return null;
 		}
-		int c = Character.getNumericValue(alias.charAt(1));
+		int r = Character.getNumericValue(alias.charAt(1));
 		Pair coord = new Pair(r, c);
 		Moves allMoves = p.move(coord);
-		allMoves.checkBounds();//gets the possible moves and makes sure that they are all in bounds
-		for (int i = 0; i < allMoves.getSize(); i++) {
+		for (int i = 0; i < allMoves.getSize(); i++) 
+		{
 			Pair pa = allMoves.getPair(i);
 			Piece other = this.board[pa.getX()][pa.getY()].getPiece();
-			if (other == null) {//if the square is empty, we can move there
-				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
-			} else if (other.getColor() && p.getColor()) {//if its the same color, continue
-				continue;
-			} else if (!(other.getColor() && p.getColor())) {//if its a different color, we can move there
+			if (other == null) 
+			{//if the square is empty, we can move there
 				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
 			}
-			if(other instanceof Rook || other instanceof Queen){
+			else if (other.getColor() == p.getColor()) 
+			{//if its the same color, continue
+				continue;
+			} 
+			else if (!(other.getColor() == p.getColor())) 
+			{//if its a different color, we can move there
+				validMoves.addMove(new Pair(pa.getX(), pa.getY()));
+			}
+			if(other instanceof Rook || other instanceof Queen)
+			{
 
-            }
-			if(other instanceof Bishop || other instanceof Queen){
+			}
+			if(other instanceof Bishop || other instanceof Queen)
+			{
 
-            }
+            		}
 		}
 		return validMoves;
 	}

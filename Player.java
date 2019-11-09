@@ -1,11 +1,10 @@
 import pieces.Piece;
-import java.util.ArrayList;
 
 public class Player {//creates a player for the chess game
     private String playerNum;
     private int numPoints;
     private boolean color;
-    private ArrayList<Piece> graveyard;
+    private Graveyard graveyard;
 
     public Player(boolean color){//the color decides if they are player one or 2,
                                 //and the other fields are initialized
@@ -16,7 +15,7 @@ public class Player {//creates a player for the chess game
             playerNum = "Player 2";
         }
         numPoints = 0;
-        graveyard = new ArrayList<>();
+        graveyard = new Graveyard();
     }
 
     public int getNumPoints() {
@@ -31,11 +30,15 @@ public class Player {//creates a player for the chess game
         return playerNum;
     }
 
-    public ArrayList<Piece> getGraveyard() {
+    public Graveyard getGraveyard() {
         return graveyard;
     }
+
+	/*
 
     public void addPieceToGraveyard(Piece p){
         graveyard.add(p);
     }
+
+    */
 }
