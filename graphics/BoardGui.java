@@ -5,6 +5,12 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 
+import board.*;
+import pieces.*;
+
+import static constant.Colors.LIGHT;
+import static constant.Colors.DARK;
+
 
 public class BoardGui extends JFrame {
 
@@ -27,11 +33,15 @@ public class BoardGui extends JFrame {
 
 	private GridLayout gridLayout;
 
+	public BoardGui()
+	{
+		pieces = new BoardSpot[64];
+	}
 
 	@SuppressWarnings("WeakerAccess")
-	public void display()
+	public void display(Board b)
 	{
-		defaultBoardLayout();
+		setBoard(b);
 		setTitle("Chess");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -56,6 +66,69 @@ public class BoardGui extends JFrame {
 	{
 
 
+	}
+
+	public void setBoard(Board b)
+	{
+		int i, j;
+		int x;
+
+		Piece currentPiece;
+		boolean pieceColor;
+		String pieceName;
+		x = 0;
+
+		for(i = 0; i < 8; i++)
+		{
+			for(j = 0; j < 8; j++)
+			{
+				currentPiece = b.getSquare(i,j).getPiece();
+				
+				if(currentPiece != null)
+				{
+					pieceColor = currentPiece.getColor();
+					pieceName = currentPiece.getName();
+
+					if(pieceColor == LIGHT)
+					{
+						if(pieceName.equals("Pawn"))
+							pieces[x] = new BoardSpot(LIGHT_PAWN);
+						else if(pieceName.equals("Rook"))
+							pieces[x] = new BoardSpot(LIGHT_ROOK);
+						else if(pieceName.equals("Bishop"))
+							pieces[x] = new BoardSpot(LIGHT_BISHOP);
+						else if(pieceName.equals("Knight"))
+							pieces[x] = new BoardSpot(LIGHT_KNIGHT);
+						else if(pieceName.equals("Queen"))
+							pieces[x] = new BoardSpot(LIGHT_QUEEN);
+						else	pieces[x] = new BoardSpot(LIGHT_KING);
+					}
+					else
+					{
+						if(pieceName.equals("Pawn"))
+							pieces[x] = new BoardSpot(DARK_PAWN);
+						else if(pieceName.equals("Rook"))
+							pieces[x] = new BoardSpot(DARK_ROOK);
+						else if(pieceName.equals("Bishop"))
+							pieces[x] = new BoardSpot(DARK_BISHOP);
+						else if(pieceName.equals("Knight"))
+							pieces[x] = new BoardSpot(DARK_KNIGHT);
+						else if(pieceName.equals("Queen"))
+							pieces[x] = new BoardSpot(DARK_QUEEN);
+						else	pieces[x] = new BoardSpot(DARK_KING);
+
+					}
+				}
+				else
+				{
+					pieces[x] = new BoardSpot(EMPTY_PIECE);
+				}
+
+				x++;
+
+			}
+
+		}
 	}
 
 	private void defaultBoardLayout()
@@ -93,7 +166,6 @@ public class BoardGui extends JFrame {
 	public static void main(String[] args)
 	{
 		BoardGui boardGui = new BoardGui();
-		boardGui.display();
 
 
 	}

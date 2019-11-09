@@ -85,6 +85,11 @@ public class Board
 
 	}
 
+	public Square getSquare(int i, int j)
+	{
+		return board[i][j];
+	}
+
 	/*
 	 * printBoard()
 	 *
