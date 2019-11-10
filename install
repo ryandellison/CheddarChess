@@ -1,0 +1,20 @@
+#!/bin/bash
+
+JAVAC=$(whereis javac)
+
+compile ()
+{
+	$JAVAC *.java board/*.java player/*.java pieces/*.java graphics/*.java
+}
+
+clean ()
+{
+	rm *.class board/*.class player/*.class pieces/*.class graphics/*.class
+}
+
+if [ $1 = "compile" ] ; then
+	compile
+elif [ $1 = "clean" ] ; then
+	clean
+fi
+
