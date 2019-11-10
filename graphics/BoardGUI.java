@@ -43,13 +43,15 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Player player1;
 	private Player player2;
 	private boolean currentPlayer;
+	private Pair sourceLocation;
 
 	public BoardGUI()
 	{
 		boardSpots = new BoardSpot[8][8];
 		currentPlayer = LIGHT;
+		sourceLocation = null;
 
-		setTitle("JChess");
+		setTitle("JChess - Light's Turn");
 		setSize(SIZE, SIZE);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -92,19 +94,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-
-
-	public void movePiece(int x, int y)
-	{
-
-
-	}
-
 	public void actionPerformed(ActionEvent e)
 	{
+		Piece p;
 		int i, j;
-		
-		System.out.println("hi!");
 
 		for(i = 0; i < 8; i++)
 		{
@@ -112,7 +105,16 @@ public class BoardGUI extends JFrame implements ActionListener {
 			{
 				if(boardSpots[i][j] == e.getSource())
 				{	
-					handleTurn(new Pair(i, j));
+					p = board.getSquare(i, j).getPiece();
+
+					if(p == null)
+					{
+						handlePieceDestinationSelection(new Pair(i, j));
+					}
+					else
+					{
+						handlePieceSourceSelection(new Pair(i, j));
+					}
 					j = 8;
 					i = 8;
 				}
@@ -122,17 +124,66 @@ public class BoardGUI extends JFrame implements ActionListener {
 		
 	}
 
-	public void handleTurn(Pair start)
+	public void switchTurn()
+	{
+		currentPlayer = !currentPlayer;
+
+		board.enablePiecesByColor(currentPlayer);
+
+		if(currentPlayer == LIGHT)
+			setTitle("JChess - Light's Turn");
+		else
+			setTitle("JChess - Dark's Turn");
+	}
+
+	public void handlePieceDestinationSelection(Pair dest)
+	{
+		int sRow;
+		int sCol;
+		int dRow;
+		int dCol;
+
+		sRow = sourceLocation.getRow();
+		sCol = sourceLocation.getCol();
+		dRow = dest.getRow();
+		dCol = dest.getCol();
+
+		board.getSquare(dRow, dCol).setPiece(board.getSquare(sRow, sCol).getPiece());
+
+		board.getSquare(sRow, sCol).setPiece(null);
+
+		board.disableAllSquares();
+		board.unhighlightAllSquares();
+
+		switchTurn();
+
+		display();
+
+		
+
+	}
+
+	public void handlePieceSourceSelection(Pair source)
 	{
 		int row;
 		int col;
+		Moves moves;
 
-		row = start.getRow();
-		col = start.getCol();
+		row = source.getRow();
+		col = source.getCol();
 
-		board.highlightSquares(board.getSquare(row, col).getPiece().move(start));
+		moves = board.getSquare(row, col).getPiece().move(source);
+
+		board.highlightSquares(moves);
+		board.disableAllSquares();
+		board.enableSquares(moves);
 
 		display();
+
+		sourceLocation = source;
+
+		board.unhighlightAllSquares();
+
 	}
 
 	public void setBoardSpots()

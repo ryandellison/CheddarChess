@@ -1,44 +1,67 @@
+/*
+ * Pair
+ *
+ * The purpose of this class is to represent a row and
+ * column pair indicating a location on the chessboard
+ * using two-dimensional array notation.
+ *
+ * Methods:
+ * 	getRow()
+ * 	getCol()
+ *
+ */
+
 package pieces;
 
-public class Pair{
+public class Pair
+{
 
-    private int row;	//the first element of the pair
-    private int col;	//the second element of the pair
+	private int row;	// the row
+	private int col;	// the column
 
-    public Pair(int v1, int v2)
-    {        
-	row = v1;
-        col = v2;
-    }
+	public Pair(int row, int col)
+    	{        
+		this.row = row;
+        	this.col = col;
+    	}
 
-    public int getRow()
-    {
-        return row;
-    }
+	/*
+	 * getRow()
+	 *
+	 * The purpose of this method is to return the row
+	 * of the pair.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	int row	// the row
+	 *
+	 */
 
-    public int getCol()
-    {
-        return col;
-    }
+    	public int getRow()
+    	{
+        	return row;
+    	}
 
-    // Return string representation of a pair
-    // as <first,second> with no spaces
-    public String toString()
-    {
-        return "<" + row + "," + col + ">";
-    }
+	/*
+	 * getCol()
+	 *
+	 * The purpose of this method is to return the col
+	 * of the pair.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	int col	// the column
+	 *
+	 */
 
+    	public int getCol()
+    	{
+        	return col;
+    	}  
     
-    public boolean equals(Object o)
-    {
-        if (o instanceof Pair) {//checks to make sure o is a pair
-            Pair other = (Pair) o;//casts it to a pair
-            if ((other.row) == (this.row) && ((other.col) == (this.col))) {//makes sure the first and
-                //second elements of both pairs are the same in order to return true
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
+

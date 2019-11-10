@@ -1,3 +1,11 @@
+/*
+ * Chess
+ *
+ * This is the main driver class for the Chess game, which contains
+ * the main() method.
+ *
+ */
+
 import graphics.*;
 
 public class Chess
@@ -9,3 +17,4 @@ public class Chess
 	}
 
 }
+

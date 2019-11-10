@@ -85,6 +85,31 @@ public class Board
 
 	}
 
+	public void enableSquares(Moves moves)
+	{
+		Pair p;
+		int size;
+		int i;
+
+		size = moves.getSize();
+
+		for(i = 0; i < size; i++)
+		{
+			p = moves.getPair(i);
+
+			board[p.getRow()][p.getCol()].enable();
+		}
+	}
+
+	public void disableAllSquares()
+	{
+		int i, j;
+		
+		for(i = 0; i < 8; i++)
+			for(j = 0; j < 8; j++)
+				board[i][j].disable();
+	}
+
 	public void highlightSquares(Moves moves)
 	{
 		Pair p;
@@ -102,7 +127,7 @@ public class Board
 		
 	}
 
-	public void unhighlight()
+	public void unhighlightAllSquares()
 	{
 		int i, j;
 

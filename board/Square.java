@@ -43,6 +43,11 @@ public class Square
 		return piece;
 	}
 
+	public void setPiece(Piece p)
+	{
+		piece = p;
+	}
+
 	public void enable()
 	{
 		enabled = true;
