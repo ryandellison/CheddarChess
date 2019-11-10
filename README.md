@@ -8,5 +8,5 @@ A twist on classic chess written in Java for portability.
 - Scott Morgan ([scottyboimorgan](https://github.com/scottyboimorgan))
 - Mani Shah ([Mani9723](https://github.com/Mani9723))
 
-![Default screen](images/board_on_mac.png?raw=true "Default Screen")
+![Default screen](images/board-on-mac.png?raw=true "Default Screen")
 
