@@ -1,5 +1,11 @@
-package graphics;
+/*
+ * BoardGUI
+ *
+ * The purpose of this class is to represent the chess board GUI.
+ *
+ */
 
+package graphics;
 
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -31,10 +37,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private static final String DARK_PAWN = "\u265f";
 	private static final String DARK_ROOK = "\u265C";
 
-	private static final int SIZE = 800;
-
-
 	// CONSTANTS AND VARIABLES FOR GUI
+	private static final int SIZE = 800;		// size of the frame, will be SIZExSIZE (square)
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
 	private GridLayout gridLayout;
@@ -66,13 +70,28 @@ public class BoardGUI extends JFrame implements ActionListener {
 		display();
 	}
 
+	/*
+	 * display()
+	 *
+	 * The purpose of this method is to display the BoardGUI
+	 * based on the current board by running setBoardSpots()
+	 * and refreshing the content pane.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	N/A
+	 *
+	 */
+
 	@SuppressWarnings("WeakerAccess")
 	public void display()
 	{
-		int i, j;
+		int row, col;
 		Container contentPane;
 		
-		setVisible(false);
+		// setVisible(false);
 		setBoardSpots();
 
 		
@@ -83,11 +102,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		contentPane.removeAll();
 
-		for(i = 0; i < 8; i++)
+		for(row = 0; row < 8; row++)
 		{
-			for(j = 0; j < 8; j++)
+			for(col = 0; col < 8; col++)
 			{
-				contentPane.add(boardSpots[i][j]);
+				contentPane.add(boardSpots[row][col]);
 			}
 		}
 
@@ -124,12 +143,29 @@ public class BoardGUI extends JFrame implements ActionListener {
 		
 	}
 
+	/*
+	 * switchTurn()
+	 *
+	 * The purpose of this method is to handle the change of players turn
+	 * (based on the currentPlayer variable) by enabling only the current 
+	 * players pieces, and changing the GUI frame's title.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	N/A
+	 *
+	 */
+
 	public void switchTurn()
 	{
+		// Change the currentPlayer variable to reflect the currentPlayer
 		currentPlayer = !currentPlayer;
 
 		board.enablePiecesByColor(currentPlayer);
 
+		// Change the frame's title
 		if(currentPlayer == LIGHT)
 			setTitle("JChess - Light's Turn");
 		else
@@ -138,19 +174,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public void handlePieceDestinationSelection(Pair dest)
 	{
-		int sRow;
-		int sCol;
-		int dRow;
-		int dCol;
 
-		sRow = sourceLocation.getRow();
-		sCol = sourceLocation.getCol();
-		dRow = dest.getRow();
-		dCol = dest.getCol();
+		board.getSquare(dest).setPiece(board.getSquare(sourceLocation).getPiece());
 
-		board.getSquare(dRow, dCol).setPiece(board.getSquare(sRow, sCol).getPiece());
-
-		board.getSquare(sRow, sCol).setPiece(null);
+		board.getSquare(sourceLocation).setPiece(null);
 
 		board.disableAllSquares();
 		board.unhighlightAllSquares();
@@ -163,16 +190,110 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	}
 
+	/*
+	 * isInCheck()
+	 *
+	 * The purpose of this method is to check whether or not
+	 * the king of the given color is in check.
+	 *
+	 * Input:
+	 * 	boolean kingColor	// the color of the king
+	 *
+	 * Output:
+	 * 	boolean ans	// whether or not that king is in check
+	 *
+	 */
+
+	public boolean isInCheck(boolean kingColor)//the color parameter is the color king that we are checking for check
+	{
+		Piece p;
+		boolean ans = false;
+		Pair kingLoc = board.findKing(kingColor);
+
+		for(int i = 0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				p = board.getSquare(i,j).getPiece();
+				if(p == null)
+				{
+					continue;
+				}
+				else if(p.getColor() != kingColor)
+				{//if the piece on this spot has a valid move to where the king is located, we go into check
+					Moves m = board.getValidMoves(new Pair(i, j));
+					if(m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1)
+					{
+						ans = true;
+					}
+				}
+			}
+		}
+		return ans;
+	}
+
+	public boolean isInCheckMate(boolean kingColor)
+	{
+		Piece p;
+		Square s;
+		boolean ans = false;
+		boolean tracker = true;
+		Pair kingLoc = board.findKing(kingColor);
+		Pair attackDest;
+		Square kingSquare = board.getSquare(kingLoc);
+		Moves kingMoves = board.getValidMoves(kingLoc);
+		Moves attackMoves;
+		//this will only go thru if the king is already in check
+		if(isInCheck(kingColor))
+		{
+			if(kingMoves.getSize() == 0)//if the king cannot move and there is a valid move to reach it, checkmate
+			{
+				ans = true;
+			}
+			else
+			{
+				for (int i = 0; i < 8; i++) 
+				{
+					for (int j = 0; j < 8; j++) 
+					{
+						s = board.getSquare(i,j);
+						p = s.getPiece();
+						attackMoves = board.getValidMoves(new Pair(i, j));
+						if(p == null)
+						{
+							continue;
+						}//p is the piece again, loop thru and get all of the pieces that are the opposite color
+                        				//of the king
+						else if(p.getColor() != kingColor)
+						{
+							for (int x = 0; x < attackMoves.getSize(); x++) 
+							{
+								attackDest = attackMoves.getPair(x);
+								if(kingMoves.findPair(attackDest.getRow(),attackDest.getCol()) != -1)//for the valid
+								    //king moves, if the attacker can move to an available move, remove that move from
+								    //the possible king moves
+								{
+                                    					// kingMoves.removeMove(new Pair(attackDest.getRow(),attackDest.getCol()));
+								}
+							}
+						}
+					}
+				}
+				if(kingMoves.getSize() == 0)//if all possible moves have been removed, we are in checkmate
+                		{
+                    			ans = true;
+                		}
+		}
+	}
+
+	return ans;
+	}
+
 	public void handlePieceSourceSelection(Pair source)
 	{
-		int row;
-		int col;
 		Moves moves;
 
-		row = source.getRow();
-		col = source.getCol();
-
-		moves = board.getSquare(row, col).getPiece().move(source);
+		moves = board.getValidMoves(source);
 
 		board.highlightSquares(moves);
 		board.disableAllSquares();

@@ -65,10 +65,9 @@ public class Moves
 	 *
 	 */
 
-	public void removeMove(Pair p)
+	public void removeMove(int location)
 	{
-		moves.remove(p);
-		isInBounds = false;
+		moves.remove(location);
 	}
 
 	/*

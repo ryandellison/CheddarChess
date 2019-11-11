@@ -1,3 +1,21 @@
+/*
+ * Board
+ *
+ * The purpose of this class is to logically represent our chess board
+ * using a 2-dimensional array of Square objects.
+ *
+ * Methods:
+ * 	enableSquares()
+ * 	disableAllSquares()
+ * 	findKing()
+ * 	highlightSquares()
+ * 	unhighlightAllSquares()
+ * 	getSquare()
+ * 	enablePiecesByColor()
+ * 	printBoard()
+ * 	getValidMoves()
+ */
+
 package board;
 
 import pieces.*;
@@ -15,13 +33,27 @@ public class Board
 		fillBoard();
 	}
 
-	public void fillBoard()
+	/*
+	 * fillBoard()
+	 *
+	 * The purpose of this method is to fill the board to it's default, starting
+	 * state.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	N/A
+	 *
+	 */
+
+	private void fillBoard()
 	{
 		int row;
 		int col;
 		boolean alternator;
 
-		alternator = true;
+		alternator = LIGHT;
 
 		board[0][0] = new Square("A8", LIGHT, new Rook(DARK, "Rook"));
 		board[0][1] = new Square("B8", DARK, new Knight(DARK, "Knight"));
@@ -52,16 +84,16 @@ public class Board
 				if(alternator)
 				{
 					board[row][col] = new Square(letter + Integer.toString(6 - (row - 2)), LIGHT, null);
-					alternator = false;
+					alternator = DARK;
 				}
 				else
 				{
 					board[row][col] = new Square(letter + Integer.toString(6 - (row - 2)), DARK, null);
-					alternator = true;
+					alternator = LIGHT;
 				}
 			}
 
-			alternator = (alternator) ? false : true;
+			alternator = !alternator;
 		}
 
 		for(col = 0; col < 8; col++)
@@ -101,6 +133,25 @@ public class Board
 		}
 	}
 
+	public Pair findKing(boolean kingColor)
+	{
+		Piece p;
+		Pair ans = null;
+		for (int row = 0; row < 8; row++) 
+		{
+			for (int col = 0; col < 8; col++) 
+			{
+				p = board[row][col].getPiece();
+				if(p instanceof King && p.getColor() == kingColor)
+				{
+					ans = new Pair(row, col);
+				}
+			}
+		}
+		return ans;
+	}
+
+
 	public void disableAllSquares()
 	{
 		int i, j;
@@ -137,9 +188,14 @@ public class Board
 
 	}
 
-	public Square getSquare(int i, int j)
+	public Square getSquare(Pair pair)
 	{
-		return board[i][j];
+		return board[pair.getRow()][pair.getCol()];
+	}
+
+	public Square getSquare(int row, int col)
+	{
+		return board[row][col];
 	}
 
 	public void enablePiecesByColor(boolean color)
@@ -212,58 +268,112 @@ public class Board
 
 		System.out.println("\n");
 	}
-    /*
-        Moves getValidMovesFromSquare(Square s);
 
-        the purpose of this method is to validate the moves of the piece at a Square
 
-        DEBUG: could not develop a condition in which moves for rooks, bishops, and the queen
-               that would invalidate moves in a space after which passing through a player owned piece
-               (i.e. a queen at the beginning of the game would have valid moves)
-     */
-	public Moves getValidMovesFromSquare(Square s) 
+    	/*
+         * getValidMoves()
+	 *
+         * the purpose of this method is to validate the moves of the piece at a Square
+	 *
+         * DEBUG: could not develop a condition in which moves for rooks, bishops, and the queen
+         * that would invalidate moves in a space after which passing through a player owned piece
+         * (i.e. a queen at the beginning of the game would have valid moves)
+         */
+
+	public Moves getValidMoves(Pair location) 
 	{
-		Piece p = s.getPiece();
-		String alias = s.getAlias();
-		Moves validMoves = new Moves();
-		int c = -1;
-		char col = alias.charAt(0);
+		Piece p = getSquare(location).getPiece();
+		Moves validMoves;
+		Moves allMoves;
+		Pair currentPair;
+		Piece currentPiece;
+		int index;
+		int c;
+		int r;
+
+		validMoves = new Moves();
+
+		r = location.getRow();
+		c = location.getCol();
+
+		// No piece on this square
+		if(p == null) 
+		{
+			return null;
+		}
 		
-		// for getting the col of the square
-		c = (char) Math.abs('A' - col);
+		allMoves = p.move(location);
 
-		if (p == null) 
+		for(int i = 0; i < allMoves.getSize(); i++) 
 		{
-			return validMoves;
-		}
-		int r = Character.getNumericValue(alias.charAt(1));
-		Pair coord = new Pair(r, c);
-		Moves allMoves = p.move(coord);
-		for (int i = 0; i < allMoves.getSize(); i++) 
-		{
-			Pair pa = allMoves.getPair(i);
-			Piece other = this.board[pa.getRow()][pa.getCol()].getPiece();
-			if (other == null) 
-			{//if the square is empty, we can move there
-				validMoves.addMove(new Pair(pa.getRow(), pa.getCol()));
-			}
-			else if (other.getColor() == p.getColor()) 
-			{//if its the same color, continue
-				continue;
-			} 
-			else if (!(other.getColor() == p.getColor())) 
-			{//if its a different color, we can move there
-				validMoves.addMove(new Pair(pa.getRow(), pa.getCol()));
-			}
-			if(other instanceof Rook || other instanceof Queen)
+			currentPair = allMoves.getPair(i);
+
+			currentPiece = getSquare(currentPair).getPiece();
+			
+			if(currentPiece != null)
 			{
 
-			}
-			if(other instanceof Bishop || other instanceof Queen)
-			{
+				if(p instanceof Rook || p instanceof Queen) // The piece we're working with is a Rook or Queen, remove unreachable moves
+				{
+					if(location.getRow() == currentPair.getRow()) // The Rook/Queen is on the same row as another piece
+					{
+						if(location.getCol() < currentPair.getCol())
+						{
+							for(int col = 1; (col + currentPair.getCol()) < 8; col++)
+							{
+								index = allMoves.findPair(currentPair.getRow(), col + currentPair.getCol());
 
-            		}
+								if(index != -1)
+									allMoves.removeMove(index);
+							}
+						}
+						else
+						{
+							for(int col = 1; (currentPair.getCol() - col) >= 0; col++)
+							{
+								index = allMoves.findPair(currentPair.getRow(), currentPair.getCol() - col);
+
+								if(index != -1)
+									allMoves.removeMove(index);
+							}
+						}
+					}
+					else if(location.getCol() == currentPair.getCol()) // The Rook/Queen is on the same column as another piece
+					{
+						if(location.getRow() < currentPair.getRow())
+						{
+							for(int row = 1; (currentPair.getRow() - row) >= 0; row++)
+							{
+								index = allMoves.findPair(currentPair.getRow() - row, currentPair.getCol());
+
+								if(index != -1)
+									allMoves.removeMove(index);
+							}
+						}
+						else
+						{
+							for(int row = 1; (currentPair.getRow() + row) < 8; row++)
+							{
+								index = allMoves.findPair(currentPair.getRow() + row, currentPair.getCol());
+
+								if(index != -1)
+									allMoves.removeMove(index);
+							}
+						}
+					}
+				}
+				if(p instanceof Bishop || p instanceof Queen)
+				{
+
+            			}
+
+				if(p.getColor() == currentPiece.getColor())
+				{
+					allMoves.removeMove(i);
+					i--;
+				}
+			}
 		}
-		return validMoves;
+		return allMoves;
 	}
 }
