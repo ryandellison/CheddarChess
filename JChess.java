@@ -8,7 +8,7 @@
 
 import graphics.*;
 
-public class Chess
+public class JChess
 {
 	public static void main(String[] args)
 	{
