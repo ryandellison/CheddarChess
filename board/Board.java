@@ -283,6 +283,7 @@ public class Board
 	public Moves getValidMoves(Pair location) 
 	{
 		Piece p = getSquare(location).getPiece();
+		Piece potentialMove;
 		Moves validMoves;
 		Moves allMoves;
 		Pair currentPair;
@@ -365,7 +366,36 @@ public class Board
 				if(p instanceof Bishop || p instanceof Queen)
 				{
 
-            			}
+				}
+				if(p instanceof Pawn)
+				{
+					if(p.getColor() == LIGHT)
+					{
+						potentialMove = this.getSquare(r - 1, c + 1).getPiece();
+						if(potentialMove != null && potentialMove.getColor() != LIGHT)
+						{
+							allMoves.addMove(new Pair(r - 1, c + 1));
+						}
+						potentialMove = this.getSquare(r - 1, c - 1).getPiece();
+						if(potentialMove != null && potentialMove.getColor() != LIGHT)
+						{
+							allMoves.addMove(new Pair(r - 1, c - 1));
+						}
+					}
+					else
+					{
+						potentialMove = this.getSquare(r + 1, c + 1).getPiece();
+						if(potentialMove != null && potentialMove.getColor() != LIGHT)
+						{
+							allMoves.addMove(new Pair(r + 1, c + 1));
+						}
+						potentialMove = this.getSquare(r + 1, c - 1).getPiece();
+						if(potentialMove != null && potentialMove.getColor() != LIGHT)
+						{
+							allMoves.addMove(new Pair(r + 1, c - 1));
+						}
+					}
+				}
 
 				if(p.getColor() == currentPiece.getColor())
 				{
