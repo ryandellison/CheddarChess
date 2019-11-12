@@ -43,6 +43,12 @@ public class Square
 		return piece;
 	}
 
+	public Piece popPiece(){
+		Piece p = this.piece;
+		this.piece = null;
+		return p;
+	}
+
 	public void setPiece(Piece p)
 	{
 		piece = p;
