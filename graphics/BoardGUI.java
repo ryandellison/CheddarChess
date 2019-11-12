@@ -7,12 +7,12 @@
 
 package graphics;
 
-import java.awt.Container;
-import java.awt.GridLayout;
-import javax.swing.JFrame;
+import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
 
 import board.*;
+import jdk.internal.dynalink.support.BottomGuardingDynamicLinker;
 import pieces.*;
 import player.*;
 
@@ -20,8 +20,9 @@ import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
 
+@SuppressWarnings("Duplicates")
 public class BoardGUI extends JFrame implements ActionListener {
-	
+
 	// UNICODE CONSTANTS FOR CHESS PIECES
 	private static final String LIGHT_QUEEN = "\u2654";
 	private static final String LIGHT_BISHOP = "\u2657";
@@ -42,6 +43,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
 	private GridLayout gridLayout;
+	private JPanel gridPanel;
+	private JPanel playerOnePanel;
+	private JPanel playerTwoPanel;
+	private JLabel playerOnePointsLabel;
+	private JLabel playerTwoPointsLabel;
+	private Container contentPane;
 
 	private Board board;
 	private Player player1;
@@ -55,10 +62,17 @@ public class BoardGUI extends JFrame implements ActionListener {
 		currentPlayer = LIGHT;
 		sourceLocation = null;
 
+
 		setTitle("JChess - Light's Turn");
-		setSize(SIZE, SIZE);
+		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+
+	private void setDimensions()
+	{
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setSize(screenSize.width,screenSize.height);
 	}
 
 	public void run()
@@ -88,29 +102,100 @@ public class BoardGUI extends JFrame implements ActionListener {
 	@SuppressWarnings("WeakerAccess")
 	public void display()
 	{
-		int row, col;
-		Container contentPane;
-		
-		// setVisible(false);
 		setBoardSpots();
 
-		
 		contentPane = getContentPane();
-		gridLayout = new GridLayout(8, 8);
-
-		contentPane.setLayout(gridLayout);
+		contentPane.setLayout(new BorderLayout());
 
 		contentPane.removeAll();
 
+		setGridPanel();
+		setPlayerOnePanel();
+		setPlayerTwoPanel();
+
+
+		contentPane.add(gridPanel,BorderLayout.CENTER);
+		contentPane.add(playerOnePanel, BorderLayout.WEST);
+		contentPane.add(playerTwoPanel, BorderLayout.EAST);
+
+
+		setVisible(true);
+
+	}
+
+	private void setPlayerOnePanel()
+	{
+		playerOnePanel = new JPanel();
+		playerOnePanel.setLayout(new BorderLayout());
+
+		JPanel topPanel = new JPanel();
+		GridLayout grave = new GridLayout(8,0);
+		topPanel.setLayout(grave);
+
+		JLabel nameLabel = new JLabel("Player 1", SwingConstants.CENTER); // player name
+		JLabel pointsLabel = new JLabel("1234",SwingConstants.CENTER); // player points, just an example
+
+		// SETS THE WIDTH OF THE GRAVEYARD
+		nameLabel.setPreferredSize(new Dimension(150,50));
+
+		topPanel.add(nameLabel);
+		topPanel.add(pointsLabel);
+
+		// PRETENDING TO ADD PIECES TO THE GRAVE TO TEST WHETHER OR NOT IT
+		// GOES TO THE SPOT
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+
+
+		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
+
+	}
+
+	private void setPlayerTwoPanel()
+	{
+		playerTwoPanel = new JPanel();
+		playerTwoPanel.setLayout(new BorderLayout());
+		JPanel topPanel = new JPanel();
+
+		GridLayout pointsAndNameGrid = new GridLayout(2,1);
+		topPanel.setLayout(pointsAndNameGrid);
+
+		JLabel nameLabel = new JLabel("Player 2", SwingConstants.CENTER);
+		JLabel pointsLabel = new JLabel("5678",SwingConstants.CENTER);
+
+		nameLabel.setPreferredSize(new Dimension(150,50));
+
+
+		topPanel.add(nameLabel);
+		topPanel.add(pointsLabel);
+
+		playerTwoPanel.add(topPanel,BorderLayout.NORTH);
+	}
+
+	private void setGridPanel()
+	{
+		gridPanel = new JPanel();
+		gridLayout = new GridLayout(8,8);
+
+		gridPanel.setLayout(gridLayout);
+		int row, col;
 		for(row = 0; row < 8; row++)
 		{
 			for(col = 0; col < 8; col++)
 			{
-				contentPane.add(boardSpots[row][col]);
+				gridPanel.add(boardSpots[row][col]);
 			}
 		}
 
-		setVisible(true);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -123,7 +208,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			for(j = 0; j < 8; j++)
 			{
 				if(boardSpots[i][j] == e.getSource())
-				{	
+				{
 					p = board.getSquare(i, j).getPiece();
 
 					if(p == null)
@@ -140,14 +225,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 			}
 		}
 
-		
+
 	}
 
 	/*
 	 * switchTurn()
 	 *
 	 * The purpose of this method is to handle the change of players turn
-	 * (based on the currentPlayer variable) by enabling only the current 
+	 * (based on the currentPlayer variable) by enabling only the current
 	 * players pieces, and changing the GUI frame's title.
 	 *
 	 * Input:
@@ -186,7 +271,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		display();
 
-		
+
 
 	}
 
@@ -252,9 +337,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 			}
 			else
 			{
-				for (int i = 0; i < 8; i++) 
+				for (int i = 0; i < 8; i++)
 				{
-					for (int j = 0; j < 8; j++) 
+					for (int j = 0; j < 8; j++)
 					{
 						s = board.getSquare(i,j);
 						p = s.getPiece();
@@ -266,7 +351,7 @@ public class BoardGUI extends JFrame implements ActionListener {
                         				//of the king
 						else if(p.getColor() != kingColor)
 						{
-							for (int x = 0; x < attackMoves.getSize(); x++) 
+							for (int x = 0; x < attackMoves.getSize(); x++)
 							{
 								attackDest = attackMoves.getPair(x);
 								if(kingMoves.findPair(attackDest.getRow(),attackDest.getCol()) != -1)//for the valid
@@ -320,7 +405,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			for(j = 0; j < 8; j++)
 			{
 				currentPiece = board.getSquare(i,j).getPiece();
-				
+
 				if(currentPiece != null)
 				{
 					pieceColor = currentPiece.getColor();
