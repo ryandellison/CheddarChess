@@ -137,9 +137,9 @@ public class Board
 	{
 		Piece p;
 		Pair ans = null;
-		for (int row = 0; row < 8; row++) 
+		for (int row = 0; row < 8; row++)
 		{
-			for (int col = 0; col < 8; col++) 
+			for (int col = 0; col < 8; col++)
 			{
 				p = board[row][col].getPiece();
 				if(p instanceof King && p.getColor() == kingColor)
@@ -155,7 +155,7 @@ public class Board
 	public void disableAllSquares()
 	{
 		int i, j;
-		
+
 		for(i = 0; i < 8; i++)
 			for(j = 0; j < 8; j++)
 				board[i][j].disable();
@@ -175,7 +175,7 @@ public class Board
 
 			board[p.getRow()][p.getCol()].setHighlighted(true);
 		}
-		
+
 	}
 
 	public void unhighlightAllSquares()
@@ -236,17 +236,17 @@ public class Board
 		boolean pieceColBool;
 
 		System.out.println("\n");
-		
+
 		for(row = 0; row < 8; row++)
 		{
 			for(col = 0; col < 8; col++)
 			{
-				
+
 				if(board[row][col].getPiece() != null)
 				{
 					pieceName = board[row][col].getPiece().getName();
 					pieceColBool = board[row][col].getPiece().getColor();
-					
+
 					if(pieceColBool == LIGHT)
 						pieceColStr = "L";
 					else
@@ -280,7 +280,7 @@ public class Board
          * (i.e. a queen at the beginning of the game would have valid moves)
          */
 
-	public Moves getValidMoves(Pair location) 
+	public Moves getValidMoves(Pair location)
 	{
 		Piece p = getSquare(location).getPiece();
 		Piece potentialMove;
@@ -298,19 +298,19 @@ public class Board
 		c = location.getCol();
 
 		// No piece on this square
-		if(p == null) 
+		if(p == null)
 		{
 			return null;
 		}
-		
+
 		allMoves = p.move(location);
 
-		for(int i = 0; i < allMoves.getSize(); i++) 
+		for(int i = 0; i < allMoves.getSize(); i++)
 		{
 			currentPair = allMoves.getPair(i);
 
 			currentPiece = getSquare(currentPair).getPiece();
-			
+
 			if(currentPiece != null)
 			{
 
@@ -380,28 +380,40 @@ public class Board
 		{
 			if(p.getColor() == LIGHT)
 			{
-				potentialMove = this.getSquare(r - 1, c + 1).getPiece();
-				if(potentialMove != null && potentialMove.getColor() != LIGHT)
+				if (c + 1 < 8)
 				{
-					allMoves.addMove(new Pair(r - 1, c + 1));
+					potentialMove = this.getSquare(r - 1, c + 1).getPiece();
+					if (potentialMove != null && potentialMove.getColor() != LIGHT) {
+							allMoves.addMove(new Pair(r - 1, c + 1));
+					}
 				}
-				potentialMove = this.getSquare(r - 1, c - 1).getPiece();
-				if(potentialMove != null && potentialMove.getColor() != LIGHT)
+				if (c - 1 > 0)
 				{
-					allMoves.addMove(new Pair(r - 1, c - 1));
+				potentialMove = this.getSquare(r - 1, c - 1).getPiece();
+				if(potentialMove != null && potentialMove.getColor() != LIGHT) {
+
+						allMoves.addMove(new Pair(r - 1, c - 1));
+					}
 				}
 			}
 			else
 			{
-				potentialMove = this.getSquare(r + 1, c + 1).getPiece();
-				if(potentialMove != null && potentialMove.getColor() != LIGHT)
+				if(c + 1 < 8)
 				{
-					allMoves.addMove(new Pair(r + 1, c + 1));
+					potentialMove = this.getSquare(r + 1, c + 1).getPiece();
+					if(potentialMove != null && potentialMove.getColor() != LIGHT)
+					{
+
+						allMoves.addMove(new Pair(r + 1, c + 1));
+					}
 				}
-				potentialMove = this.getSquare(r + 1, c - 1).getPiece();
-				if(potentialMove != null && potentialMove.getColor() != LIGHT)
+				if(c - 1 > 0)
 				{
-					allMoves.addMove(new Pair(r + 1, c - 1));
+					potentialMove = this.getSquare(r + 1, c - 1).getPiece();
+					if(potentialMove != null && potentialMove.getColor() != LIGHT)
+					{
+						allMoves.addMove(new Pair(r + 1, c - 1));
+					}
 				}
 			}
 		}
