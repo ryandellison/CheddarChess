@@ -401,7 +401,7 @@ public class Board
 				if(c + 1 < 8)
 				{
 					potentialMove = this.getSquare(r + 1, c + 1).getPiece();
-					if(potentialMove != null && potentialMove.getColor() != LIGHT)
+					if(potentialMove != null && potentialMove.getColor() != DARK)
 					{
 
 						allMoves.addMove(new Pair(r + 1, c + 1));
@@ -410,7 +410,7 @@ public class Board
 				if(c - 1 > 0)
 				{
 					potentialMove = this.getSquare(r + 1, c - 1).getPiece();
-					if(potentialMove != null && potentialMove.getColor() != LIGHT)
+					if(potentialMove != null && potentialMove.getColor() != DARK)
 					{
 						allMoves.addMove(new Pair(r + 1, c - 1));
 					}
