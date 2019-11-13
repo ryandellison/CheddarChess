@@ -19,7 +19,6 @@ import player.*;
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
-
 @SuppressWarnings("Duplicates")
 public class BoardGUI extends JFrame implements ActionListener {
 
@@ -137,8 +136,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
 		JLabel nameLabel = new JLabel(player1.getPlayerNum(), SwingConstants.CENTER); // player name
-        String points = "" + player1.getNumPoints();
-		JLabel pointsLabel = new JLabel(points,SwingConstants.CENTER); // player points, just an example
+        int points = player1.getNumPoints();
+		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER); // player points, just an example
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
@@ -155,10 +154,19 @@ public class BoardGUI extends JFrame implements ActionListener {
 	{
 		ArrayList<Piece> pieces = player.getGraveyard().getGraveyardPieces();
 		int len = pieces.size();
+		JButton capturedPiece;
 
 		for(int i = 0; i < len; i++){
-			playerPanel.add(getCapturedPiece(pieces.get(i)));
+			capturedPiece= getCapturedPiece(pieces.get(i));
+			capturedPiece.setBackground(getPlayerColor(player));
+			playerPanel.add(capturedPiece);
 		}
+	}
+
+	private Color getPlayerColor(Player player)
+	{
+		return player.getPlayerNum().equals("Player 1") ? new Color(222, 184, 135)
+				: new Color(139, 69, 19);
 	}
 
 	private JButton getCapturedPiece(Piece piece)
@@ -173,22 +181,22 @@ public class BoardGUI extends JFrame implements ActionListener {
 	{
 		playerTwoPanel = new JPanel();
 		playerTwoPanel.setLayout(new BorderLayout());
-		JPanel topPanel = new JPanel();
 
-		GridLayout pointsAndNameGrid = new GridLayout(8,1);
-		topPanel.setLayout(pointsAndNameGrid);
+		JPanel topPanel = new JPanel();
+		GridLayout grave = new GridLayout(8,1);
+		topPanel.setLayout(grave);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		JLabel nameLabel = new JLabel(player2.getPlayerNum(), SwingConstants.CENTER);
-		String points = "" + player2.getNumPoints();
-		JLabel pointsLabel = new JLabel(points, SwingConstants.CENTER);
+		JLabel nameLabel = new JLabel(player2.getPlayerNum(), SwingConstants.CENTER); // player name
+		int points = player2.getNumPoints();
+		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER); // player points, just an example
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
-		addToGraveyard(player2,topPanel);
-
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
+
+		addToGraveyard(player2,topPanel);
 
 		playerTwoPanel.add(topPanel,BorderLayout.NORTH);
 	}

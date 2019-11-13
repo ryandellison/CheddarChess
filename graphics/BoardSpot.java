@@ -4,6 +4,9 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import static constant.Colors.LIGHT;
+import static constant.Colors.DARK;
+
 
 @SuppressWarnings("WeakerAccess")
 public class BoardSpot extends JButton {
