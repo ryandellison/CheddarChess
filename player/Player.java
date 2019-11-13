@@ -24,8 +24,10 @@ public class Player {//creates a player for the chess game
     }
 
     public void addPoints(int numPoints) {
-        this.numPoints = numPoints;
+        this.numPoints += numPoints;
     }
+
+    public void removePoints(int numPoints){ this.numPoints -= numPoints; }
 
     public String getPlayerNum() {
         return playerNum;

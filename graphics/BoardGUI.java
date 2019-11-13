@@ -54,6 +54,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Player player2;
 	private boolean currentPlayer;
 	private Pair sourceLocation;
+	boolean currentlyMoving = false;
 
 	public BoardGUI()
 	{
@@ -66,6 +67,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		player1 = new Player(DARK);
+		player2 = new Player(LIGHT);
 	}
 
 	private void setDimensions()
@@ -132,7 +135,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setLayout(grave);
 
 		JLabel nameLabel = new JLabel("Player 1", SwingConstants.CENTER); // player name
-		JLabel pointsLabel = new JLabel("1234",SwingConstants.CENTER); // player points, just an example
+        String points = "" + player1.getNumPoints();
+		JLabel pointsLabel = new JLabel(points,SwingConstants.CENTER); // player points, just an example
 
 		// SETS THE WIDTH OF THE GRAVEYARD
 		nameLabel.setPreferredSize(new Dimension(150,50));
@@ -169,7 +173,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setLayout(pointsAndNameGrid);
 
 		JLabel nameLabel = new JLabel("Player 2", SwingConstants.CENTER);
-		JLabel pointsLabel = new JLabel("5678",SwingConstants.CENTER);
+		String points = "" + player2.getNumPoints();
+		JLabel pointsLabel = new JLabel(points, SwingConstants.CENTER);
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
@@ -206,12 +211,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		{
 			for(j = 0; j < 8; j++)
 			{
-				if(boardSpots[i][j] == e.getSource())
-				{
+				if(boardSpots[i][j] == e.getSource()) {
 					p = board.getSquare(i, j).getPiece();
 
-					if(p == null)
-					{
+					if (p == null || currentlyMoving) {
 						handlePieceDestinationSelection(new Pair(i, j));
 					}
 					else
@@ -258,10 +261,54 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public void handlePieceDestinationSelection(Pair dest)
 	{
+	    int numPoints = 0;
+	    String name = "";
+        Square destSquare = board.getSquare(dest);
+        Piece p = destSquare.getPiece();
+        if(p != null)
+        {
+            p = destSquare.popPiece();
+			name = p.getName();
+        }
 
-		board.getSquare(dest).setPiece(board.getSquare(sourceLocation).getPiece());
+	    Pair clicked = sourceLocation;
+	    Piece clickedPiece = board.getSquare(clicked).getPiece();
 
-		board.getSquare(sourceLocation).setPiece(null);
+	    switch(name) {
+			case "Pawn":
+				numPoints = 1;
+				break;
+			case "Knight":
+				numPoints = 2;
+				break;
+			case "Rook":
+				numPoints = 2;
+				break;
+			case "Bishop":
+				numPoints = 2;
+				break;
+			case "Queen":
+				numPoints = 4;
+				break;
+			default:
+				numPoints = 0;
+				break;
+
+		}
+
+
+        if(currentPlayer == DARK && p != null)
+        {
+        	player1.addPoints(numPoints);
+            player2.getGraveyard().addToGraveyard(p);
+        }
+        else if(currentPlayer == LIGHT && p != null)
+        {
+        	player2.addPoints(numPoints);
+            player1.getGraveyard().addToGraveyard(p);
+        }
+        board.getSquare(dest).setPiece(clickedPiece);
+		board.getSquare(clicked).setPiece(null);
 
 		board.disableAllSquares();
 		board.unhighlightAllSquares();
@@ -269,9 +316,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		switchTurn();
 
 		display();
-
-
-
+		currentlyMoving = false;
 	}
 
 	/*
@@ -375,19 +420,20 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public void handlePieceSourceSelection(Pair source)
 	{
-		Moves moves;
+            Moves moves;
 
-		moves = board.getValidMoves(source);
+            moves = board.getValidMoves(source);
 
-		board.highlightSquares(moves);
-		board.disableAllSquares();
-		board.enableSquares(moves);
+            board.highlightSquares(moves);
+            board.disableAllSquares();
+            board.enableSquares(moves);
 
-		display();
+            display();
 
-		sourceLocation = source;
+            sourceLocation = source;
 
-		board.unhighlightAllSquares();
+            board.unhighlightAllSquares();
+            currentlyMoving = true;
 
 	}
 

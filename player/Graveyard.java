@@ -17,4 +17,9 @@ public class Graveyard
 		graveyard = new ArrayList<Piece>();
 	}
 
+	public void addToGraveyard(Piece p)
+	{
+		graveyard.add(p);
+	}
+
 }
