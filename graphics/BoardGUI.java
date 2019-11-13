@@ -112,9 +112,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		contentPane.removeAll();
 
 		setGridPanel();
-		setPlayerOnePanel();
-		setPlayerTwoPanel();
 
+		playerOnePanel = setPlayerGraveYardPanel(playerOnePanel,player1);
+		playerTwoPanel = setPlayerGraveYardPanel(playerTwoPanel,player2);
 
 		contentPane.add(gridPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
@@ -124,30 +124,29 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setVisible(true);
 
 	}
-
-	private void setPlayerOnePanel()
+	private JPanel setPlayerGraveYardPanel(JPanel panel, Player player)
 	{
-		playerOnePanel = new JPanel();
-		playerOnePanel.setLayout(new BorderLayout());
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 
 		JPanel topPanel = new JPanel();
 		GridLayout grave = new GridLayout(8,1);
 		topPanel.setLayout(grave);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		JLabel nameLabel = new JLabel(player1.getPlayerNum(), SwingConstants.CENTER); // player name
-        int points = player1.getNumPoints();
-		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER); // player points, just an example
+		JLabel nameLabel = new JLabel(player.getPlayerNum(), SwingConstants.CENTER); // player name
+		int points = player.getNumPoints();
+		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER);
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
 
-		addToGraveyard(player1,topPanel);
+		addToGraveyard(player,topPanel);
 
-		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
-
+		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
+		return panel;
 	}
 
 	private void addToGraveyard(Player player, JPanel playerPanel)
@@ -175,30 +174,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		JButton button = new JButton(piece.getUnicode());
 		button.setFont(new Font("Ariel", Font.PLAIN, 50));
 		return button;
-	}
-
-	private void setPlayerTwoPanel()
-	{
-		playerTwoPanel = new JPanel();
-		playerTwoPanel.setLayout(new BorderLayout());
-
-		JPanel topPanel = new JPanel();
-		GridLayout grave = new GridLayout(8,1);
-		topPanel.setLayout(grave);
-		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
-
-		JLabel nameLabel = new JLabel(player2.getPlayerNum(), SwingConstants.CENTER); // player name
-		int points = player2.getNumPoints();
-		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER); // player points, just an example
-
-		nameLabel.setPreferredSize(new Dimension(150,50));
-
-		topPanel.add(nameLabel);
-		topPanel.add(pointsLabel);
-
-		addToGraveyard(player2,topPanel);
-
-		playerTwoPanel.add(topPanel,BorderLayout.NORTH);
 	}
 
 	private void setGridPanel()
