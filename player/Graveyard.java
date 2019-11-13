@@ -38,8 +38,42 @@ public class Graveyard
 		for(int i = 0; i < numPieces; i++){
 			capturedPieces[i]= getCapturedPiece(graveyard.get(i));
 			capturedPieces[i].setBackground(getPlayerColor(player));
+			capturedPieces[i].setEnabled(getPieceValue(graveyard.get(i)) <= player.getNumPoints()
+					? true : false);
 		}
 		return capturedPieces;
+	}
+
+	private int getPieceValue(Piece piece)
+	{
+		int value = 0;
+		String name = piece.getName();
+		switch (name){
+			case "Pawn":
+				value = PAWN_VALUE;
+				break;
+			case "Rook":
+				value = ROOK_VALUE;
+				break;
+			case "Knight":
+				value = KNIGHT_VALUE;
+				break;
+			case "Bishop":
+				value = BISHOP_VALUE;
+				break;
+			case "Queen":
+				value = QUEEN_VALUE;
+				break;
+			default:
+				value = 0;
+				break;
+		}
+		return value;
+	}
+
+	private void setBuyBackAvailability(JButton capturedPiece)
+	{
+
 	}
 
 	private Color getPlayerColor(Player player)
