@@ -144,7 +144,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
 		topPanel.add(nameLabel);
-		topPanel.setBackground(new Color(105, 191, 121));
+		topPanel.setBackground(new Color(155, 208, 214));
 
 		addToGraveyard(player,topPanel);
 
