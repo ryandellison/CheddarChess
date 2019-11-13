@@ -25,7 +25,16 @@ public class Bishop extends Piece{
         return moves;
     }
 
-
+    public String getUnicode(){
+        if(this.getColor() == true)
+        {
+            return "\u2657";
+        }
+        else
+        {
+            return "\u265D";
+        }
+    }
 
 
 

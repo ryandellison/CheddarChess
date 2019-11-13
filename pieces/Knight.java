@@ -27,4 +27,15 @@ public class Knight extends Piece
 		moves.checkBounds();
 		return moves;
 	}
+
+	public String getUnicode(){
+		if(this.getColor() == true)
+		{
+			return "\u2658";
+		}
+		else
+		{
+			return "\u265E";
+		}
+	}
 }

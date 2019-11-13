@@ -27,4 +27,15 @@ public class King extends Piece
 		moves.checkBounds();
 	return moves;
 	}
+
+	public String getUnicode(){
+		if(this.getColor() == true)
+		{
+			return "\u2655";
+		}
+		else
+		{
+			return "\u265B";
+		}
+	}
 }

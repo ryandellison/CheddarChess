@@ -31,6 +31,16 @@ public class Queen extends Piece
 		}
 		moves.checkBounds();
 		return moves;
+	}
 
+	public String getUnicode(){
+		if(this.getColor() == true)
+		{
+			return "\u2654";
+		}
+		else
+		{
+			return "\u265A";
+		}
 	}
 }

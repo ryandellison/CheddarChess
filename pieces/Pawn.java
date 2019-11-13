@@ -69,4 +69,15 @@ public class Pawn extends Piece
 		return moves;
 	}
 
+	public String getUnicode(){
+		if(this.getColor() == true)
+		{
+			return "\u2659";
+		}
+		else
+		{
+			return "\u265f";
+		}
+	}
+
 }

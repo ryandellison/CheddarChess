@@ -12,7 +12,7 @@
  */
 
 package pieces;
-import java.util.Set;
+
 
 public abstract class Piece
 {
@@ -62,6 +62,8 @@ public abstract class Piece
 	{
 		return name;
 	}
+
+	public abstract String getUnicode();
 
 	public abstract Moves move(Pair coord);
   
