@@ -38,7 +38,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private static final String DARK_ROOK = "\u265C";
 
 	// CONSTANTS AND VARIABLES FOR GUI
-	private static final int SIZE = 800;		// size of the frame, will be SIZExSIZE (square)
+	//private static final int SIZE = 800;		// size of the frame, will be SIZExSIZE (square)
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
 	private GridLayout gridLayout;
@@ -61,7 +61,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		boardSpots = new BoardSpot[8][8];
 		currentPlayer = LIGHT;
 		sourceLocation = null;
-
 
 		setTitle("JChess - Light's Turn");
 		setDimensions();
@@ -115,6 +114,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		playerOnePanel = setPlayerGraveYardPanel(playerOnePanel,player1);
 		playerTwoPanel = setPlayerGraveYardPanel(playerTwoPanel,player2);
+		playerOnePanel.setBackground(Color.BLUE);
 
 		contentPane.add(gridPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
@@ -145,6 +145,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		addToGraveyard(player,topPanel);
 
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
+		panel.setBackground(Color.CYAN);
 		return panel;
 	}
 
@@ -172,7 +173,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 				gridPanel.add(boardSpots[row][col]);
 			}
 		}
-
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -247,7 +247,40 @@ public class BoardGUI extends JFrame implements ActionListener {
 	    Pair clicked = sourceLocation;
 	    Piece clickedPiece = board.getSquare(clicked).getPiece();
 
-	    switch(name) {
+		numPoints = getPoints(name);
+
+		handleCapturedPointsAndPieces(p,numPoints);
+
+        board.getSquare(dest).setPiece(clickedPiece);
+		board.getSquare(clicked).setPiece(null);
+
+		board.disableAllSquares();
+		board.unhighlightAllSquares();
+
+		switchTurn();
+
+		display();
+		currentlyMoving = false;
+	}
+
+	private void handleCapturedPointsAndPieces(Piece p, int numPoints)
+	{
+		if(currentPlayer == DARK && p != null)
+		{
+			player2.addPoints(numPoints);
+			player2.getGraveyard().addToGraveyard(p);
+		}
+		else if(currentPlayer == LIGHT && p != null)
+		{
+			player1.addPoints(numPoints);
+			player1.getGraveyard().addToGraveyard(p);
+		}
+	}
+
+	private int getPoints(String name)
+	{
+		int numPoints = 0;
+		switch(name) {
 			case "Pawn":
 				numPoints = 1;
 				break;
@@ -266,31 +299,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 			default:
 				numPoints = 0;
 				break;
-
 		}
-
-
-        if(currentPlayer == DARK && p != null)
-        {
-        	player2.addPoints(numPoints);
-            player2.getGraveyard().addToGraveyard(p);
-        }
-        else if(currentPlayer == LIGHT && p != null)
-        {
-        	player1.addPoints(numPoints);
-            player1.getGraveyard().addToGraveyard(p);
-        }
-        board.getSquare(dest).setPiece(clickedPiece);
-		board.getSquare(clicked).setPiece(null);
-
-		board.disableAllSquares();
-		board.unhighlightAllSquares();
-
-		switchTurn();
-
-		display();
-		currentlyMoving = false;
+		return numPoints;
 	}
+
 
 	/*
 	 * isInCheck()
@@ -480,6 +492,4 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		}
 	}
-
-
 }
