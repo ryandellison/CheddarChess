@@ -134,14 +134,13 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setLayout(grave);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		JLabel nameLabel = new JLabel(player.getPlayerNum(), SwingConstants.CENTER); // player name
+		String info = player.getPlayerNum() + "             " + player.getNumPoints();
+		JLabel nameLabel = new JLabel(info, SwingConstants.CENTER); // player name
 		int points = player.getNumPoints();
-		JLabel pointsLabel = new JLabel(Integer.toString(points),SwingConstants.CENTER);
 
-		nameLabel.setPreferredSize(new Dimension(150,50));
+		nameLabel.setPreferredSize(new Dimension(150,25));
 
 		topPanel.add(nameLabel);
-		topPanel.add(pointsLabel);
 
 		addToGraveyard(player,topPanel);
 
@@ -151,29 +150,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	private void addToGraveyard(Player player, JPanel playerPanel)
 	{
-		ArrayList<Piece> pieces = player.getGraveyard().getGraveyardPieces();
-		int len = pieces.size();
-		JButton capturedPiece;
+		Graveyard yard = player.getGraveyard();
+		int size = yard.getNumPieces();
+		JButton[] capturedPieces = yard.getPieces(player);
+		for(int i = 0; i < size; i++)
+			playerPanel.add(capturedPieces[i]);
 
-		for(int i = 0; i < len; i++){
-			capturedPiece= getCapturedPiece(pieces.get(i));
-			capturedPiece.setBackground(getPlayerColor(player));
-			playerPanel.add(capturedPiece);
-		}
-	}
-
-	private Color getPlayerColor(Player player)
-	{
-		return player.getPlayerNum().equals("Player 1") ? new Color(222, 184, 135)
-				: new Color(139, 69, 19);
-	}
-
-	private JButton getCapturedPiece(Piece piece)
-	{
-		JLabel pieceImage = new JLabel(piece.getUnicode());
-		JButton button = new JButton(piece.getUnicode());
-		button.setFont(new Font("Ariel", Font.PLAIN, 50));
-		return button;
 	}
 
 	private void setGridPanel()
@@ -290,12 +272,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 
         if(currentPlayer == DARK && p != null)
         {
-        	player1.addPoints(numPoints);
+        	player2.addPoints(numPoints);
             player2.getGraveyard().addToGraveyard(p);
         }
         else if(currentPlayer == LIGHT && p != null)
         {
-        	player2.addPoints(numPoints);
+        	player1.addPoints(numPoints);
             player1.getGraveyard().addToGraveyard(p);
         }
         board.getSquare(dest).setPiece(clickedPiece);
