@@ -122,13 +122,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
 
-
 		setVisible(true);
 
 	}
 	private JPanel setPlayerGraveYardPanel(JPanel panel, Player player)
 	{
-		//panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setOpaque(true);
 
@@ -138,8 +136,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setOpaque(true);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		String info = player.getPlayerNum() + "             " + player.getNumPoints();
+		String info = player.getPlayerNum() + "           " + player.getNumPoints();
 		JLabel nameLabel = new JLabel(info, SwingConstants.CENTER); // player name
+		nameLabel.setFont(new Font("Ariel", Font.BOLD,15));
 
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
@@ -147,6 +146,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setBackground(new Color(105, 191, 121));
 
 		addToGraveyard(player,topPanel);
+
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 		return panel;
 	}
