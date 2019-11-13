@@ -157,9 +157,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		Graveyard yard = player.getGraveyard();
 		int size = yard.getNumPieces();
 		JButton[] capturedPieces = yard.getPieces(player);
-		for(int i = 0; i < size; i++)
+		for(int i = 0; i < size; i++) {
 			playerPanel.add(capturedPieces[i]);
-
+			capturedPieces[i].addActionListener(this);
+		}
 	}
 
 	private void setGridPanel()
@@ -202,7 +203,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 				}
 			}
 		}
-
 
 	}
 
