@@ -10,6 +10,8 @@
 
 package constant;
 
+import java.awt.*;
+
 public final class Colors
 {
 	public final static boolean LIGHT = true;

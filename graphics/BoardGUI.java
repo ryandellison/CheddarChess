@@ -38,15 +38,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private static final String DARK_ROOK = "\u265C";
 
 	// CONSTANTS AND VARIABLES FOR GUI
-	//private static final int SIZE = 800;		// size of the frame, will be SIZExSIZE (square)
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
 	private GridLayout gridLayout;
 	private JPanel gridPanel;
 	private JPanel playerOnePanel;
 	private JPanel playerTwoPanel;
-	private JLabel playerOnePointsLabel;
-	private JLabel playerTwoPointsLabel;
 	private Container contentPane;
 
 	private Board board;
@@ -54,8 +51,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Player player2;
 	private boolean currentPlayer;
 	private Pair sourceLocation;
-	private Pair destinationLocation;
+	private Square destSquare1, destSquare2;
 	private boolean currentlyMoving = false;
+	private MovesHistory history;
+	private int turn = 0;
 
 	public BoardGUI()
 	{
@@ -87,6 +86,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.enablePiecesByColor(currentPlayer);
 
 		display();
+		history = new MovesHistory(board);
 	}
 
 	/*
@@ -123,7 +123,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
 
 		setVisible(true);
-
 	}
 
 	// Creates graveyard, shows points and player number
@@ -230,10 +229,17 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.enablePiecesByColor(currentPlayer);
 
 		// Change the frame's title
-		if(currentPlayer == LIGHT)
+		// write to file
+		if(currentPlayer == LIGHT) {
 			setTitle("JChess - Light's Turn");
-		else
+			if(turn > 0) {
+				history.write(destSquare1, destSquare2, turn);
+				destSquare1 = null; destSquare2 = null;
+			}
+		} else {
 			setTitle("JChess - Dark's Turn");
+			turn++;
+		}
 	}
 
 	public void handlePieceDestinationSelection(Pair dest)
@@ -241,7 +247,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		int numPoints = 0;
 		String name = "";
 		Square destSquare = board.getSquare(dest);
-		destinationLocation = dest;
 		Piece p = destSquare.getPiece();
 		if(p != null)
 		{
@@ -256,6 +261,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		board.getSquare(dest).setPiece(clickedPiece);
 		board.getSquare(clicked).setPiece(null);
+
+		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
+		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
 
 		board.disableAllSquares();
 		board.unhighlightAllSquares();
@@ -304,6 +312,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		}
 		return numPoints;
 	}
+
 
 
 	/*

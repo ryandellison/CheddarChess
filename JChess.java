@@ -14,6 +14,7 @@ public class JChess
 	{
 		BoardGUI game = new BoardGUI();
 		game.run();
+
 	}
 
 }
