@@ -54,6 +54,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Player player2;
 	private boolean currentPlayer;
 	private Pair sourceLocation;
+	private Pair destinationLocation;
 	boolean currentlyMoving = false;
 
 	public BoardGUI()
@@ -125,7 +126,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setVisible(true);
 
 	}
-	private JPanel setPlayerGraveYardPanel(JPanel panel, Player player)
+	private void setPlayerGraveYardPanel(JPanel panel, Player player)
 	{
 		panel.setLayout(new BorderLayout());
 		panel.setOpaque(true);
@@ -148,7 +149,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		addToGraveyard(player,topPanel);
 
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
-		return panel;
 	}
 
 	private void addToGraveyard(Player player, JPanel playerPanel)
@@ -239,6 +239,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	    int numPoints = 0;
 	    String name = "";
         Square destSquare = board.getSquare(dest);
+        destinationLocation = dest;
         Piece p = destSquare.getPiece();
         if(p != null)
         {
@@ -299,7 +300,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 				numPoints = 4;
 				break;
 			default:
-				numPoints = 0;
 				break;
 		}
 		return numPoints;
