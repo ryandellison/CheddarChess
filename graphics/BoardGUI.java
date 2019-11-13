@@ -140,13 +140,12 @@ public class BoardGUI extends JFrame implements ActionListener {
         String points = "" + player1.getNumPoints();
 		JLabel pointsLabel = new JLabel(points,SwingConstants.CENTER); // player points, just an example
 
-		// SETS THE WIDTH OF THE GRAVEYARD
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
 
-		addToGraveyard(player1,playerOnePanel);
+		addToGraveyard(player1,topPanel);
 
 		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 
@@ -164,7 +163,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	private JButton getCapturedPiece(Piece piece)
 	{
-		return new JButton(piece.getUnicode());
+		JLabel pieceImage = new JLabel(piece.getUnicode());
+		JButton button = new JButton(piece.getUnicode());
+		button.setFont(new Font("Ariel", Font.PLAIN, 50));
+		return button;
 	}
 
 	private void setPlayerTwoPanel()
@@ -173,7 +175,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		playerTwoPanel.setLayout(new BorderLayout());
 		JPanel topPanel = new JPanel();
 
-		GridLayout pointsAndNameGrid = new GridLayout(2,1);
+		GridLayout pointsAndNameGrid = new GridLayout(8,1);
 		topPanel.setLayout(pointsAndNameGrid);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
@@ -183,7 +185,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
-		addToGraveyard(player2,playerTwoPanel);
+		addToGraveyard(player2,topPanel);
 
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
