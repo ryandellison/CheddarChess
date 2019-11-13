@@ -136,7 +136,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setLayout(grave);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		JLabel nameLabel = new JLabel("Player 1", SwingConstants.CENTER); // player name
+		JLabel nameLabel = new JLabel(player1.getPlayerNum(), SwingConstants.CENTER); // player name
         String points = "" + player1.getNumPoints();
 		JLabel pointsLabel = new JLabel(points,SwingConstants.CENTER); // player points, just an example
 
