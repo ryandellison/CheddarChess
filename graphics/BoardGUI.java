@@ -136,7 +136,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		String info = player.getPlayerNum() + "             " + player.getNumPoints();
 		JLabel nameLabel = new JLabel(info, SwingConstants.CENTER); // player name
-		int points = player.getNumPoints();
 
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
