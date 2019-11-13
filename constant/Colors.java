@@ -10,9 +10,15 @@
 
 package constant;
 
+import java.awt.*;
+
 public final class Colors
 {
 	public final static boolean LIGHT = true;
 	public final static boolean DARK = false;
+
+	public static final Color LIGHT_SPOT = new Color(222, 184, 135);
+	public static final Color DARK_SPOT = new Color(139, 69, 19);
+	public static final Color HIGHLIGHTED_SPOT = new Color(50, 205, 50);
 }
 
