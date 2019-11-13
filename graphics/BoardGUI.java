@@ -146,14 +146,20 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
 
-		ArrayList<Piece> pieces = player1.getGraveyard().getGraveyardPieces();
+		addToGraveyard(player1,playerOnePanel);
+
+		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
+
+	}
+
+	private void addToGraveyard(Player player, JPanel playerPanel)
+	{
+		ArrayList<Piece> pieces = player.getGraveyard().getGraveyardPieces();
 		int len = pieces.size();
 
 		for(int i = 0; i < len; i++){
-			topPanel.add(getCapturedPiece(pieces.get(i)));
+			playerPanel.add(getCapturedPiece(pieces.get(i)));
 		}
-		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
-
 	}
 
 	private JButton getCapturedPiece(Piece piece)
@@ -177,12 +183,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
-		ArrayList<Piece> pieces = player2.getGraveyard().getGraveyardPieces();
-		int len = pieces.size();
-
-		for(int i = 0; i < len; i++){
-			topPanel.add(getCapturedPiece(pieces.get(i)));
-		}
+		addToGraveyard(player2,playerTwoPanel);
 
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
