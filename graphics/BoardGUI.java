@@ -62,6 +62,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		currentPlayer = LIGHT;
 		sourceLocation = null;
 
+		playerOnePanel = new JPanel();
+		playerTwoPanel = new JPanel();
+
 		setTitle("JChess - Light's Turn");
 		setDimensions();
 		setVisible(true);
@@ -112,9 +115,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		setGridPanel();
 
-		playerOnePanel = setPlayerGraveYardPanel(playerOnePanel,player1);
-		playerTwoPanel = setPlayerGraveYardPanel(playerTwoPanel,player2);
-		playerOnePanel.setBackground(Color.BLUE);
+		setPlayerGraveYardPanel(playerOnePanel,player1);
+		setPlayerGraveYardPanel(playerTwoPanel,player2);
 
 		contentPane.add(gridPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
@@ -126,12 +128,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 	}
 	private JPanel setPlayerGraveYardPanel(JPanel panel, Player player)
 	{
-		panel = new JPanel();
+		//panel = new JPanel();
 		panel.setLayout(new BorderLayout());
+		panel.setOpaque(true);
 
 		JPanel topPanel = new JPanel();
 		GridLayout grave = new GridLayout(8,1);
 		topPanel.setLayout(grave);
+		topPanel.setOpaque(true);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
 		String info = player.getPlayerNum() + "             " + player.getNumPoints();
@@ -140,11 +144,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
 		topPanel.add(nameLabel);
+		topPanel.setBackground(new Color(105, 191, 121));
 
 		addToGraveyard(player,topPanel);
-
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
-		panel.setBackground(Color.CYAN);
 		return panel;
 	}
 
