@@ -22,4 +22,9 @@ public class Graveyard
 		graveyard.add(p);
 	}
 
+	public ArrayList<Piece> getGraveyardPieces()
+	{
+		return graveyard;
+	}
+
 }

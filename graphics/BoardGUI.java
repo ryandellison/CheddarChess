@@ -10,6 +10,7 @@ package graphics;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import board.*;
 import pieces.*;
@@ -131,8 +132,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		playerOnePanel.setLayout(new BorderLayout());
 
 		JPanel topPanel = new JPanel();
-		GridLayout grave = new GridLayout(8,0);
+		GridLayout grave = new GridLayout(8,1);
 		topPanel.setLayout(grave);
+		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
 		JLabel nameLabel = new JLabel("Player 1", SwingConstants.CENTER); // player name
         String points = "" + player1.getNumPoints();
@@ -144,23 +146,19 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
 
-		// PRETENDING TO ADD PIECES TO THE GRAVE TO TEST WHETHER OR NOT IT
-		// GOES TO THE SPOT
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
-//		topPanel.add(new JButton(board.getSquare(1,2).getPiece().getName()));
+		ArrayList<Piece> pieces = player1.getGraveyard().getGraveyardPieces();
+		int len = pieces.size();
 
-
+		for(int i = 0; i < len; i++){
+			topPanel.add(getCapturedPiece(pieces.get(i)));
+		}
 		playerOnePanel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 
+	}
+
+	private JButton getCapturedPiece(Piece piece)
+	{
+		return new JButton(piece.getUnicode());
 	}
 
 	private void setPlayerTwoPanel()
@@ -171,13 +169,20 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		GridLayout pointsAndNameGrid = new GridLayout(2,1);
 		topPanel.setLayout(pointsAndNameGrid);
+		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		JLabel nameLabel = new JLabel("Player 2", SwingConstants.CENTER);
+		JLabel nameLabel = new JLabel(player2.getPlayerNum(), SwingConstants.CENTER);
 		String points = "" + player2.getNumPoints();
 		JLabel pointsLabel = new JLabel(points, SwingConstants.CENTER);
 
 		nameLabel.setPreferredSize(new Dimension(150,50));
 
+		ArrayList<Piece> pieces = player2.getGraveyard().getGraveyardPieces();
+		int len = pieces.size();
+
+		for(int i = 0; i < len; i++){
+			topPanel.add(getCapturedPiece(pieces.get(i)));
+		}
 
 		topPanel.add(nameLabel);
 		topPanel.add(pointsLabel);
