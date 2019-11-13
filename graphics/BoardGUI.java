@@ -55,7 +55,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private boolean currentPlayer;
 	private Pair sourceLocation;
 	private Pair destinationLocation;
-	boolean currentlyMoving = false;
+	private boolean currentlyMoving = false;
 
 	public BoardGUI()
 	{
@@ -111,7 +111,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-
 		contentPane.removeAll();
 
 		setGridPanel();
@@ -126,6 +125,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setVisible(true);
 
 	}
+
+	// Creates graveyard, shows points and player number
 	private void setPlayerGraveYardPanel(JPanel panel, Player player)
 	{
 		panel.setLayout(new BorderLayout());
@@ -151,6 +152,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 	}
 
+	// Adds pieces to the graveyard, if any.
 	private void addToGraveyard(Player player, JPanel playerPanel)
 	{
 		Graveyard yard = player.getGraveyard();
@@ -236,25 +238,23 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public void handlePieceDestinationSelection(Pair dest)
 	{
-	    int numPoints = 0;
-	    String name = "";
-        Square destSquare = board.getSquare(dest);
-        destinationLocation = dest;
-        Piece p = destSquare.getPiece();
-        if(p != null)
-        {
-            p = destSquare.popPiece();
+		int numPoints = 0;
+		String name = "";
+		Square destSquare = board.getSquare(dest);
+		destinationLocation = dest;
+		Piece p = destSquare.getPiece();
+		if(p != null)
+		{
+			p = destSquare.popPiece();
 			name = p.getName();
-        }
+			numPoints = getPoints(name);
+			handleCapturedPointsAndPieces(p,numPoints);
+		}
 
-	    Pair clicked = sourceLocation;
-	    Piece clickedPiece = board.getSquare(clicked).getPiece();
+		Pair clicked = sourceLocation;
+		Piece clickedPiece = board.getSquare(clicked).getPiece();
 
-		numPoints = getPoints(name);
-
-		handleCapturedPointsAndPieces(p,numPoints);
-
-        board.getSquare(dest).setPiece(clickedPiece);
+		board.getSquare(dest).setPiece(clickedPiece);
 		board.getSquare(clicked).setPiece(null);
 
 		board.disableAllSquares();
@@ -379,48 +379,48 @@ public class BoardGUI extends JFrame implements ActionListener {
 						{
 							continue;
 						}//p is the piece again, loop thru and get all of the pieces that are the opposite color
-                        				//of the king
+						//of the king
 						else if(p.getColor() != kingColor)
 						{
 							for (int x = 0; x < attackMoves.getSize(); x++)
 							{
 								attackDest = attackMoves.getPair(x);
 								if(kingMoves.findPair(attackDest.getRow(),attackDest.getCol()) != -1)//for the valid
-								    //king moves, if the attacker can move to an available move, remove that move from
-								    //the possible king moves
+								//king moves, if the attacker can move to an available move, remove that move from
+								//the possible king moves
 								{
-                                    					// kingMoves.removeMove(new Pair(attackDest.getRow(),attackDest.getCol()));
+									// kingMoves.removeMove(new Pair(attackDest.getRow(),attackDest.getCol()));
 								}
 							}
 						}
 					}
 				}
 				if(kingMoves.getSize() == 0)//if all possible moves have been removed, we are in checkmate
-                		{
-                    			ans = true;
-                		}
+				{
+					ans = true;
+				}
+			}
 		}
-	}
 
-	return ans;
+		return ans;
 	}
 
 	public void handlePieceSourceSelection(Pair source)
 	{
-            Moves moves;
+		Moves moves;
 
-            moves = board.getValidMoves(source);
+		moves = board.getValidMoves(source);
 
-            board.highlightSquares(moves);
-            board.disableAllSquares();
-            board.enableSquares(moves);
+		board.highlightSquares(moves);
+		board.disableAllSquares();
+		board.enableSquares(moves);
 
-            display();
+		display();
 
-            sourceLocation = source;
+		sourceLocation = source;
 
-            board.unhighlightAllSquares();
-            currentlyMoving = true;
+		board.unhighlightAllSquares();
+		currentlyMoving = true;
 
 	}
 

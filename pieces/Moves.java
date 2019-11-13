@@ -11,7 +11,7 @@
 
 package pieces;
 
-import java.util.*;
+import java.util.LinkedList;
 
 public class Moves
 {

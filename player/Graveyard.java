@@ -44,7 +44,7 @@ public class Graveyard
 
 	private Color getPlayerColor(Player player)
 	{
-		return player.getPlayerNum().equals("Player 1") ? new Color(222, 184, 135)
+		return player.getPlayerNum().equals("Player 2") ? new Color(222, 184, 135)
 				: new Color(180, 79, 20);
 	}
 
