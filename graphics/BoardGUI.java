@@ -144,7 +144,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
 		topPanel.add(nameLabel);
-		topPanel.setBackground(new Color(155, 208, 214));
+		topPanel.setBackground(new Color(34, 107, 214));
 
 		addToGraveyard(player,topPanel);
 
@@ -161,49 +161,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 			playerPanel.add(capturedPieces[i]);
 			capturedPieces[i].addActionListener(this);
 		}
-	}
-
-	private void setGridPanel()
-	{
-		gridPanel = new JPanel();
-		gridLayout = new GridLayout(8,8);
-
-		gridPanel.setLayout(gridLayout);
-		int row, col;
-		for(row = 0; row < 8; row++)
-		{
-			for(col = 0; col < 8; col++)
-			{
-				gridPanel.add(boardSpots[row][col]);
-			}
-		}
-	}
-
-	public void actionPerformed(ActionEvent e)
-	{
-		Piece p;
-		int i, j;
-
-		for(i = 0; i < 8; i++)
-		{
-			for(j = 0; j < 8; j++)
-			{
-				if(boardSpots[i][j] == e.getSource()) {
-					p = board.getSquare(i, j).getPiece();
-
-					if (p == null || currentlyMoving) {
-						handlePieceDestinationSelection(new Pair(i, j));
-					}
-					else
-					{
-						handlePieceSourceSelection(new Pair(i, j));
-					}
-					j = 8;
-					i = 8;
-				}
-			}
-		}
-
 	}
 
 	/*
@@ -240,6 +197,74 @@ public class BoardGUI extends JFrame implements ActionListener {
 			setTitle("JChess - Dark's Turn");
 			turn++;
 		}
+	}
+
+
+	private void setGridPanel()
+	{
+		gridPanel = new JPanel();
+		gridLayout = new GridLayout(8,8);
+
+		gridPanel.setLayout(gridLayout);
+		int row, col;
+		for(row = 0; row < 8; row++)
+		{
+			for(col = 0; col < 8; col++)
+			{
+				gridPanel.add(boardSpots[row][col]);
+			}
+		}
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+		Piece p;
+		int i, j;
+		Pair clicked;
+		for(i = 0; i < 8; i++)
+		{
+			for(j = 0; j < 8; j++)
+			{
+				if(boardSpots[i][j] == e.getSource()) {
+					p = board.getSquare(i, j).getPiece();
+					clicked = new Pair(i,j);
+
+					if(currentlyMoving &&  p!= null && p.getColor() == currentPlayer){
+						handlePieceSourceSelection(clicked);
+					}
+					else if (p == null || currentlyMoving) {
+						handlePieceDestinationSelection(clicked);
+					}
+					else
+					{
+						handlePieceSourceSelection(clicked);
+					}
+					j = 8;
+					i = 8;
+				}
+			}
+		}
+
+	}
+
+
+	public void handlePieceSourceSelection(Pair source)
+	{
+		Moves moves;
+
+		moves = board.getValidMoves(source);
+
+		board.highlightSquares(moves);
+		//board.disableAllSquares();
+		board.enableSquares(moves);
+
+		display();
+
+		sourceLocation = source;
+
+		board.unhighlightAllSquares();
+		currentlyMoving = true;
+
 	}
 
 	public void handlePieceDestinationSelection(Pair dest)
@@ -414,24 +439,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		return ans;
 	}
 
-	public void handlePieceSourceSelection(Pair source)
-	{
-		Moves moves;
 
-		moves = board.getValidMoves(source);
-
-		board.highlightSquares(moves);
-		board.disableAllSquares();
-		board.enableSquares(moves);
-
-		display();
-
-		sourceLocation = source;
-
-		board.unhighlightAllSquares();
-		currentlyMoving = true;
-
-	}
 
 	public void setBoardSpots()
 	{

@@ -50,7 +50,7 @@ public class Pawn extends Piece
 		
 		if(getColor() == LIGHT){
 			if(firstMove){
-				moves.addMove(new Pair(row-2, col));
+				moves.addMove(new Pair(row - 2, col));
 				firstMove = false;
 			}
 			moves.addMove(new Pair(row-1, col));
