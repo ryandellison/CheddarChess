@@ -31,6 +31,16 @@ public class BoardSpot extends JButton {
 
 	}
 
+	public BoardSpot(String piece, int fontSize)
+	{
+		super(piece);
+		this.piece = piece;
+		isEmpty = piece.isEmpty();
+		font = new Font("Ariel", Font.PLAIN,fontSize);
+
+		enabled = true;
+	}
+
 	public void set(int index, int row, boolean highlight)
 	{
 		setFont(font);

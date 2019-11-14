@@ -1,4 +1,5 @@
 package player;
+import board.Square;
 import graphics.BoardSpot;
 import pieces.*;
 
@@ -32,17 +33,21 @@ public class Graveyard
 	{
 		return numPieces;
 	}
-
-	public BoardSpot[] getPieces(Player player)
+	public ArrayList<Piece>getGraveyard()
 	{
-		BoardSpot[] capturedPieces = new BoardSpot[numPieces];
-		for(int i = 0; i < numPieces; i++){
-			capturedPieces[i]= getCapturedPiece(graveyard.get(i));
-			capturedPieces[i].setBackground(getPlayerColor(player));
-			capturedPieces[i].setEnabled(getPieceValue(graveyard.get(i)) <= player.getNumPoints()
-					? true : false);
-		}
-		return capturedPieces;
+		return graveyard;
+	}
+
+	public Square[] getPieces(Player player)
+	{
+//		Piece[] capturedPieces = new Piece[numPieces];
+//		for(int i = 0; i < numPieces; i++){
+//			capturedPieces[i]= new Square();
+//			capturedPieces[i].setBackground(getPlayerColor(player));
+//			capturedPieces[i].setEnabled(getPieceValue(graveyard.get(i)) <= player.getNumPoints()
+//					? true : false);
+//		}
+		return null;
 	}
 
 	private int getPieceValue(Piece piece)

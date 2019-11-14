@@ -1,1 +1,4 @@
 			Player 1             Player 2 					
+Turn 1      PawnC4             PawnB5
+Turn 2      PawnB5             PawnC6
+Turn 3      PawnD4             PawnB5

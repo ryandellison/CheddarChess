@@ -55,6 +55,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private boolean currentlyMoving = false;
 	private MovesHistory history;
 	private int turn = 0;
+	private boolean isGraveyardPiece = false;
 
 	public BoardGUI()
 	{
@@ -144,6 +145,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
 		topPanel.add(nameLabel);
+
 		topPanel.setBackground(new Color(34, 107, 214));
 
 		addToGraveyard(player,topPanel);
@@ -156,11 +158,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 	{
 		Graveyard yard = player.getGraveyard();
 		int size = yard.getNumPieces();
-		JButton[] capturedPieces = yard.getPieces(player);
-		for(int i = 0; i < size; i++) {
-			playerPanel.add(capturedPieces[i]);
-			capturedPieces[i].addActionListener(this);
-		}
+		ArrayList<Piece> capturedPieces = yard.getGraveyard();
+
+        for(int i =0;i < size; i++){
+            playerPanel.add(new BoardSpot(capturedPieces.get(i).getUnicode()));
+        }
 	}
 
 	/*
@@ -231,22 +233,33 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 					if(currentlyMoving &&  p!= null && p.getColor() == currentPlayer){
 						handlePieceSourceSelection(clicked);
+						return;
+
 					}
 					else if (p == null || currentlyMoving) {
 						handlePieceDestinationSelection(clicked);
+						return;
 					}
 					else
 					{
 						handlePieceSourceSelection(clicked);
+						return;
 					}
-					j = 8;
-					i = 8;
+//					j = 8;
+//					i = 8;
 				}
 			}
 		}
+        isGraveyardPiece = true;
+		BoardSpot spot = (BoardSpot)e.getSource();
 
 	}
 
+
+	public void handleGraveyardPiece(BoardSpot spot)
+    {
+
+    }
 
 	public void handlePieceSourceSelection(Pair source)
 	{
@@ -255,7 +268,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		moves = board.getValidMoves(source);
 
 		board.highlightSquares(moves);
-		//board.disableAllSquares();
 		board.enableSquares(moves);
 
 		display();
