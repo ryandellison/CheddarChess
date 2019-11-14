@@ -431,6 +431,9 @@ public class Board
 
 					}
 
+					i = allMoves.findPair(row, col);
+
+
 					
 				}
 
