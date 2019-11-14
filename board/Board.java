@@ -438,15 +438,103 @@ public class Board
 				}
 
 
+
 				if(p.getColor() == currentPiece.getColor())
 				{
 					allMoves.removeMove(i);
 					i--;
+
+					if(p instanceof Pawn)
+					{
+						if(p.getColor() == LIGHT)
+						{
+							index = allMoves.findPair(r - 2, c);
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+						else
+						{
+							index = allMoves.findPair(r + 2, c);
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+					}
 				}
 			}
 		}
 		if(p instanceof Pawn)
 		{
+			if(allMoves.getSize() >= 1)
+			{
+				
+				if(p.getColor() == LIGHT)
+				{
+					index = allMoves.findPair(r - 1, c);
+
+					if(index != -1)
+					{
+						currentPair = allMoves.getPair(index);
+						currentPiece = getSquare(currentPair).getPiece();
+
+						if(currentPiece != null)
+						{
+							allMoves.removeMove(index);
+						
+
+							index = allMoves.findPair(r - 2, c);
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+
+						index = allMoves.findPair(r - 2, c);
+
+						if(index != -1)
+						{
+							currentPair = allMoves.getPair(index);
+							currentPiece = getSquare(currentPair).getPiece();
+
+							if(currentPiece != null)
+								allMoves.removeMove(index);
+						}
+					}
+
+				}
+				else
+				{
+					index = allMoves.findPair(r + 1, c);
+
+					if(index != -1)
+					{
+						currentPair = allMoves.getPair(index);
+						currentPiece = getSquare(currentPair).getPiece();
+
+						if(currentPiece != null)
+						{
+							allMoves.removeMove(index);
+						
+
+							index = allMoves.findPair(r + 2, c);
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+
+						index = allMoves.findPair(r + 2, c);
+
+						if(index != -1)
+						{
+							currentPair = allMoves.getPair(index);
+							currentPiece = getSquare(currentPair).getPiece();
+
+							if(currentPiece != null)
+								allMoves.removeMove(index);
+						}
+					}
+
+				}
+				
+				
+			}
+
 			if(p.getColor() == LIGHT)
 			{
 				if (c + 1 < 8)
