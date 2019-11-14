@@ -316,12 +316,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 		if(currentPlayer == DARK && p != null)
 		{
 			player2.addPoints(numPoints);
-			player2.getGraveyard().addToGraveyard(p);
+			player1.getGraveyard().addToGraveyard(p);
 		}
 		else if(currentPlayer == LIGHT && p != null)
 		{
 			player1.addPoints(numPoints);
-			player1.getGraveyard().addToGraveyard(p);
+			player2.getGraveyard().addToGraveyard(p);
 		}
 	}
 
