@@ -1,4 +1,5 @@
 package player;
+import graphics.BoardSpot;
 import pieces.*;
 
 import javax.swing.*;
@@ -32,9 +33,9 @@ public class Graveyard
 		return numPieces;
 	}
 
-	public JButton[] getPieces(Player player)
+	public BoardSpot[] getPieces(Player player)
 	{
-		JButton[] capturedPieces = new JButton[numPieces];
+		BoardSpot[] capturedPieces = new BoardSpot[numPieces];
 		for(int i = 0; i < numPieces; i++){
 			capturedPieces[i]= getCapturedPiece(graveyard.get(i));
 			capturedPieces[i].setBackground(getPlayerColor(player));
@@ -82,11 +83,10 @@ public class Graveyard
 				: new Color(180, 79, 20);
 	}
 
-	private JButton getCapturedPiece(Piece piece)
+	private BoardSpot getCapturedPiece(Piece piece)
 	{
 		JLabel pieceImage = new JLabel(piece.getUnicode());
-		JButton button = new JButton(piece.getUnicode());
-		button.setFont(new Font("Ariel", Font.PLAIN, 50));
+		BoardSpot button = new BoardSpot(piece.getUnicode());
 		return button;
 	}
 

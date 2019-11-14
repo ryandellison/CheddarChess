@@ -133,6 +133,33 @@ public class Board
 		}
 	}
 
+	public Moves getBuyBackMoves()
+	{
+		Moves moves = new Moves();
+		Pair pair;
+		if(LIGHT) {
+			for (int i = 0; i < 2; i++) {
+				for (int j = 0; j < 8; j++) {
+					pair = new Pair(i,j);
+					if(getSquare(pair).getPiece() == null)
+						moves.addMove(pair);
+				}
+			}
+		}
+		else {
+			for(int i = 6; i < 8; i++){
+				for (int j = 0; j < 8; j++) {
+					pair = new Pair(i,j);
+					if(getSquare(pair).getPiece() == null)
+						moves.addMove(pair);
+
+				}
+			}
+
+		}
+		return moves;
+	}
+
 	public Pair findKing(boolean kingColor)
 	{
 		Piece p;
