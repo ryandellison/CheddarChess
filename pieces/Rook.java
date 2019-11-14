@@ -17,10 +17,12 @@ public class Rook extends Piece
 		int row = coord.getRow();
 		int col = coord.getCol();
 		for(int i = -7; i < 7; i++){
-			moves.addMove(new Pair(row + i, col));
+			if(i != 0)
+				moves.addMove(new Pair(row + i, col));
 		}
 		for(int i = -7; i < 7; i++){
-			moves.addMove(new Pair(row, col+i));
+			if(i != 0)
+				moves.addMove(new Pair(row, col+i));
 		}
 		moves.checkBounds();
 		return moves;

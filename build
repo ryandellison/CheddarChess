@@ -4,7 +4,7 @@ JAVAC=$(whereis javac)
 
 compile ()
 {
-	$JAVAC *.java board/*.java player/*.java pieces/*.java graphics/*.java
+	$JAVAC -g *.java board/*.java player/*.java pieces/*.java graphics/*.java
 }
 
 clean ()

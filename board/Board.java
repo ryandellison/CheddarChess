@@ -316,9 +316,9 @@ public class Board
 
 				if(p instanceof Rook || p instanceof Queen) // The piece we're working with is a Rook or Queen, remove unreachable moves
 				{
-					if(location.getRow() == currentPair.getRow()) // The Rook/Queen is on the same row as another piece
+					if(r == currentPair.getRow()) // The Rook/Queen is on the same row as another piece
 					{
-						if(location.getCol() < currentPair.getCol())
+						if(c < currentPair.getCol())
 						{
 							for(int col = 1; (col + currentPair.getCol()) < 8; col++)
 							{
@@ -330,6 +330,7 @@ public class Board
 						}
 						else
 						{
+
 							for(int col = 1; (currentPair.getCol() - col) >= 0; col++)
 							{
 								index = allMoves.findPair(currentPair.getRow(), currentPair.getCol() - col);
@@ -337,11 +338,25 @@ public class Board
 								if(index != -1)
 									allMoves.removeMove(index);
 							}
+
 						}
+
+						i = allMoves.findPair(currentPair.getRow(), currentPair.getCol());
 					}
-					else if(location.getCol() == currentPair.getCol()) // The Rook/Queen is on the same column as another piece
+					else if(c == currentPair.getCol()) // The Rook/Queen is on the same column as another piece
 					{
-						if(location.getRow() < currentPair.getRow())
+						if(r < currentPair.getRow())
+						{
+
+							for(int row = 1; (currentPair.getRow() + row) < 8; row++)
+							{
+								index = allMoves.findPair(currentPair.getRow() + row, currentPair.getCol());
+
+								if(index != -1)
+									allMoves.removeMove(index);
+							}
+						}
+						else
 						{
 							for(int row = 1; (currentPair.getRow() - row) >= 0; row++)
 							{
@@ -351,21 +366,72 @@ public class Board
 									allMoves.removeMove(index);
 							}
 						}
-						else
-						{
-							for(int row = 1; (currentPair.getRow() + row) < 8; row++)
-							{
-								index = allMoves.findPair(currentPair.getRow() + row, currentPair.getCol());
 
-								if(index != -1)
-									allMoves.removeMove(index);
-							}
-						}
+						i = allMoves.findPair(currentPair.getRow(), currentPair.getCol());
 					}
 				}
 				if(p instanceof Bishop || p instanceof Queen)
 				{
+					int row;
+					int col;
+					int tRow;
+					int tCol;
 
+					row = currentPair.getRow();
+					col = currentPair.getCol();
+
+					tRow = r - row;
+					tCol = c - col;
+
+					// tRow > 0 means north
+					//
+					// tCol > 0 means west
+
+					
+					if((tRow > 0) && (tCol > 0)) // It's in the north-west diagonal
+					{
+						for(int t = 1; ((row - t) >= 0) && ((col - t) >= 0); t++)
+						{
+							index = allMoves.findPair((row - t), (col - t));
+
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+					}
+					else if((tRow < 0) && (tCol > 0)) // It's in the south-west diagonal
+					{
+						for(int t = 1; ((row + t) < 8) && ((col - t) >= 0); t++)
+						{
+							index = allMoves.findPair((row + t), (col - t));
+
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+					}
+					else if((tRow < 0) && (tCol < 0)) // It's in the south-east diagonal
+					{
+						for(int t = 1; ((row + t) < 8) && ((col + t) < 8); t++)
+						{
+							index = allMoves.findPair((row + t), (col + t));
+
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+
+					}
+					else if((tRow > 0) && (tCol < 0)) // It's in the north-east diagonal
+					{
+						for(int t = 1; ((row - t) >= 0) && ((col + t) < 8); t++)
+						{
+							index = allMoves.findPair((row - t), (col + t));
+
+							if(index != -1)
+								allMoves.removeMove(index);
+						}
+
+					}
+
+					
 				}
 
 
