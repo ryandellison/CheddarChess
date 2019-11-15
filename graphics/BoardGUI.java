@@ -50,8 +50,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private JPanel playerTwoPanel;
 	private Container contentPane;
 	private JMenu menu;
-	private JMenuBar menuBar;
-	private JMenuItem menuItem;
 
 	private Board board;
 	private Player player1;
@@ -154,13 +152,19 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	private JMenuBar addMenuBar()
 	{
+		JMenuBar menuBar;
+		JMenuItem menuItem, menuItem2;
 		menuBar = new JMenuBar();
 		menu = new JMenu("File");
 		menu.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem = new JMenuItem("Save Game");
+		menuItem2 = new JMenuItem("Load Game");
+
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
+		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
 
 		menu.add(menuItem);
+		menu.add(menuItem2);
 		menuBar.add(menu);
 		menuBar.setSize(new Dimension(10,10));
 		return menuBar;
