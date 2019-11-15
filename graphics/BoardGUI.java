@@ -169,14 +169,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		topPanel.setBackground(new Color(34, 107, 214));
 
-		addToGraveyard(player,topPanel, playerGraveyardSpots);
+		addToGraveyard(topPanel, playerGraveyardSpots);
 
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 
 	}
 
 	// Adds pieces to the graveyard, if any.
-	private void addToGraveyard(Player player, JPanel playerPanel, ArrayList<BoardSpot> playerGraveyardSpots)
+	private void addToGraveyard(JPanel playerPanel, ArrayList<BoardSpot> playerGraveyardSpots)
 	{
 		int size;
 		
