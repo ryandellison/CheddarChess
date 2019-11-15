@@ -205,6 +205,42 @@ public class Board
 
 	}
 
+	public void highlightEnableBottomRows()
+	{
+		unhighlightAllSquares();
+		disableAllSquares();
+
+		for(int row = 6; row < 8; row++)
+		{
+			for(int col = 0; col < 8; col++)
+			{
+				if(board[row][col].getPiece() == null)
+				{
+					board[row][col].setHighlighted(true);
+					board[row][col].enable();
+				}
+			}
+		}
+	}
+
+	public void highlightEnableTopRows()
+	{
+		unhighlightAllSquares();
+		disableAllSquares();
+
+		for(int row = 0; row < 2; row++)
+		{
+			for(int col = 0; col < 8; col++)
+			{
+				if(board[row][col].getPiece() == null)
+				{
+					board[row][col].setHighlighted(true);
+					board[row][col].enable();
+				}
+			}
+		}
+	}
+
 	public void unhighlightAllSquares()
 	{
 		int i, j;

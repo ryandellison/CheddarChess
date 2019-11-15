@@ -16,11 +16,11 @@ public class Rook extends Piece
 		Moves moves = new Moves();
 		int row = coord.getRow();
 		int col = coord.getCol();
-		for(int i = -7; i < 7; i++){
+		for(int i = -7; i < 8; i++){
 			if(i != 0)
 				moves.addMove(new Pair(row + i, col));
 		}
-		for(int i = -7; i < 7; i++){
+		for(int i = -7; i < 8; i++){
 			if(i != 0)
 				moves.addMove(new Pair(row, col+i));
 		}

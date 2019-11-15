@@ -19,6 +19,8 @@ import player.*;
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
+import static constant.Points.PAWN_VALUE;
+
 @SuppressWarnings("Duplicates")
 public class BoardGUI extends JFrame implements ActionListener {
 
@@ -40,8 +42,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 	// CONSTANTS AND VARIABLES FOR GUI
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
+	private ArrayList<BoardSpot> player1GraveyardSpots;
+	private ArrayList<BoardSpot> player2GraveyardSpots;
 	private GridLayout gridLayout;
-	private JPanel gridPanel;
+	private JPanel boardPanel;
 	private JPanel playerOnePanel;
 	private JPanel playerTwoPanel;
 	private Container contentPane;
@@ -56,10 +60,18 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private MovesHistory history;
 	private int turn = 0;
 	private boolean isGraveyardPiece = false;
+	
+	private boolean bringingBackTheDead;
+	private Piece deadPiece;
+	private int locationOfDead;
 
 	public BoardGUI()
 	{
 		boardSpots = new BoardSpot[8][8];
+
+		player1GraveyardSpots = new ArrayList<BoardSpot>();
+		player2GraveyardSpots = new ArrayList<BoardSpot>();
+
 		currentPlayer = LIGHT;
 		sourceLocation = null;
 
@@ -70,8 +82,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		player1 = new Player(DARK);
-		player2 = new Player(LIGHT);
+		player1 = new Player(LIGHT);
+		player2 = new Player(DARK);
+
+		bringingBackTheDead = false;
+		deadPiece = null;
 	}
 
 	private void setDimensions()
@@ -116,10 +131,16 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		setGridPanel();
 
-		setPlayerGraveYardPanel(playerOnePanel,player1);
-		setPlayerGraveYardPanel(playerTwoPanel,player2);
+		setGraveyardSpots(player1);
+		setGraveyardSpots(player2);
 
-		contentPane.add(gridPanel,BorderLayout.CENTER);
+		playerOnePanel = new JPanel();
+		playerOnePanel = new JPanel();
+
+		setPlayerGraveYardPanel(playerOnePanel,player1, player1GraveyardSpots);
+		setPlayerGraveYardPanel(playerTwoPanel,player2, player2GraveyardSpots);
+
+		contentPane.add(boardPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
 
@@ -127,7 +148,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	}
 
 	// Creates graveyard, shows points and player number
-	private void setPlayerGraveYardPanel(JPanel panel, Player player)
+	private void setPlayerGraveYardPanel(JPanel panel, Player player, ArrayList<BoardSpot> playerGraveyardSpots)
 	{
 		panel.setLayout(new BorderLayout());
 		panel.setOpaque(true);
@@ -148,21 +169,23 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		topPanel.setBackground(new Color(34, 107, 214));
 
-		addToGraveyard(player,topPanel);
+		addToGraveyard(player,topPanel, playerGraveyardSpots);
 
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
+
 	}
 
 	// Adds pieces to the graveyard, if any.
-	private void addToGraveyard(Player player, JPanel playerPanel)
+	private void addToGraveyard(Player player, JPanel playerPanel, ArrayList<BoardSpot> playerGraveyardSpots)
 	{
-		Graveyard yard = player.getGraveyard();
-		int size = yard.getNumPieces();
-		ArrayList<Piece> capturedPieces = yard.getGraveyard();
-
-        for(int i =0;i < size; i++){
-            playerPanel.add(new BoardSpot(capturedPieces.get(i).getUnicode()));
-        }
+		int size;
+		
+		size = playerGraveyardSpots.size();
+		
+        	for(int i =0;i < size; i++)
+		{
+            		playerPanel.add(playerGraveyardSpots.get(i));
+        	}
 	}
 
 	/*
@@ -185,35 +208,45 @@ public class BoardGUI extends JFrame implements ActionListener {
 		// Change the currentPlayer variable to reflect the currentPlayer
 		currentPlayer = !currentPlayer;
 
+		board.disableAllSquares();
+		board.unhighlightAllSquares();
+
 		board.enablePiecesByColor(currentPlayer);
 
 		// Change the frame's title
 		// write to file
-		if(currentPlayer == LIGHT) {
+		
+		/*
+		if(currentPlayer == LIGHT) 
+		{
 			setTitle("JChess - Light's Turn");
-			if(turn > 0) {
+			if(turn > 0) 
+			{
 				history.write(destSquare1, destSquare2, turn);
 				destSquare1 = null; destSquare2 = null;
 			}
-		} else {
+		} 
+		else 
+		{
 			setTitle("JChess - Dark's Turn");
 			turn++;
 		}
+		*/
 	}
 
 
 	private void setGridPanel()
 	{
-		gridPanel = new JPanel();
+		boardPanel = new JPanel();
 		gridLayout = new GridLayout(8,8);
 
-		gridPanel.setLayout(gridLayout);
+		boardPanel.setLayout(gridLayout);
 		int row, col;
 		for(row = 0; row < 8; row++)
 		{
 			for(col = 0; col < 8; col++)
 			{
-				gridPanel.add(boardSpots[row][col]);
+				boardPanel.add(boardSpots[row][col]);
 			}
 		}
 	}
@@ -221,8 +254,42 @@ public class BoardGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		Piece p;
+		BoardSpot deadPieceSpot;
 		int i, j;
 		Pair clicked;
+		int size;
+
+		// Is someone trying to bring a piece back from the dead??
+		size = player1GraveyardSpots.size();
+
+		for(i = 0; i < size; i++)
+		{
+			deadPieceSpot = player1GraveyardSpots.get(i);
+
+			if(deadPieceSpot == e.getSource())
+			{
+				locationOfDead = i;
+				deadPiece = player1.getGraveyard().getPiece(i);
+				handleGraveyardPieceSourceSelection();
+			}
+			
+		}
+
+		size = player2GraveyardSpots.size();
+
+		for(i = 0; i < size; i++)
+		{
+			deadPieceSpot = player2GraveyardSpots.get(i);
+
+			if(deadPieceSpot == e.getSource())
+			{
+				locationOfDead = i;
+				deadPiece = player2.getGraveyard().getPiece(i);
+				handleGraveyardPieceSourceSelection();
+			}
+		}	
+
+		// Were one of our chess buttons clicked??
 		for(i = 0; i < 8; i++)
 		{
 			for(j = 0; j < 8; j++)
@@ -231,7 +298,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 					p = board.getSquare(i, j).getPiece();
 					clicked = new Pair(i,j);
 
-					if(currentlyMoving &&  p!= null && p.getColor() == currentPlayer){
+					if(bringingBackTheDead)
+					{
+						handleGraveyardPieceDestSelection(clicked);
+					}
+
+					else if(currentlyMoving &&  p!= null && p.getColor() == currentPlayer){
 						handlePieceSourceSelection(clicked);
 						return;
 
@@ -245,21 +317,55 @@ public class BoardGUI extends JFrame implements ActionListener {
 						handlePieceSourceSelection(clicked);
 						return;
 					}
-//					j = 8;
-//					i = 8;
+					j = 8;
+					i = 8;
 				}
 			}
 		}
-        isGraveyardPiece = true;
-		BoardSpot spot = (BoardSpot)e.getSource();
+        
+	}
 
+	public void handleGraveyardPieceDestSelection(Pair dest)
+	{
+		int cost;
+		board.getSquare(dest).setPiece(deadPiece);
+
+		cost = Graveyard.getCost(deadPiece);
+
+		if(currentPlayer == LIGHT)
+		{
+			player1.getGraveyard().removePiece(locationOfDead);
+			player1.removePoints(cost);
+		}
+		else
+		{
+			player2.getGraveyard().removePiece(locationOfDead);
+			player2.removePoints(cost);
+		}
+
+		bringingBackTheDead = false;
+
+		switchTurn();
+
+		display();
 	}
 
 
-	public void handleGraveyardPiece(BoardSpot spot)
-    {
+	public void handleGraveyardPieceSourceSelection()
+    	{
+		if(currentPlayer == LIGHT)
+		{
+			board.highlightEnableBottomRows();
+		}
+		else
+		{
+			board.highlightEnableTopRows();
+		}
 
-    }
+		bringingBackTheDead = true;
+
+		display();
+    	}
 
 	public void handlePieceSourceSelection(Pair source)
 	{
@@ -281,23 +387,23 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public void handlePieceDestinationSelection(Pair dest)
 	{
-		int numPoints = 0;
 		String name = "";
 		Square destSquare = board.getSquare(dest);
-		Piece p = destSquare.getPiece();
-		if(p != null)
+		Piece destPiece = destSquare.getPiece();
+		
+		if(destPiece != null)
 		{
-			p = destSquare.popPiece();
-			name = p.getName();
-			numPoints = getPoints(name);
-			handleCapturedPointsAndPieces(p,numPoints);
+
+			destPiece = destSquare.popPiece();
+			name = destPiece.getName();
+			handleCapturedPiece(destPiece);
 		}
 
-		Pair clicked = sourceLocation;
-		Piece clickedPiece = board.getSquare(clicked).getPiece();
+		Pair sourcePair = sourceLocation;
+		Piece sourcePiece = board.getSquare(sourcePair).getPiece();
 
-		board.getSquare(dest).setPiece(clickedPiece);
-		board.getSquare(clicked).setPiece(null);
+		board.getSquare(dest).setPiece(sourcePiece);
+		board.getSquare(sourcePair).setPiece(null);
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
 		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
@@ -311,46 +417,23 @@ public class BoardGUI extends JFrame implements ActionListener {
 		currentlyMoving = false;
 	}
 
-	private void handleCapturedPointsAndPieces(Piece p, int numPoints)
+	private void handleCapturedPiece(Piece captured)
 	{
-		if(currentPlayer == DARK && p != null)
+		if(currentPlayer == LIGHT && captured != null)
 		{
-			player2.addPoints(numPoints);
-			player1.getGraveyard().addToGraveyard(p);
+			if(captured instanceof Pawn)
+				player1.addPoints(PAWN_VALUE);
+			else
+				player2.getGraveyard().addToGraveyard(captured);
 		}
-		else if(currentPlayer == LIGHT && p != null)
+		else if(currentPlayer == DARK && captured != null)
 		{
-			player1.addPoints(numPoints);
-			player2.getGraveyard().addToGraveyard(p);
-		}
+			if(captured instanceof Pawn)
+				player2.addPoints(PAWN_VALUE);
+			else
+				player1.getGraveyard().addToGraveyard(captured);
+		}	
 	}
-
-	private int getPoints(String name)
-	{
-		int numPoints = 0;
-		switch(name) {
-			case "Pawn":
-				numPoints = 1;
-				break;
-			case "Knight":
-				numPoints = 2;
-				break;
-			case "Rook":
-				numPoints = 2;
-				break;
-			case "Bishop":
-				numPoints = 2;
-				break;
-			case "Queen":
-				numPoints = 4;
-				break;
-			default:
-				break;
-		}
-		return numPoints;
-	}
-
-
 
 	/*
 	 * isInCheck()
@@ -451,7 +534,97 @@ public class BoardGUI extends JFrame implements ActionListener {
 		return ans;
 	}
 
+	public void setGraveyardSpots(Player player)
+	{
+		Piece currentPiece;
+		Graveyard graveyard;
+		String pieceName;
+		int numPieces;
+		int numPoints;
 
+		if(player == player1) // Setting Player 1's Graveyard spots
+		{
+			player1GraveyardSpots = new ArrayList<BoardSpot>();
+			graveyard = player.getGraveyard();
+			numPieces = graveyard.getNumPieces();
+
+			for(int i = 0; i < numPieces; i++)
+			{
+				numPoints = player1.getNumPoints();
+				currentPiece = graveyard.getPiece(i);
+				pieceName = currentPiece.getName();
+				
+				switch(pieceName)
+				{
+					case "Rook":
+						player1GraveyardSpots.add(new BoardSpot(LIGHT_ROOK));
+						break;
+					case "Knight":
+						player1GraveyardSpots.add(new BoardSpot(LIGHT_KNIGHT));
+						break;
+					case "Bishop":
+						player1GraveyardSpots.add(new BoardSpot(LIGHT_BISHOP));
+						break;
+					case "Queen":
+						player1GraveyardSpots.add(new BoardSpot(LIGHT_QUEEN));
+						break;
+				}
+					
+				if((numPoints >= Graveyard.getCost(currentPiece)) && (currentPlayer == LIGHT))
+				{
+					player1GraveyardSpots.get(i).setEnabled(true);
+				}
+				else
+				{
+					player1GraveyardSpots.get(i).setEnabled(false);
+				}
+
+				player1GraveyardSpots.get(i).addActionListener(this);
+			}
+			
+			
+		}
+		else
+		{
+			player2GraveyardSpots = new ArrayList<BoardSpot>();
+			graveyard = player.getGraveyard();
+			numPieces = graveyard.getNumPieces();
+
+			for(int i = 0; i < numPieces; i++)
+			{
+				numPoints = player2.getNumPoints();
+				currentPiece = graveyard.getPiece(i);
+				pieceName = currentPiece.getName();
+				
+				switch(pieceName)
+				{
+					case "Rook":
+						player2GraveyardSpots.add(new BoardSpot(DARK_ROOK));
+						break;
+					case "Knight":
+						player2GraveyardSpots.add(new BoardSpot(DARK_KNIGHT));
+						break;
+					case "Bishop":
+						player2GraveyardSpots.add(new BoardSpot(DARK_BISHOP));
+						break;
+					case "Queen":
+						player2GraveyardSpots.add(new BoardSpot(DARK_QUEEN));
+						break;
+				}
+
+				if((numPoints >= Graveyard.getCost(currentPiece)) && (currentPlayer == DARK))
+				{
+					player2GraveyardSpots.get(i).setEnabled(true);
+				}
+				else
+				{
+					player2GraveyardSpots.get(i).setEnabled(false);
+				}
+
+				player2GraveyardSpots.get(i).addActionListener(this);
+			}
+		}
+	}
 
 	public void setBoardSpots()
 	{

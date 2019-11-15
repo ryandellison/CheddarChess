@@ -7,15 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static constant.Points.PAWN_VALUE;
+import static constant.Points.ROOK_COST;
+import static constant.Points.KNIGHT_COST;
+import static constant.Points.BISHOP_COST;
+import static constant.Points.QUEEN_COST;
+
 public class Graveyard
 {
-	public final static int PAWN_VALUE = 1;
-	public final static int ROOK_VALUE = 2;
-	public final static int KNIGHT_VALUE = 3;
-	public final static int BISHOP_VALUE = 4;
-	public final static int QUEEN_VALUE = 8;
-
-	private int numPieces = 0;
 	private ArrayList<Piece> graveyard;
 
 	public Graveyard()
@@ -26,16 +25,25 @@ public class Graveyard
 	public void addToGraveyard(Piece p)
 	{
 		graveyard.add(p);
-		numPieces++;
 	}
 
 	public int getNumPieces()
 	{
-		return numPieces;
+		return graveyard.size();
 	}
-	public ArrayList<Piece>getGraveyard()
+
+	public Piece getPiece(int index)
 	{
-		return graveyard;
+		if((index >= 0) && (index <= graveyard.size()))
+			return graveyard.get(index);
+
+		return null;
+	}
+
+	public void removePiece(int index)
+	{
+		if((index >= 0) && (index <= graveyard.size()))
+			graveyard.remove(index);
 	}
 
 	public Square[] getPieces(Player player)
@@ -50,6 +58,20 @@ public class Graveyard
 		return null;
 	}
 
+	public static int getCost(Piece piece)
+	{
+		if(piece instanceof Rook)
+			return ROOK_COST;
+		else if(piece instanceof Knight)
+			return KNIGHT_COST;
+		else if(piece instanceof Bishop)
+			return BISHOP_COST;
+		else if(piece instanceof Queen)
+			return QUEEN_COST;
+
+		return 0;
+	}
+
 	private int getPieceValue(Piece piece)
 	{
 		int value = 0;
@@ -59,16 +81,16 @@ public class Graveyard
 				value = PAWN_VALUE;
 				break;
 			case "Rook":
-				value = ROOK_VALUE;
+				value = ROOK_COST;
 				break;
 			case "Knight":
-				value = KNIGHT_VALUE;
+				value = KNIGHT_COST;
 				break;
 			case "Bishop":
-				value = BISHOP_VALUE;
+				value = BISHOP_COST;
 				break;
 			case "Queen":
-				value = QUEEN_VALUE;
+				value = QUEEN_COST;
 				break;
 			default:
 				value = 0;

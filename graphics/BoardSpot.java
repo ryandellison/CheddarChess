@@ -18,7 +18,6 @@ public class BoardSpot extends JButton {
 	private Font font;
 	private boolean isEmpty;
 	private String piece;
-	private boolean enabled;
 
 	public BoardSpot(String piece)
 	{
@@ -26,24 +25,12 @@ public class BoardSpot extends JButton {
 		this.piece = piece;
 		isEmpty = piece.isEmpty(); // refers to if the spot has a piece in it or not.
 		font = new Font("Ariel", Font.PLAIN, 50);
+		setFont(font);
 
-		enabled = false;
-
-	}
-
-	public BoardSpot(String piece, int fontSize)
-	{
-		super(piece);
-		this.piece = piece;
-		isEmpty = piece.isEmpty();
-		font = new Font("Ariel", Font.PLAIN,fontSize);
-
-		enabled = true;
 	}
 
 	public void set(int index, int row, boolean highlight)
 	{
-		setFont(font);
 		setOpaque(true);
 		if(highlight)
 			setBackground(HIGHLIGHTED_SPOT);

@@ -43,7 +43,8 @@ public class Square
 		return piece;
 	}
 
-	public Piece popPiece(){
+	public Piece popPiece()
+	{
 		Piece p = this.piece;
 		this.piece = null;
 		return p;

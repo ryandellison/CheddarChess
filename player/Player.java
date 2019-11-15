@@ -7,9 +7,10 @@ public class Player {//creates a player for the chess game
     private boolean color;
     private Graveyard graveyard;
 
-    public Player(boolean color){//the color decides if they are player one or 2,
+    public Player(boolean color)
+    {//the color decides if they are player one or 2,
                                 //and the other fields are initialized
-        if(!color){
+        if(color){
             playerNum = "Player 1";
         }
         else{
@@ -27,7 +28,10 @@ public class Player {//creates a player for the chess game
         this.numPoints += numPoints;
     }
 
-    public void removePoints(int numPoints){ this.numPoints -= numPoints; }
+    public void removePoints(int numPoints)
+    { 
+    		this.numPoints -= numPoints; 
+	}
 
     public String getPlayerNum() {
         return playerNum;
