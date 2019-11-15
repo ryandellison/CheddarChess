@@ -393,7 +393,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		
 		if(destPiece != null)
 		{
-
 			destPiece = destSquare.popPiece();
 			name = destPiece.getName();
 			handleCapturedPiece(destPiece);
@@ -401,6 +400,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		Pair sourcePair = sourceLocation;
 		Piece sourcePiece = board.getSquare(sourcePair).getPiece();
+
+		if(sourcePiece instanceof Pawn)
+		{
+			((Pawn) sourcePiece).setFirstMoveToFalse();
+		}
 
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);

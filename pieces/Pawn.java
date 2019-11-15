@@ -51,14 +51,14 @@ public class Pawn extends Piece
 		if(getColor() == LIGHT){
 			if(firstMove){
 				moves.addMove(new Pair(row - 2, col));
-				firstMove = false;
+				//firstMove = false;
 			}
 			moves.addMove(new Pair(row-1, col));
 		}
 		else{
 			if(firstMove){
 				moves.addMove(new Pair(row+2, col));
-				firstMove = false;
+				//firstMove = false;
 			}
 			moves.addMove(new Pair(row+1, col));
 		}
@@ -68,6 +68,10 @@ public class Pawn extends Piece
 		
 		return moves;
 	}
+
+	public void setFirstMoveToFalse(){ firstMove = false; }
+
+	public boolean getFirstMove(){ return firstMove; }
 
 	public String getUnicode(){
 		if(this.getColor() == true)
