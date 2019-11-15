@@ -79,6 +79,13 @@ public class Square
 	{
 		return highlighted;
 	}
-  
-  
+
+	@Override
+	public String toString() {
+		if(getPiece() != null) {
+			return getAlias() + "," + getPiece().getName() + ","
+					+ getPiece().getUnicode() + "," + getColor() + "," + getEnabled();
+		}
+		return getAlias()+","+"NULL,NULL,"+getColor()+","+getEnabled();
+	}
 }

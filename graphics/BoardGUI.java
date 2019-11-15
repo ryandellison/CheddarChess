@@ -59,6 +59,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Square destSquare1, destSquare2;
 	private boolean currentlyMoving = false;
 	private MovesHistory history;
+	private GameState gameState;
 	private int turn = 0;
 	private boolean isGraveyardPiece = false;
 	
@@ -103,7 +104,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.enablePiecesByColor(currentPlayer);
 
 		display();
-		history = new MovesHistory(board);
+		//history = new MovesHistory(board);
 	}
 
 	/*
@@ -161,7 +162,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		menuItem2 = new JMenuItem("Load Game");
 
 		menuItem.addActionListener((event) -> saveGame());
-		menuItem.addActionListener((event) -> loadGame());
+		menuItem2.addActionListener((event) -> loadGame());
 
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
@@ -173,14 +174,33 @@ public class BoardGUI extends JFrame implements ActionListener {
 		return menuBar;
 	}
 
+	// WORK IN PROGRESS
 	private void loadGame()
 	{
+		gameState = new GameState();
+		System.out.println("loading game");
+		gameState.openFile();
+
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+
+			}
+		}
 
 	}
 
+	// WORK IN PROGRESS
 	private void saveGame()
 	{
-
+		gameState = new GameState();
+		String text = "";
+		for(int i = 0; i < 8;i++){
+			for(int j = 0; j < 8; j++){
+				text = i+","+j+","+board.getSquare(i,j).toString();
+				gameState.writeToFile(text);
+			}
+		}
+		gameState.close();
 	}
 
 	// Creates graveyard, shows points and player number
