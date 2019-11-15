@@ -155,10 +155,13 @@ public class BoardGUI extends JFrame implements ActionListener {
 		JMenuBar menuBar;
 		JMenuItem menuItem, menuItem2;
 		menuBar = new JMenuBar();
-		menu = new JMenu("File");
+		menu = new JMenu("Options");
 		menu.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem = new JMenuItem("Save Game");
 		menuItem2 = new JMenuItem("Load Game");
+
+		menuItem.addActionListener((event) -> saveGame());
+		menuItem.addActionListener((event) -> loadGame());
 
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
@@ -168,6 +171,16 @@ public class BoardGUI extends JFrame implements ActionListener {
 		menuBar.add(menu);
 		menuBar.setSize(new Dimension(10,10));
 		return menuBar;
+	}
+
+	private void loadGame()
+	{
+
+	}
+
+	private void saveGame()
+	{
+
 	}
 
 	// Creates graveyard, shows points and player number
