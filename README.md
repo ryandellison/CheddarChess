@@ -12,22 +12,22 @@ A twist on classic chess written in Java for portability.
 
 ## Finished Classes
 
-- [] board.Board
-- [] board.Square
-- [] graphics.BoardGUI
-- [] graphics.BoardSpot
-- [] pieces.Pair
-- [] pieces.Moves
-- [] pieces.MovesHistory
-- [] pieces.Piece
-- [] pieces.Pawn
-- [] pieces.Rook
-- [] pieces.Knight
-- [] pieces.Bishop
-- [] pieces.Queen
-- [] pieces.King
+- [ ] board.Board
+- [ ] board.Square
+- [ ] graphics.BoardGUI
+- [ ] graphics.BoardSpot
+- [ ] pieces.Pair
+- [ ] pieces.Moves
+- [ ] pieces.MovesHistory
+- [ ] pieces.Piece
+- [ ] pieces.Pawn
+- [ ] pieces.Rook
+- [ ] pieces.Knight
+- [ ] pieces.Bishop
+- [ ] pieces.Queen
+- [ ] pieces.King
 - [x] player.Player
-- [] player.Graveyard
+- [ ] player.Graveyard
 - [x] constant.Colors
 - [x] constant.Points
 
