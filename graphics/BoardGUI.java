@@ -49,6 +49,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private JPanel playerOnePanel;
 	private JPanel playerTwoPanel;
 	private Container contentPane;
+	private JMenu menu;
+	private JMenuBar menuBar;
+	private JMenuItem menuItem;
 
 	private Board board;
 	private Player player1;
@@ -144,7 +147,23 @@ public class BoardGUI extends JFrame implements ActionListener {
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
 
+		contentPane.add(addMenuBar(), BorderLayout.NORTH);
+
 		setVisible(true);
+	}
+
+	private JMenuBar addMenuBar()
+	{
+		menuBar = new JMenuBar();
+		menu = new JMenu("File");
+		menu.setFont(new Font("Ariel",Font.BOLD,12));
+		menuItem = new JMenuItem("Save Game");
+		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
+
+		menu.add(menuItem);
+		menuBar.add(menu);
+		menuBar.setSize(new Dimension(10,10));
+		return menuBar;
 	}
 
 	// Creates graveyard, shows points and player number

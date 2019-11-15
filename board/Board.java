@@ -32,7 +32,6 @@ public class Board
 
 		fillBoard();
 	}
-
 	/*
 	 * fillBoard()
 	 *
@@ -331,7 +330,6 @@ public class Board
 
 		System.out.println("\n");
 	}
-
 
     	/*
          * getValidMoves()
