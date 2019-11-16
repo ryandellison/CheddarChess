@@ -19,14 +19,14 @@ public class Square
 
 		enabled = false;
 		highlighted = false;
-  	}
-  	
+	}
+
 	public Square(String alias, boolean color, Piece piece)
 	{
 		this.alias = alias;
 		this.color = color;
 		this.piece = piece;
-  	}
+	}
 
 	public String getAlias()
 	{
@@ -84,8 +84,10 @@ public class Square
 	public String toString() {
 		if(getPiece() != null) {
 			return getAlias() + "," + getPiece().getName() + ","
-					+ getPiece().getUnicode() + "," + getColor() + "," + getEnabled();
+					+ getColor() +"," +getPiece().getColor()+ ","
+					+ getEnabled();
 		}
-		return getAlias()+","+"NULL,NULL,"+getColor()+","+getEnabled();
+		return getAlias()+","+"Empty,"+getColor()+","
+				+"false"+","+getEnabled();
 	}
 }

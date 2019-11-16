@@ -158,52 +158,52 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private JMenuBar addMenuBar()
 	{
 		JMenuBar menuBar;
-		JMenuItem menuItem, menuItem2;
+		JMenuItem menuItem, menuItem2, menuItem3;
 		menuBar = new JMenuBar();
 		menu = new JMenu("Options");
 		menu.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem = new JMenuItem("Save Game");
 		menuItem2 = new JMenuItem("Load Game");
+		menuItem3 = new JMenuItem("Rematch");
 
 		menuItem.addActionListener((event) -> saveGame());
 		menuItem2.addActionListener((event) -> loadGame());
+		menuItem3.addActionListener(this::rematch);
 
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
+		menuItem3.setFont(new Font("Ariel",Font.BOLD,12));
 
 		menu.add(menuItem);
 		menu.add(menuItem2);
+		menu.add(menuItem3);
 		menuBar.add(menu);
 		menuBar.setSize(new Dimension(10,10));
 		return menuBar;
 	}
 
+	private void rematch(ActionEvent event)
+	{
+		dispose();
+		BoardGUI boardGUI = new BoardGUI();
+		boardGUI.run();
+	}
+
 	// WORK IN PROGRESS
 	private void loadGame()
 	{
-		gameState = new GameState();
+		gameState = new GameState(true);
 		System.out.println("loading game");
-		gameState.openFile();
-
-		for(int i = 0; i < 8; i++){
-			for(int j = 0; j < 8; j++){
-
-			}
-		}
-
+		board = gameState.getBoard();
+		gameState.close();
+		display();
 	}
 
 	// WORK IN PROGRESS
 	private void saveGame()
 	{
-		gameState = new GameState();
-		String text = "";
-		for(int i = 0; i < 8;i++){
-			for(int j = 0; j < 8; j++){
-				text = i+","+j+","+board.getSquare(i,j).toString();
-				gameState.writeToFile(text);
-			}
-		}
+		gameState = new GameState(false);
+		gameState.writeToFile(board);
 		gameState.close();
 	}
 

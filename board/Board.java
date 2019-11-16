@@ -23,6 +23,8 @@ package board;
 
 import pieces.*;
 
+import java.util.ArrayList;
+
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
@@ -35,6 +37,66 @@ public class Board
 		board = new Square[8][8];
 
 		fillBoard();
+	}
+	public Board(ArrayList<String[]> data)
+	{
+		board = new Square[8][8];
+		fillSavedBoard(data);
+	}
+
+	private void fillSavedBoard(ArrayList<String[]> data)
+	{
+		String alias,pieceColor,tileColor,piece,enable;
+		int index = 0;
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				alias = data.get(index)[0];
+				pieceColor = data.get(index)[3];
+				tileColor = data.get(index)[2];
+				piece = data.get(index)[1];
+				enable = data.get(index)[4];
+				board[i][j] = new Square(alias, convertColor(tileColor),convertToPiece(piece,pieceColor));
+				if(enable.equals("false"))
+					board[i][j].disable();
+				else
+					board[i][j].enable();
+				index++;
+			}
+		}
+	}
+	private boolean convertColor(String value)
+	{
+		return value.equals("true")  ? LIGHT : DARK;
+	}
+
+	private Piece convertToPiece(String name, String colorValue)
+	{
+		Piece piece;
+		boolean color = convertColor(colorValue);
+		switch (name){
+			case "Pawn":
+				piece = new Pawn(color,name);
+				break;
+			case "Rook":
+				piece = new Rook(color,name);
+				break;
+			case "Knight":
+				piece = new Knight(color,name);
+				break;
+			case "Bishop":
+				piece = new Bishop(color,name);
+				break;
+			case "King":
+				piece = new King(color,name);
+				break;
+			case "Queen":
+				piece = new Queen(color,name);
+				break;
+			default:
+				piece = null;
+				break;
+		}
+		return piece;
 	}
 
 	/*
