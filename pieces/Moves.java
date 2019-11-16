@@ -5,8 +5,6 @@
  * possible moves (Pair's) for a piece.
  * The moves are only valid IFF isValid is true.
  *
- * Written by: Ryan Ellison
- *
  */
 
 package pieces;
@@ -16,7 +14,7 @@ import java.util.LinkedList;
 public class Moves
 {
 	private LinkedList<Pair> moves;	// the linkedlist of Pair moves
-	private boolean isInBounds;	// indicates whether or not the moves are valid
+	private boolean isInBounds;	// indicates whether or not the moves are in bounds
 
 	/*
 	 * Moves()

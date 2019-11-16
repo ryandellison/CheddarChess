@@ -6,9 +6,8 @@
  * using two-dimensional array notation.
  *
  * Methods:
- * 	getRow()
- * 	getCol()
- *
+ * 	public int getRow()
+ * 	public int getCol()
  */
 
 package pieces;
@@ -36,7 +35,6 @@ public class Pair
 	 *
 	 * Output:
 	 * 	int row	// the row
-	 *
 	 */
 
     	public int getRow()
@@ -55,7 +53,6 @@ public class Pair
 	 *
 	 * Output:
 	 * 	int col	// the column
-	 *
 	 */
 
     	public int getCol()

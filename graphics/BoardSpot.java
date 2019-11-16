@@ -24,7 +24,7 @@ public class BoardSpot extends JButton {
 		super(piece);
 		this.piece = piece;
 		isEmpty = piece.isEmpty(); // refers to if the spot has a piece in it or not.
-		font = new Font("Ariel", Font.PLAIN, 50);
+		font = new Font("Sans Serif", Font.PLAIN, 50);
 		setFont(font);
 
 	}

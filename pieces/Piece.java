@@ -5,7 +5,7 @@
  * in common and is extended by the other pieces.
  *
  * Methods:
- * 	getColor()
+ * 	boolean getColor()
  * 	getName()
  * 	move()
  *

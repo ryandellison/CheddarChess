@@ -1,20 +1,50 @@
 #!/bin/bash
 
+# A script used for building JChess on Unix-based machines with
+# bash.
+# Tested on MacOS.
+#
+# Author: Ryan Ellison
+
 JAVAC=$(whereis javac)
+
+if [ $# -eq 0 ] ; then
+	echo "Usage: ./build [OPTION...]"
+	echo "Try \`./build --help' for more information."
+	exit 0
+fi
 
 compile ()
 {
-	$JAVAC -g *.java board/*.java player/*.java pieces/*.java graphics/*.java
+	$JAVAC -g *.java board/*.java player/*.java pieces/*.java graphics/*.java constant/*.java
 }
 
 clean ()
 {
-	rm *.class board/*.class player/*.class pieces/*.class graphics/*.class
+	rm *.class board/*.class player/*.class pieces/*.class graphics/*.class constant/*.class
+}
+
+generate_jar ()
+{
+	compile
+	jar -cvfm0 JChess.jar manifest-additions *.java *.class board/ player/ pieces/ graphics/ constant/
+}
+
+print_help()
+{
+	echo "OPTIONS:"
+	printf "\tcompile:\tcompiles the java source into class files\n"
+	printf "\tclean:\t\tremoves all class files\n"
+	printf "\tjar:\t\tcompiles, then generates a jar file for the game\n"
 }
 
 if [ $1 = "compile" ] ; then
 	compile
 elif [ $1 = "clean" ] ; then
 	clean
+elif [ $1 = "jar" ] ; then
+	generate_jar
+elif [ $1 = "--help" ] ; then
+	print_help
 fi
 

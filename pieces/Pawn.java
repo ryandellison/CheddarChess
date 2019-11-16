@@ -69,11 +69,18 @@ public class Pawn extends Piece
 		return moves;
 	}
 
-	public void setFirstMoveToFalse(){ firstMove = false; }
+	public void setFirstMoveToFalse()
+	{ 
+		firstMove = false; 
+	}
 
-	public boolean getFirstMove(){ return firstMove; }
+	public boolean getFirstMove()
+	{ 
+		return firstMove; 
+	}
 
 	public String getUnicode(){
+		
 		if(this.getColor() == true)
 		{
 			return "\u2659";

@@ -42,8 +42,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 	// CONSTANTS AND VARIABLES FOR GUI
 	private static final String EMPTY_PIECE = "";
 	private BoardSpot[][] boardSpots;
-	private ArrayList<BoardSpot> player1GraveyardSpots;
-	private ArrayList<BoardSpot> player2GraveyardSpots;
+	private ArrayList<BoardSpot> lightGraveyardSpots;
+	private ArrayList<BoardSpot> darkGraveyardSpots;
 	private GridLayout gridLayout;
 	private JPanel boardPanel;
 	private JPanel playerOnePanel;
@@ -71,8 +71,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 	{
 		boardSpots = new BoardSpot[8][8];
 
-		player1GraveyardSpots = new ArrayList<BoardSpot>();
-		player2GraveyardSpots = new ArrayList<BoardSpot>();
+		lightGraveyardSpots = new ArrayList<BoardSpot>();
+		darkGraveyardSpots = new ArrayList<BoardSpot>();
 
 		currentPlayer = LIGHT;
 		sourceLocation = null;
@@ -137,10 +137,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setGraveyardSpots(player2);
 
 		playerOnePanel = new JPanel();
-		playerOnePanel = new JPanel();
+		playerTwoPanel = new JPanel();
 
-		setPlayerGraveYardPanel(playerOnePanel,player1, player1GraveyardSpots);
-		setPlayerGraveYardPanel(playerTwoPanel,player2, player2GraveyardSpots);
+		setPlayerGraveYardPanel(playerOnePanel,player1, lightGraveyardSpots);
+		setPlayerGraveYardPanel(playerTwoPanel,player2, darkGraveyardSpots);
 
 		contentPane.add(boardPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
@@ -215,9 +215,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		topPanel.setOpaque(true);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
 
-		String info = player.getPlayerNum() + "           " + player.getNumPoints();
+		String info = "<html>" + player.getPlayerName() + "<br/># Points: " + player.getNumPoints() + "</html>";
 		JLabel nameLabel = new JLabel(info, SwingConstants.CENTER); // player name
-		nameLabel.setFont(new Font("Ariel", Font.BOLD,15));
+		nameLabel.setFont(new Font("Sans Serif", Font.BOLD,17));
 
 		nameLabel.setPreferredSize(new Dimension(150,25));
 
@@ -316,11 +316,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 		int size;
 
 		// Is someone trying to bring a piece back from the dead??
-		size = player1GraveyardSpots.size();
+		size = lightGraveyardSpots.size();
 
 		for(i = 0; i < size; i++)
 		{
-			deadPieceSpot = player1GraveyardSpots.get(i);
+			deadPieceSpot = lightGraveyardSpots.get(i);
 
 			if(deadPieceSpot == e.getSource())
 			{
@@ -331,11 +331,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 			
 		}
 
-		size = player2GraveyardSpots.size();
+		size = darkGraveyardSpots.size();
 
 		for(i = 0; i < size; i++)
 		{
-			deadPieceSpot = player2GraveyardSpots.get(i);
+			deadPieceSpot = darkGraveyardSpots.get(i);
 
 			if(deadPieceSpot == e.getSource())
 			{
@@ -428,6 +428,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		Moves moves;
 
 		moves = board.getValidMoves(source);
+
+		board.unhighlightAllSquares();
+		board.disableAllSquares();
+		board.enablePiecesByColor(currentPlayer);
 
 		board.highlightSquares(moves);
 		board.enableSquares(moves);
@@ -604,7 +608,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		if(player == player1) // Setting Player 1's Graveyard spots
 		{
-			player1GraveyardSpots = new ArrayList<BoardSpot>();
+			lightGraveyardSpots = new ArrayList<BoardSpot>();
 			graveyard = player.getGraveyard();
 			numPieces = graveyard.getNumPieces();
 
@@ -617,36 +621,36 @@ public class BoardGUI extends JFrame implements ActionListener {
 				switch(pieceName)
 				{
 					case "Rook":
-						player1GraveyardSpots.add(new BoardSpot(LIGHT_ROOK));
+						lightGraveyardSpots.add(new BoardSpot(LIGHT_ROOK));
 						break;
 					case "Knight":
-						player1GraveyardSpots.add(new BoardSpot(LIGHT_KNIGHT));
+						lightGraveyardSpots.add(new BoardSpot(LIGHT_KNIGHT));
 						break;
 					case "Bishop":
-						player1GraveyardSpots.add(new BoardSpot(LIGHT_BISHOP));
+						lightGraveyardSpots.add(new BoardSpot(LIGHT_BISHOP));
 						break;
 					case "Queen":
-						player1GraveyardSpots.add(new BoardSpot(LIGHT_QUEEN));
+						lightGraveyardSpots.add(new BoardSpot(LIGHT_QUEEN));
 						break;
 				}
 					
 				if((numPoints >= Graveyard.getCost(currentPiece)) && (currentPlayer == LIGHT))
 				{
-					player1GraveyardSpots.get(i).setEnabled(true);
+					lightGraveyardSpots.get(i).setEnabled(true);
 				}
 				else
 				{
-					player1GraveyardSpots.get(i).setEnabled(false);
+					lightGraveyardSpots.get(i).setEnabled(false);
 				}
 
-				player1GraveyardSpots.get(i).addActionListener(this);
+				lightGraveyardSpots.get(i).addActionListener(this);
 			}
 			
 			
 		}
 		else
 		{
-			player2GraveyardSpots = new ArrayList<BoardSpot>();
+			darkGraveyardSpots = new ArrayList<BoardSpot>();
 			graveyard = player.getGraveyard();
 			numPieces = graveyard.getNumPieces();
 
@@ -659,29 +663,29 @@ public class BoardGUI extends JFrame implements ActionListener {
 				switch(pieceName)
 				{
 					case "Rook":
-						player2GraveyardSpots.add(new BoardSpot(DARK_ROOK));
+						darkGraveyardSpots.add(new BoardSpot(DARK_ROOK));
 						break;
 					case "Knight":
-						player2GraveyardSpots.add(new BoardSpot(DARK_KNIGHT));
+						darkGraveyardSpots.add(new BoardSpot(DARK_KNIGHT));
 						break;
 					case "Bishop":
-						player2GraveyardSpots.add(new BoardSpot(DARK_BISHOP));
+						darkGraveyardSpots.add(new BoardSpot(DARK_BISHOP));
 						break;
 					case "Queen":
-						player2GraveyardSpots.add(new BoardSpot(DARK_QUEEN));
+						darkGraveyardSpots.add(new BoardSpot(DARK_QUEEN));
 						break;
 				}
 
 				if((numPoints >= Graveyard.getCost(currentPiece)) && (currentPlayer == DARK))
 				{
-					player2GraveyardSpots.get(i).setEnabled(true);
+					darkGraveyardSpots.get(i).setEnabled(true);
 				}
 				else
 				{
-					player2GraveyardSpots.get(i).setEnabled(false);
+					darkGraveyardSpots.get(i).setEnabled(false);
 				}
 
-				player2GraveyardSpots.get(i).addActionListener(this);
+				darkGraveyardSpots.get(i).addActionListener(this);
 			}
 		}
 	}
