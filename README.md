@@ -12,11 +12,11 @@ A twist on classic chess written in Java for portability.
 
 ## Finished Classes
 
-- [ ] board.Board
+- [x] board.Board
 - [ ] board.Square
 - [ ] graphics.BoardGUI
 - [ ] graphics.BoardSpot
-- [ ] pieces.Pair
+- [x] pieces.Pair
 - [ ] pieces.Moves
 - [ ] pieces.MovesHistory
 - [ ] pieces.Piece
