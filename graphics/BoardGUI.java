@@ -62,7 +62,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private GameState gameState;
 	private int turn = 0;
 	private boolean isGraveyardPiece = false;
-	
+
+	private boolean inCheck;
+
 	private boolean bringingBackTheDead;
 	private Piece deadPiece;
 	private int locationOfDead;
@@ -89,6 +91,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		bringingBackTheDead = false;
 		deadPiece = null;
+
+		inCheck = false;
 	}
 
 	private void setDimensions()
@@ -401,6 +405,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		bringingBackTheDead = false;
 
+		inCheck = isInCheck(!currentPlayer);
+
 		switchTurn();
 
 		display();
@@ -474,6 +480,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		board.disableAllSquares();
 		board.unhighlightAllSquares();
+
+		inCheck = isInCheck(!currentPlayer);
 
 		switchTurn();
 
