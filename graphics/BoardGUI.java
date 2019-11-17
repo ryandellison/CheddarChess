@@ -64,6 +64,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private boolean isGraveyardPiece = false;
 
 	private boolean inCheck;
+	private boolean inCheckMate;
+	private String checkMateString;
 
 	private boolean bringingBackTheDead;
 	private Piece deadPiece;
@@ -93,6 +95,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		deadPiece = null;
 
 		inCheck = false;
+		inCheckMate = false;
 	}
 
 	private void setDimensions()
@@ -287,7 +290,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.enablePiecesByColor(currentPlayer);
 
 		// Change the frame's title
-		// write to file
 		if(inCheck)
 		{
 			String player;
@@ -298,21 +300,19 @@ public class BoardGUI extends JFrame implements ActionListener {
 				player = "Light";
 			}
 			setTitle(player + " is in check");
+            setTitle(checkMateString);
 		}
-
+		else if(inCheckMate)
+		{
+			setTitle("CHECKMATE: GAME OVER");
+		}
 		else if(currentPlayer == LIGHT)
 		{
 			setTitle("JChess - Light's Turn");
-//			if(turn > 0)
-//			{
-//				history.write(destSquare1, destSquare2, turn);
-//				destSquare1 = null; destSquare2 = null;
-//			}
 		} 
 		else 
 		{
 			setTitle("JChess - Dark's Turn");
-//			turn++;
 		}
 
 	}
@@ -429,7 +429,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		bringingBackTheDead = false;
 
 		inCheck = isInCheck(!currentPlayer);
-
+		inCheckMate = isInCheckMate(!currentPlayer);
 		switchTurn();
 
 		display();
@@ -481,6 +481,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		String name = "";
 		Square destSquare = board.getSquare(dest);
 		Piece destPiece = destSquare.getPiece();
+		boolean dontSwitchTurn = false;
 		
 		if(destPiece != null)
 		{
@@ -499,16 +500,24 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
+        if(isInCheck(currentPlayer)){
+            board.getSquare(dest).setPiece(null);
+            board.getSquare(sourcePair).setPiece(sourcePiece);
+            dontSwitchTurn = true;
+        }
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
 		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
 
-		board.disableAllSquares();
+
 		board.unhighlightAllSquares();
 
 		inCheck = isInCheck(!currentPlayer);
-
-		switchTurn();
+		inCheckMate = isInCheckMate(!currentPlayer);
+        if(!dontSwitchTurn) {
+            board.disableAllSquares();
+            switchTurn();
+        }
 
 		display();
 		currentlyMoving = false;
@@ -566,6 +575,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 					Moves m = board.getValidMoves(new Pair(i, j));
 					if(m != null) {
 						if (m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1) {
+						    checkMateString = p.getName() + " can move to " +  board.getSquare(i, j).getAlias();
 							ans = true;
 						}
 					}
@@ -595,7 +605,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
-					alt = board.getSquare(i, j).getPiece();
+					alt = checkForAlternateMoves.getSquare(i, j).getPiece();
 					if(alt != null && alt.getColor() == kingColor){
 						altMoves = checkForAlternateMoves.getValidMoves(new Pair(i,j));
 						for (int k = 0; k < altMoves.getSize(); k++) {
