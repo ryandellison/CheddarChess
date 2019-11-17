@@ -382,7 +382,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 					}
 					else if (p == null || currentlyMoving) {
-						handlePieceDestinationSelection(clicked);
+						handlePieceDestinationSelection(clicked, board);
 						return;
 					}
 					else
@@ -395,7 +395,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 				}
 			}
 		}
-        
+        if(isInCheck(LIGHT))
+		{
+			System.out.println("Testing this bullshit");
+		}
+        else if(isInCheck(DARK))
+		{
+			System.out.println("Testing this bullshit");
+		}
 	}
 
 	public void handleGraveyardPieceDestSelection(Pair dest)
@@ -424,6 +431,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		display();
 	}
+
+
 
 
 	public void handleGraveyardPieceSourceSelection()
@@ -464,7 +473,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	}
 
-	public void handlePieceDestinationSelection(Pair dest)
+	public void handlePieceDestinationSelection(Pair dest, Board board)
 	{
 		String name = "";
 		Square destSquare = board.getSquare(dest);
@@ -603,7 +612,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 								//king moves, if the attacker can move to an available move, remove that move from
 								//the possible king moves
 								{
-									// kingMoves.removeMove(new Pair(attackDest.getRow(),attackDest.getCol()));
+									kingMoves.removeMove(x);
 								}
 							}
 						}
@@ -612,6 +621,27 @@ public class BoardGUI extends JFrame implements ActionListener {
 				if(kingMoves.getSize() == 0)//if all possible moves have been removed, we are in checkmate
 				{
 					ans = true;
+				}
+			}
+		}
+
+		if(ans){
+			Board checkForAlternateMoves = this.board;
+			Piece alt;
+			Moves altMoves;
+
+			for (int i = 0; i < 8; i++) {
+				for (int j = 0; j < 8; j++) {
+					alt = board.getSquare(i, j).getPiece();
+					altMoves = checkForAlternateMoves.getValidMoves(new Pair(i,j));
+					if(alt != null && alt.getColor() == kingColor){
+						for (int k = 0; k < altMoves.getSize(); k++) {
+							handlePieceDestinationSelection(altMoves.getPair(k), checkForAlternateMoves);
+							if(!isInCheck(kingColor)){
+								ans = false;
+							}
+						}
+					}
 				}
 			}
 		}
