@@ -196,7 +196,6 @@ public class GameState
      */
     public void close()
     {
-        System.out.println("closing");
         if(printWriter!=null)printWriter.close();
         if(scanner!= null)scanner.close();
     }
