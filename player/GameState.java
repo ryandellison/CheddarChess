@@ -1,6 +1,3 @@
-/**
- * Main funtion is to either save the game and load a game
- */
 package player;
 
 import board.Board;
@@ -14,24 +11,25 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main class is to either save the game and load a game
+ */
+
 public class GameState
 {
-    private File logFile;
     private static final String filePath = "GameData.txt";
     private PrintWriter printWriter;
     private FileWriter fileWriter;
     private Scanner scanner;
-    private boolean readonly;
     private ArrayList<String[]> data;
 
     /**
      * Creates a new gameState that either reads or writes to file
-     * @param readonly True is reading file
+     *
      */
     public GameState(boolean readonly)
     {
-        this.readonly = readonly;
-        if(!this.readonly)
+        if(!readonly)
             initialize();
         else
             initializeReadOnly();
@@ -64,10 +62,9 @@ public class GameState
 
     /**
      * Gets the line by line data for the board
-     * @return ArrayList of String arrays, each string array represents
-     * a square
+     *
      */
-    private ArrayList<String[]> readFile()
+    private void readFile()
     {
         data = new ArrayList<>(64);
         int i = 1;
@@ -76,12 +73,11 @@ public class GameState
             i++;
         }
         scanner.nextLine();
-        return data;
     }
 
     /**
      * Gets the Board representation from the file
-     * @return
+     * @return Board Object
      */
     public Board getBoard()
     {
@@ -117,18 +113,6 @@ public class GameState
         }
         scanner.nextLine();
     }
-
-//    private void getPlayer2(Player player)
-//    {
-//        String[] pieceData;
-//        Graveyard graveyard = player.getGraveyard();
-//        player.addPoints(Integer.parseInt(scanner.nextLine()));
-//        int numPieces = Integer.parseInt(scanner.nextLine());
-//        for(int i = 0; i < numPieces; i++){
-//            pieceData = scanner.nextLine().split(",");
-//            graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1]));
-//        }
-//    }
 
     /**
      * Converts the piece data to a Piece object
@@ -174,11 +158,11 @@ public class GameState
      */
     public void writeToFile(Board board, Player player1, Player player2)
     {
-        String text ="";
+        String text;
         for(int i = 0; i < 8;i++){
             for(int j = 0; j < 8; j++){
                 text = board.getSquare(i,j).toString();
-                printWriter.append(text+"\n");
+                printWriter.append(text).append("\n");
             }
         }
 
