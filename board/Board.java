@@ -129,8 +129,8 @@ public class Board
 		board[0][0] = new Square("A8", LIGHT, new Rook(DARK, "Rook"));
 		board[0][1] = new Square("B8", DARK, new Knight(DARK, "Knight"));
 		board[0][2] = new Square("C8", LIGHT, new Bishop(DARK, "Bishop"));
-		board[0][3] = new Square("D8", DARK, new King(DARK, "King"));
-		board[0][4] = new Square("E8", LIGHT, new Queen(DARK, "Queen"));
+		board[0][3] = new Square("D8", DARK, new Queen(DARK, "Queen"));
+		board[0][4] = new Square("E8", LIGHT, new King(DARK, "King"));
 		board[0][5] = new Square("F8", DARK, new Bishop(DARK, "Bishop"));
 		board[0][6] = new Square("G8", LIGHT, new Knight(DARK, "Knight"));
 		board[0][7] = new Square("H8", DARK, new Rook(DARK, "Rook"));
