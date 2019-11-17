@@ -288,23 +288,33 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		// Change the frame's title
 		// write to file
-		
-		/*
-		if(currentPlayer == LIGHT) 
+		if(inCheck)
+		{
+			String player;
+			if(currentPlayer == DARK){
+				player = "Dark";
+			}
+			else{
+				player = "Light";
+			}
+			setTitle(player + " is in check");
+		}
+
+		else if(currentPlayer == LIGHT)
 		{
 			setTitle("JChess - Light's Turn");
-			if(turn > 0) 
-			{
-				history.write(destSquare1, destSquare2, turn);
-				destSquare1 = null; destSquare2 = null;
-			}
+//			if(turn > 0)
+//			{
+//				history.write(destSquare1, destSquare2, turn);
+//				destSquare1 = null; destSquare2 = null;
+//			}
 		} 
 		else 
 		{
 			setTitle("JChess - Dark's Turn");
-			turn++;
+//			turn++;
 		}
-		*/
+
 	}
 
 
@@ -395,14 +405,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				}
 			}
 		}
-        if(isInCheck(LIGHT))
-		{
-			System.out.println("Testing this bullshit");
-		}
-        else if(isInCheck(DARK))
-		{
-			System.out.println("Testing this bullshit");
-		}
+
 	}
 
 	public void handleGraveyardPieceDestSelection(Pair dest)
@@ -558,12 +561,13 @@ public class BoardGUI extends JFrame implements ActionListener {
 				{
 					continue;
 				}
-				else if(p.getColor() != kingColor)
+				else if(p.getColor() != kingColor && p != null)
 				{//if the piece on this spot has a valid move to where the king is located, we go into check
 					Moves m = board.getValidMoves(new Pair(i, j));
-					if(m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1)
-					{
-						ans = true;
+					if(m != null) {
+						if (m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1) {
+							ans = true;
+						}
 					}
 				}
 			}
@@ -573,59 +577,18 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public boolean isInCheckMate(boolean kingColor)
 	{
-		Piece p;
-		Square s;
-		boolean ans = false;
-		boolean tracker = true;
-		Pair kingLoc = board.findKing(kingColor);
-		Pair attackDest;
-		Square kingSquare = board.getSquare(kingLoc);
-		Moves kingMoves = board.getValidMoves(kingLoc);
-		Moves attackMoves;
+//		Piece p;
+//		Square s;
+		boolean ans = true;
+		//boolean tracker = true;
+		//Pair kingLoc = board.findKing(kingColor);
+//		Pair attackDest;
+//		Square kingSquare = board.getSquare(kingLoc);
+//		Moves kingMoves = board.getValidMoves(kingLoc);
+//		Moves attackMoves;
 		//this will only go thru if the king is already in check
 		if(isInCheck(kingColor))
 		{
-			if(kingMoves.getSize() == 0)//if the king cannot move and there is a valid move to reach it, checkmate
-			{
-				ans = true;
-			}
-			else
-			{
-				for (int i = 0; i < 8; i++)
-				{
-					for (int j = 0; j < 8; j++)
-					{
-						s = board.getSquare(i,j);
-						p = s.getPiece();
-						attackMoves = board.getValidMoves(new Pair(i, j));
-						if(p == null)
-						{
-							continue;
-						}//p is the piece again, loop thru and get all of the pieces that are the opposite color
-						//of the king
-						else if(p.getColor() != kingColor)
-						{
-							for (int x = 0; x < attackMoves.getSize(); x++)
-							{
-								attackDest = attackMoves.getPair(x);
-								if(kingMoves.findPair(attackDest.getRow(),attackDest.getCol()) != -1)//for the valid
-								//king moves, if the attacker can move to an available move, remove that move from
-								//the possible king moves
-								{
-									kingMoves.removeMove(x);
-								}
-							}
-						}
-					}
-				}
-				if(kingMoves.getSize() == 0)//if all possible moves have been removed, we are in checkmate
-				{
-					ans = true;
-				}
-			}
-		}
-
-		if(ans){
 			Board checkForAlternateMoves = this.board;
 			Piece alt;
 			Moves altMoves;
@@ -633,13 +596,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
 					alt = board.getSquare(i, j).getPiece();
-					altMoves = checkForAlternateMoves.getValidMoves(new Pair(i,j));
 					if(alt != null && alt.getColor() == kingColor){
+						altMoves = checkForAlternateMoves.getValidMoves(new Pair(i,j));
 						for (int k = 0; k < altMoves.getSize(); k++) {
-							handlePieceDestinationSelection(altMoves.getPair(k), checkForAlternateMoves);
+							checkForAlternateMoves.getSquare(i,j).setPiece(alt);
 							if(!isInCheck(kingColor)){
 								ans = false;
 							}
+
 						}
 					}
 				}
