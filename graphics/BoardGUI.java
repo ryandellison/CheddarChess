@@ -155,6 +155,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
+	/**
+	 * Creates an option menu
+	 * @return JMenuBar
+	 */
 	private JMenuBar addMenuBar()
 	{
 		JMenuBar menuBar;
@@ -182,6 +186,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		return menuBar;
 	}
 
+	/**
+	 * Allows for rematch
+	 * @param event Button Clicked
+	 */
 	private void rematch(ActionEvent event)
 	{
 		dispose();
@@ -189,21 +197,26 @@ public class BoardGUI extends JFrame implements ActionListener {
 		boardGUI.run();
 	}
 
-	// WORK IN PROGRESS
+	/**
+	 * Loads the game from the saved data
+	 */
 	private void loadGame()
 	{
 		gameState = new GameState(true);
 		System.out.println("loading game");
 		board = gameState.getBoard();
+		gameState.getPlayerData(player1,player2);
 		gameState.close();
 		display();
 	}
 
-	// WORK IN PROGRESS
+	/**
+	 * Saves the Game data
+	 */
 	private void saveGame()
 	{
 		gameState = new GameState(false);
-		gameState.writeToFile(board);
+		gameState.writeToFile(board,player1,player2);
 		gameState.close();
 	}
 

@@ -1,18 +1,18 @@
 A8,Rook,true,false,false
 B8,Knight,false,false,false
-C8,Bishop,true,false,false
+C8,Empty,true,false,false
 D8,King,false,false,false
 E8,Queen,true,false,false
-F8,Bishop,false,false,false
+F8,Bishop,false,true,true
 G8,Knight,true,false,false
 H8,Rook,false,false,false
 A7,Pawn,false,false,false
 B7,Pawn,true,false,false
-C7,Pawn,false,false,false
-D7,Pawn,true,false,false
-E7,Pawn,false,false,false
+C7,Empty,false,false,false
+D7,Empty,true,false,false
+E7,Empty,false,false,false
 F7,Pawn,true,false,false
-G7,Pawn,false,false,false
+G7,Empty,false,false,false
 H7,Pawn,true,false,false
 A6,Empty,true,false,false
 B6,Empty,false,false,false
@@ -20,7 +20,7 @@ C6,Empty,true,false,false
 D6,Empty,false,false,false
 E6,Empty,true,false,false
 F6,Empty,false,false,false
-G6,Empty,true,false,false
+G6,Pawn,true,false,false
 H6,Empty,false,false,false
 A5,Empty,false,false,false
 B5,Empty,true,false,false
@@ -32,9 +32,9 @@ G5,Empty,false,false,false
 H5,Empty,true,false,false
 A4,Empty,true,false,false
 B4,Empty,false,false,false
-C4,Empty,true,false,false
+C4,Pawn,true,false,false
 D4,Empty,false,false,false
-E4,Empty,true,false,false
+E4,Bishop,true,false,false
 F4,Empty,false,false,false
 G4,Empty,true,false,false
 H4,Empty,false,false,false
@@ -47,7 +47,7 @@ F3,Empty,true,false,false
 G3,Empty,false,false,false
 H3,Empty,true,false,false
 A2,Pawn,true,true,true
-B2,Pawn,false,true,true
+B2,Empty,false,false,false
 C2,Pawn,true,true,true
 D2,Pawn,false,true,true
 E2,Pawn,true,true,true
@@ -55,10 +55,18 @@ F2,Pawn,false,true,true
 G2,Pawn,true,true,true
 H2,Pawn,false,true,true
 A1,Rook,false,true,true
-B1,Knight,true,true,true
-C1,Bishop,false,true,true
+B1,Empty,true,false,false
+C1,Empty,false,false,false
 D1,Queen,true,true,true
 E1,King,false,true,true
 F1,Bishop,true,true,true
 G1,Knight,false,true,true
 H1,Rook,true,true,true
+Player 1
+2
+1
+Knight,true
+Player 2
+1
+1
+Bishop,false
