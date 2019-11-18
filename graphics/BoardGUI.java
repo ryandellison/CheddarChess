@@ -50,7 +50,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private JPanel playerTwoPanel;
 	private Container contentPane;
 	private JMenu menu;
-	private JOptionPane dialogeBox;
 
 	private Board board;
 	private Player player1;
@@ -59,14 +58,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Pair sourceLocation;
 	private Square destSquare1, destSquare2;
 	private boolean currentlyMoving = false;
-	private MovesHistory history;
+
 	private GameState gameState;
-	private int turn = 0;
-	private boolean isGraveyardPiece = false;
 
 	private boolean inCheck;
 	private boolean inCheckMate;
-	private String checkMateString;
 
 	private boolean bringingBackTheDead;
 	private Piece deadPiece;
