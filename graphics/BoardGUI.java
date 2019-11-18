@@ -593,24 +593,27 @@ public class BoardGUI extends JFrame implements ActionListener {
 	public boolean isInCheckMate(boolean kingColor)
 	{
 		boolean ans = false;
-		Board checkForAlternateMoves = this.board.returnCopy();
+		Pair pair;
 		Piece alt;
+		Piece other;
 		Moves altMoves;
 
 		if(isInCheck(kingColor))
 		{
+			ans = true;
 			for (int i = 0; i < 8; i++) {
 				for (int j = 0; j < 8; j++) {
-					alt = checkForAlternateMoves.getSquare(i, j).getPiece();
+					pair = new Pair(i, j);
+					alt = board.getSquare(pair).getPiece();
 					if(alt != null && alt.getColor() == kingColor){
-						altMoves = checkForAlternateMoves.getValidMoves(new Pair(i,j));
+						altMoves = board.getValidMoves(pair);
 						for (int k = 0; k < altMoves.getSize(); k++) {
-							checkForAlternateMoves.getSquare(altMoves.getPair(k)).setPiece(alt);
+							other = board.getSquare(altMoves.getPair(k)).getPiece();
+							board.getSquare(altMoves.getPair(k)).setPiece(alt);
 							if(!isInCheck(kingColor)){
-								ans = true;
-								break;
+								ans = false;
 							}
-							checkForAlternateMoves = this.board.returnCopy();
+							board.getSquare(altMoves.getPair(k)).setPiece(other);
 						}
 					}
 				}
