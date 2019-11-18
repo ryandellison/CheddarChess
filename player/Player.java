@@ -14,8 +14,6 @@
 
 package player;
 
-import pieces.Piece;
-
 import static constant.Colors.LIGHT;
 
 public class Player 
