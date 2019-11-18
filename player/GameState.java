@@ -111,8 +111,9 @@ public class GameState
             pieceData = scanner.nextLine().split(",");
             graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1]));
         }
-        if(scanner.hasNextLine())
+        if(scanner.hasNextLine()){
             scanner.nextLine();
+        }
     }
 
     /**
