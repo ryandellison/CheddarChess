@@ -50,6 +50,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private JPanel playerTwoPanel;
 	private Container contentPane;
 	private JMenu menu;
+	private JOptionPane dialogeBox;
 
 	private Board board;
 	private Player player1;
@@ -156,6 +157,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		contentPane.add(addMenuBar(), BorderLayout.NORTH);
 
 		setVisible(true);
+
 	}
 
 	/**
@@ -175,7 +177,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		menuItem.addActionListener((event) -> saveGame());
 		menuItem2.addActionListener((event) -> loadGame());
-		menuItem3.addActionListener(this::rematch);
+		menuItem3.addActionListener((event) -> rematch());
 
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
@@ -191,9 +193,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	/**
 	 * Allows for rematch
-	 * @param event Button Clicked
+	 * //@param event Button Clicked
 	 */
-	private void rematch(ActionEvent event)
+	private void rematch()
 	{
 		dispose();
 		BoardGUI boardGUI = new BoardGUI();
@@ -306,12 +308,18 @@ public class BoardGUI extends JFrame implements ActionListener {
 			else{
 				player = "Light";
 			}
-			setTitle("CHECKMATE: GAME OVER! " + player + " wins!");
+			String message = "CHECKMATE: GAME OVER! " + player + " wins!";
+			setTitle(message);
 			board.disableAllSquares();
+			int result = JOptionPane.showConfirmDialog(contentPane,message,"GAME OVER", JOptionPane.YES_NO_OPTION);
+			if(result == 0){
+				rematch();
+			}
 		}
 		else {
 			if (inCheck) {
 				setTitle(player + " is in check");
+				JOptionPane.showMessageDialog(contentPane,player+ " is in check");
 			} else if (currentPlayer == LIGHT) {
 				setTitle("JChess - Light's Turn");
 			} else {
@@ -483,6 +491,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	public void handlePieceDestinationSelection(Pair dest, Board board)
 	{//self documenting
 		String name = "";
+		String message;
 		Square destSquare = board.getSquare(dest);
 		Piece destPiece = destSquare.getPiece();
 		boolean dontSwitchTurn = false;
@@ -516,7 +525,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 			board.getSquare(dest).setPiece(null);
 			board.getSquare(sourcePair).setPiece(sourcePiece);
 			dontSwitchTurn = true;
-			setTitle(player + " moved themselves into check, choose a different move");
+			message = player + " moved themselves into check, choose a different move";
+			setTitle(message);
+			JOptionPane.showMessageDialog(contentPane,message);
 		}
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
