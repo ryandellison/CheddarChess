@@ -640,7 +640,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 							if(!isInCheck(kingColor)){
 								ans = false;
 							}
-							//we dont want to actually place these pieces so we need to reset the potential move
+							//we dont want to actually place these pieces so we need to reset the potential moves
 							board.getSquare(altMoves.getPair(k)).setPiece(other);
 						}
 					}
