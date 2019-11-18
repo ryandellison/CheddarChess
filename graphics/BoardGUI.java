@@ -531,6 +531,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 			message = player + " moved themselves into check, choose a different move";
 			setTitle(message);
 			JOptionPane.showMessageDialog(contentPane,message);
+			board.disableAllSquares();
+			board.enablePiecesByColor(currentPlayer);
 		}
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
