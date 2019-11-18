@@ -301,7 +301,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		{
 			setTitle(player + " is in check");
 		}
-		else if(inCheckMate)
+		if(inCheckMate)
 		{
 			if(currentPlayer != DARK){
 				player = "Dark";
@@ -310,6 +310,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				player = "Light";
 			}
 			setTitle("CHECKMATE: GAME OVER! " + player + " wins!");
+			board.disableAllSquares();
 		}
 		else if(currentPlayer == LIGHT)
 		{
