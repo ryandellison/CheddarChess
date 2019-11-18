@@ -255,13 +255,13 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private void addToGraveyard(JPanel playerPanel, ArrayList<BoardSpot> playerGraveyardSpots)
 	{
 		int size;
-		
+
 		size = playerGraveyardSpots.size();
-		
-        	for(int i =0;i < size; i++)
+
+		for(int i =0;i < size; i++)
 		{
-            		playerPanel.add(playerGraveyardSpots.get(i));
-        	}
+			playerPanel.add(playerGraveyardSpots.get(i));
+		}
 	}
 
 	/*
@@ -290,27 +290,32 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.enablePiecesByColor(currentPlayer);
 
 		// Change the frame's title
+		String player;
+		if(currentPlayer == DARK){
+			player = "Dark";
+		}
+		else{
+			player = "Light";
+		}
 		if(inCheck)
 		{
-			String player;
-			if(currentPlayer == DARK){
+			setTitle(player + " is in check");
+		}
+		else if(inCheckMate)
+		{
+			if(currentPlayer != DARK){
 				player = "Dark";
 			}
 			else{
 				player = "Light";
 			}
-			setTitle(player + " is in check");
-            setTitle(checkMateString);
-		}
-		else if(inCheckMate)
-		{
-			setTitle("CHECKMATE: GAME OVER");
+			setTitle("CHECKMATE: GAME OVER! " + player + " wins!");
 		}
 		else if(currentPlayer == LIGHT)
 		{
 			setTitle("JChess - Light's Turn");
-		} 
-		else 
+		}
+		else
 		{
 			setTitle("JChess - Dark's Turn");
 		}
@@ -355,7 +360,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				deadPiece = player1.getGraveyard().getPiece(i);
 				handleGraveyardPieceSourceSelection();
 			}
-			
+
 		}
 
 		size = darkGraveyardSpots.size();
@@ -370,7 +375,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				deadPiece = player2.getGraveyard().getPiece(i);
 				handleGraveyardPieceSourceSelection();
 			}
-		}	
+		}
 
 		// Were one of our chess buttons clicked??
 		for(i = 0; i < 8; i++)
@@ -439,7 +444,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 
 	public void handleGraveyardPieceSourceSelection()
-    	{
+	{
 		if(currentPlayer == LIGHT)
 		{
 			board.highlightEnableBottomRows();
@@ -452,7 +457,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		bringingBackTheDead = true;
 
 		display();
-    	}
+	}
 
 	public void handlePieceSourceSelection(Pair source)
 	{
@@ -482,7 +487,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		Square destSquare = board.getSquare(dest);
 		Piece destPiece = destSquare.getPiece();
 		boolean dontSwitchTurn = false;
-		
+
 		if(destPiece != null)
 		{
 			destPiece = destSquare.popPiece();
@@ -500,11 +505,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
-        if(isInCheck(currentPlayer)){
-            board.getSquare(dest).setPiece(null);
-            board.getSquare(sourcePair).setPiece(sourcePiece);
-            dontSwitchTurn = true;
-        }
+
+		if(isInCheck(currentPlayer)){
+			board.getSquare(dest).setPiece(null);
+			board.getSquare(sourcePair).setPiece(sourcePiece);
+			dontSwitchTurn = true;
+		}
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
 		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
@@ -514,10 +520,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		inCheck = isInCheck(!currentPlayer);
 		inCheckMate = isInCheckMate(!currentPlayer);
-        if(!dontSwitchTurn) {
-            board.disableAllSquares();
-            switchTurn();
-        }
+		if(!dontSwitchTurn) {
+			board.disableAllSquares();
+			switchTurn();
+		}
 
 		display();
 		currentlyMoving = false;
@@ -538,7 +544,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				player2.addPoints(PAWN_VALUE);
 			else
 				player1.getGraveyard().addToGraveyard(captured);
-		}	
+		}
 	}
 
 	/*
@@ -575,7 +581,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 					Moves m = board.getValidMoves(new Pair(i, j));
 					if(m != null) {
 						if (m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1) {
-						    checkMateString = p.getName() + " can move to " +  board.getSquare(i, j).getAlias();
 							ans = true;
 						}
 					}
@@ -587,16 +592,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 	public boolean isInCheckMate(boolean kingColor)
 	{
-//		Piece p;
-//		Square s;
-		boolean ans = true;
-		//boolean tracker = true;
-		//Pair kingLoc = board.findKing(kingColor);
-//		Pair attackDest;
-//		Square kingSquare = board.getSquare(kingLoc);
-//		Moves kingMoves = board.getValidMoves(kingLoc);
-//		Moves attackMoves;
-		//this will only go thru if the king is already in check
+		boolean ans = false;
+
 		if(isInCheck(kingColor))
 		{
 			Board checkForAlternateMoves = this.board;
@@ -611,7 +608,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 						for (int k = 0; k < altMoves.getSize(); k++) {
 							checkForAlternateMoves.getSquare(i,j).setPiece(alt);
 							if(!isInCheck(kingColor)){
-								ans = false;
+								ans = true;
 							}
 
 						}
@@ -642,7 +639,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				numPoints = player1.getNumPoints();
 				currentPiece = graveyard.getPiece(i);
 				pieceName = currentPiece.getName();
-				
+
 				switch(pieceName)
 				{
 					case "Rook":
@@ -658,7 +655,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 						lightGraveyardSpots.add(new BoardSpot(LIGHT_QUEEN));
 						break;
 				}
-					
+
 				if((numPoints >= Graveyard.getCost(currentPiece)) && (currentPlayer == LIGHT))
 				{
 					lightGraveyardSpots.get(i).setEnabled(true);
@@ -670,8 +667,8 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 				lightGraveyardSpots.get(i).addActionListener(this);
 			}
-			
-			
+
+
 		}
 		else
 		{
@@ -684,7 +681,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 				numPoints = player2.getNumPoints();
 				currentPiece = graveyard.getPiece(i);
 				pieceName = currentPiece.getName();
-				
+
 				switch(pieceName)
 				{
 					case "Rook":
