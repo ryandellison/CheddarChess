@@ -481,7 +481,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	}
 
 	public void handlePieceDestinationSelection(Pair dest, Board board)
-	{
+	{//self documenting
 		String name = "";
 		Square destSquare = board.getSquare(dest);
 		Piece destPiece = destSquare.getPiece();
@@ -597,29 +597,39 @@ public class BoardGUI extends JFrame implements ActionListener {
 		return ans;
 	}
 
+	/**
+	 *
+	 * @param kingColor color of the player we are evaluating checkmate for
+	 * @return if the player is in checkmate or not
+	 *
+	 *
+	 */
 	public boolean isInCheckMate(boolean kingColor)
 	{
-		boolean ans = false;
+		boolean ans = false;//if we are in checkmate or not
 		Pair pair;
 		Piece alt;
 		Piece other;
 		Moves altMoves;
 
-		if(isInCheck(kingColor))
+		if(isInCheck(kingColor))//in order to evaluate checkmate, we first need to be in check
 		{
 			ans = true;
 			for (int i = 0; i < 8; i++) {
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < 8; j++) {//loop thru the entire board
 					pair = new Pair(i, j);
 					alt = board.getSquare(pair).getPiece();
 					if(alt != null && alt.getColor() == kingColor){
 						altMoves = board.getValidMoves(pair);
+						//gets a piece and its moveset of the same color we are evaluating
 						for (int k = 0; k < altMoves.getSize(); k++) {
 							other = board.getSquare(altMoves.getPair(k)).getPiece();
 							board.getSquare(altMoves.getPair(k)).setPiece(alt);
+							//if we place that piece and it takes us out of check, we are not in checkmate
 							if(!isInCheck(kingColor)){
 								ans = false;
 							}
+							//we dont want to actually place these pieces so we need to reset the potential move
 							board.getSquare(altMoves.getPair(k)).setPiece(other);
 						}
 					}
