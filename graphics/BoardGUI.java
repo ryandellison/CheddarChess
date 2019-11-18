@@ -514,6 +514,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 		{
 			((Pawn) sourcePiece).setFirstMoveToFalse();
 		}
+
+		if(destPiece != null)//NEED TO FIX FOR PUTTING SELF IN CHECK AFTER CAPTURING A PIECE
+		{
+			destPiece = destSquare.popPiece();
+			name = destPiece.getName();
+			handleCapturedPiece(destPiece);
+		}
+
 		pieceForCheck = board.getSquare(dest).getPiece();
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
@@ -539,12 +547,6 @@ public class BoardGUI extends JFrame implements ActionListener {
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
 		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
 
-		if(destPiece != null && !dontSwitchTurn)
-		{
-			destPiece = destSquare.popPiece();
-			name = destPiece.getName();
-			handleCapturedPiece(destPiece);
-		}
 
 		board.unhighlightAllSquares();
 
