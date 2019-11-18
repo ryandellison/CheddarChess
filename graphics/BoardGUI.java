@@ -59,6 +59,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Square destSquare1, destSquare2;
 	private boolean currentlyMoving = false;
 	private boolean isGameOver = false;
+	private boolean isAlreadyLoaded = false;
 
 	private GameState gameState;
 
@@ -184,6 +185,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		menu.add(menuItem2);
 		menu.add(menuItem3);
 		menuBar.add(menu);
+
 		menuBar.setSize(new Dimension(10,10));
 		return menuBar;
 	}
@@ -204,12 +206,15 @@ public class BoardGUI extends JFrame implements ActionListener {
 	 */
 	private void loadGame()
 	{
-		gameState = new GameState(true);
-		System.out.println("loading game");
-		board = gameState.getBoard();
-		gameState.getPlayerData(player1,player2);
-		gameState.close();
-		display();
+		if(!isAlreadyLoaded) {
+			gameState = new GameState(true);
+			System.out.println("loading game");
+			board = gameState.getBoard();
+			gameState.getPlayerData(player1, player2);
+			gameState.close();
+			display();
+			isAlreadyLoaded = !isAlreadyLoaded;
+		}
 	}
 
 	/**
