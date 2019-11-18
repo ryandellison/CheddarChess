@@ -58,6 +58,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private Pair sourceLocation;
 	private Square destSquare1, destSquare2;
 	private boolean currentlyMoving = false;
+	private boolean isGameOver = false;
 
 	private GameState gameState;
 
@@ -193,7 +194,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	 */
 	private void rematch()
 	{
-		dispose();
+		this.dispose();
 		BoardGUI boardGUI = new BoardGUI();
 		boardGUI.run();
 	}
@@ -307,10 +308,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			String message = "CHECKMATE: GAME OVER! " + player + " wins!";
 			setTitle(message);
 			board.disableAllSquares();
-			int result = JOptionPane.showConfirmDialog(contentPane,message,"GAME OVER", JOptionPane.YES_NO_OPTION);
-			if(result == 0){
-				rematch();
-			}
+			showGameDialog(player);
 		}
 		else {
 			if (inCheck) {
@@ -323,6 +321,14 @@ public class BoardGUI extends JFrame implements ActionListener {
 			}
 		}
 
+	}
+
+	private void showGameDialog(String player)
+	{
+		isGameOver = true;
+		int result = JOptionPane.showConfirmDialog(contentPane,player + " wins!","CHECK MATE", JOptionPane.YES_NO_OPTION);
+		if(result == 0)
+			rematch();
 	}
 
 
@@ -439,8 +445,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 		inCheck = isInCheck(!currentPlayer);
 		inCheckMate = isInCheckMate(!currentPlayer);
 		switchTurn();
-
-		display();
+		if(!isGameOver) {
+			display();
+		}
 	}
 
 
@@ -538,8 +545,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 			board.disableAllSquares();
 			switchTurn();
 		}
-
-		display();
+		if(!isGameOver) {
+			display();
+		}
 		currentlyMoving = false;
 	}
 
