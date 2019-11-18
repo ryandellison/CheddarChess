@@ -100,7 +100,7 @@ public class Player
 	 * 	N/A
 	 *
 	 * Output:
-	 * 	String playerName	// name of the player
+	 * 	String playerName 	// name of the player
 	 */	
 
 	public String getPlayerName() 
