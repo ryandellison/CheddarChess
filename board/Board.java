@@ -865,5 +865,9 @@ public class Board
 		}
 		return allMoves;
 	}
+
+	public Board returnCopy(){
+	    return this;
+    }
 }
 
