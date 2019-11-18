@@ -506,9 +506,17 @@ public class BoardGUI extends JFrame implements ActionListener {
 		board.getSquare(sourcePair).setPiece(null);
 
 		if(isInCheck(currentPlayer)){
+			String player;
+			if(currentPlayer == DARK){
+				player = "Dark";
+			}
+			else{
+				player = "Light";
+			}
 			board.getSquare(dest).setPiece(null);
 			board.getSquare(sourcePair).setPiece(sourcePiece);
 			dontSwitchTurn = true;
+			setTitle(player + " moved themselves into check, choose a different move");
 		}
 
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
