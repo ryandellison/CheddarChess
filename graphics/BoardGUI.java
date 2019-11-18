@@ -497,14 +497,10 @@ public class BoardGUI extends JFrame implements ActionListener {
 		String message;
 		Square destSquare = board.getSquare(dest);
 		Piece destPiece = destSquare.getPiece();
+		Piece pieceForCheck;
 		boolean dontSwitchTurn = false;
 
-		if(destPiece != null)
-		{
-			destPiece = destSquare.popPiece();
-			name = destPiece.getName();
-			handleCapturedPiece(destPiece);
-		}
+
 
 		Pair sourcePair = sourceLocation;
 		Piece sourcePiece = board.getSquare(sourcePair).getPiece();
@@ -513,7 +509,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 		{
 			((Pawn) sourcePiece).setFirstMoveToFalse();
 		}
-
+		pieceForCheck = board.getSquare(dest).getPiece();
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
 
@@ -525,7 +521,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			else{
 				player = "Light";
 			}
-			board.getSquare(dest).setPiece(null);
+			board.getSquare(dest).setPiece(pieceForCheck);
 			board.getSquare(sourcePair).setPiece(sourcePiece);
 			dontSwitchTurn = true;
 			message = player + " moved themselves into check, choose a different move";
@@ -538,6 +534,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
 		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
 
+		if(destPiece != null && !dontSwitchTurn)
+		{
+			destPiece = destSquare.popPiece();
+			name = destPiece.getName();
+			handleCapturedPiece(destPiece);
+		}
 
 		board.unhighlightAllSquares();
 
