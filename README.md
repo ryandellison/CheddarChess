@@ -10,6 +10,14 @@ A twist on classic chess written in Java for portability.
 
 ![Default screen](images/game-on-mac.png?raw=true "Default Screen")
 
+## Building
+
+Use the given buid script (named appropriately) to manage the program on Unix-type operating systems.
+
+Use the following to compile CheddarChess from source:
+
+``` ./build compile ```
+
 ## Finished Classes
 
 - [x] board.Board
