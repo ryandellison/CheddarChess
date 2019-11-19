@@ -103,7 +103,7 @@ public class BoardGUI extends JFrame implements ActionListener {
      * @param player2 Object received from the saved game
      * @param currentPlayer the current turn received from saved game
      */
-	public BoardGUI(Player player1, Player player2, boolean currentPlayer )
+	private BoardGUI(Player player1, Player player2, boolean currentPlayer )
 	{
 		boardSpots = new BoardSpot[8][8];
 
