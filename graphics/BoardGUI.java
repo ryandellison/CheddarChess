@@ -170,7 +170,7 @@ public class BoardGUI extends JFrame implements ActionListener
      * @param board Object received from the file
      * @param isAlreadyLoaded True if the game is already loaded, prevents duplication
      */
-	public void runSavedGame(Board board, boolean isAlreadyLoaded)
+	private void runSavedGame(Board board, boolean isAlreadyLoaded)
 	{
 		this.board = board;
 		this.board.enablePiecesByColor(this.currentPlayer);

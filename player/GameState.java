@@ -17,10 +17,12 @@ import java.util.Scanner;
 
 public class GameState
 {
+    // Hardcoded file path
     private static final String filePath = "GameData.txt";
     private PrintWriter printWriter;
     private FileWriter fileWriter;
     private Scanner scanner;
+    //Will board data
     private ArrayList<String[]> data;
 
     /**
@@ -29,10 +31,10 @@ public class GameState
      */
     public GameState(boolean readonly)
     {
-        if(!readonly)
+        if(!readonly) // Get the file ready to be written too
             initialize();
         else
-            initializeReadOnly();
+            initializeReadOnly(); // Get ready to read
     }
 
     /**
@@ -40,6 +42,7 @@ public class GameState
      */
     private void initialize()
     {
+        // opens file
         try {
             fileWriter = new FileWriter(filePath);
         } catch (IOException e) {
@@ -53,6 +56,7 @@ public class GameState
      */
     private void initializeReadOnly()
     {
+        //opens file
         try {
             scanner = new Scanner(new File(filePath));
         } catch (IOException e) {
@@ -69,10 +73,11 @@ public class GameState
         data = new ArrayList<>(64);
         int i = 1;
         while (scanner.hasNextLine() && i < 65) {
+            // CSV line creates an arraylist where each index represents a parameter for the board/square class
             data.add(scanner.nextLine().split(","));
             i++;
         }
-        scanner.nextLine();
+        scanner.nextLine();// move to the next line
     }
 
     /**
@@ -82,20 +87,21 @@ public class GameState
     public Board getBoard()
     {
         readFile();
-        return new Board(data);
+        return new Board(data); // New Board that will be used to load the game
     }
 
     /**
      * Gets Player data from the file
      * @param player1 Data for Player1/LIGHT
      * @param player2 Data for Player2/DARK
+     * @return True is Light's turn
      */
     public boolean getPlayerData(Player player1, Player player2)
     {
         getPlayer(player1);
-        scanner.nextLine();
+        scanner.nextLine(); // skip next line
         getPlayer(player2);
-        return Boolean.parseBoolean(scanner.nextLine());
+        return Boolean.parseBoolean(scanner.nextLine()); // returns true is Light's turn, dark if otherwise
     }
 
     /**
@@ -105,12 +111,12 @@ public class GameState
     private void getPlayer(Player player)
     {
         String[] pieceData;
-        Graveyard graveyard = player.getGraveyard();
-        player.addPoints(Integer.parseInt(scanner.nextLine()));
+        Graveyard graveyard = player.getGraveyard(); // Gets new graveyard
+        player.addPoints(Integer.parseInt(scanner.nextLine())); // adds points to new player
         int numPieces = Integer.parseInt(scanner.nextLine());
         for(int i = 0; i < numPieces; i++){
-            pieceData = scanner.nextLine().split(",");
-            graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1]));
+            pieceData = scanner.nextLine().split(","); // represents the piece name and if it light or dark
+            graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1])); // adds the piece to graveyard
         }
     }
 
@@ -124,7 +130,7 @@ public class GameState
     {
         Piece piece;
         boolean color = Boolean.parseBoolean(colorValue);
-        switch (name){
+        switch (name){ // name of the piece
             case "Pawn":
                 piece = new Pawn(color,name);
                 break;
@@ -147,7 +153,7 @@ public class GameState
                 piece = null;
                 break;
         }
-        return piece;
+        return piece; // piece that was newly created
     }
 
     /**
@@ -155,22 +161,23 @@ public class GameState
      * @param board Board object
      * @param player1 Player object
      * @param player2 Player object
+     * @param current Whose turn it is
      */
     public void writeToFile(Board board, Player player1, Player player2, boolean current)
     {
         String text;
         for(int i = 0; i < 8;i++){
             for(int j = 0; j < 8; j++){
-                text = board.getSquare(i,j).toString();
-                printWriter.append(text).append("\n");
+                text = board.getSquare(i,j).toString(); // Each squares' data
+                printWriter.append(text).append("\n"); // stored in comma seperated value
             }
         }
 
-        printWriter.append("Player 1\n");
-        writeGraveyardToFile(player1);
-        printWriter.append("Player 2\n");
-        writeGraveyardToFile(player2);
-        printWriter.append(Boolean.toString(current)).append("\n");
+        printWriter.append("Player 1\n"); // player 1 section
+        writeGraveyardToFile(player1); // gets all the player 1 graveyard pieces and writes to file
+        printWriter.append("Player 2\n"); // player 2 section
+        writeGraveyardToFile(player2); // gets all player 2 graveyard pieces and writes to file
+        printWriter.append(Boolean.toString(current)).append("\n"); // stores whose turn it is
     }
 
     /**
@@ -179,14 +186,14 @@ public class GameState
      */
     private void writeGraveyardToFile(Player player)
     {
-        printWriter.append(Integer.toString(player.getNumPoints())).append("\n");
+        printWriter.append(Integer.toString(player.getNumPoints())).append("\n"); // store numPoints of player
         Graveyard graveyard = player.getGraveyard();
-        int deadPieces = graveyard.getNumPieces();
-        printWriter.append(Integer.toString(deadPieces)).append("\n");
+        int deadPieces = graveyard.getNumPieces(); // num of pieces in the graveyard
+        printWriter.append(Integer.toString(deadPieces)).append("\n"); // store how many pieces in graveyard
         if(deadPieces > 0){
             for(int i = 0 ; i < deadPieces; i++){
-                printWriter.append(graveyard.getPiece(i).getName()).append(",");
-                printWriter.append(Boolean.toString(graveyard.getPiece(i).getColor()));
+                printWriter.append(graveyard.getPiece(i).getName()).append(","); // name of dead piece
+                printWriter.append(Boolean.toString(graveyard.getPiece(i).getColor())); // color of dead piece
                 printWriter.append("\n");
             }
         }
