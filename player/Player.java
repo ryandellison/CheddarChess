@@ -34,7 +34,7 @@ public class Player
 		numPoints = 0;
 	}
 
-	/*
+	/**
 	 * getNumPoints()
 	 *
 	 * Returns the number of points the player has.
@@ -51,7 +51,7 @@ public class Player
 		return numPoints;
 	}
 
-	/*
+	/**
 	 * addPoints()
 	 *
 	 * Adds the given number of points to the current
@@ -69,7 +69,7 @@ public class Player
 		this.numPoints += numPoints;
 	}
 
-	/*
+	/**
 	 * removePoints()
 	 *
 	 * Removes the given number of points from the
@@ -91,7 +91,7 @@ public class Player
 			System.out.printf("ERROR in Player.removePoints(): %d is more points than the player currently has\n", numPoints);
 	}
 
-	/*
+	/**
 	 * getPlayerName()
 	 *
 	 * Returns the players name.
@@ -108,7 +108,7 @@ public class Player
 		return playerName;
 	}
 
-	/*
+	/**
 	 * getGraveyard()
 	 *
 	 * Returns the players graveyard.

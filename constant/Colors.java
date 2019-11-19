@@ -14,7 +14,7 @@ import java.awt.*;
 
 public final class Colors
 {
-	public final static boolean LIGHT = true;
-	public final static boolean DARK = false;
+	public final static boolean LIGHT = true;	// Represents Player 1
+	public final static boolean DARK = false;	// Represents Player 2
 }
 

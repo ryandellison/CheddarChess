@@ -24,7 +24,7 @@ public class Pair
         	this.col = col;
     	}
 
-	/*
+	/**
 	 * getRow()
 	 *
 	 * The purpose of this method is to return the row
@@ -42,7 +42,7 @@ public class Pair
         	return row;
     	}
 
-	/*
+	/**
 	 * getCol()
 	 *
 	 * The purpose of this method is to return the col

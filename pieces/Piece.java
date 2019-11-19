@@ -25,7 +25,7 @@ public abstract class Piece
 		this.name = name;
 	}
 
-	/*
+	/**
 	 * getColor()
 	 *
 	 * The purpose of this method is to return the color
@@ -44,7 +44,7 @@ public abstract class Piece
 		return color; 
 	}
 
-	/*
+	/**
 	 * getName()
 	 *
 	 * The purpose of this method is to return the name

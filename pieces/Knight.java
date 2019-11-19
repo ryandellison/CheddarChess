@@ -14,7 +14,7 @@ public class Knight extends Piece
 		super(color,name);
 	}
 
-	/*
+	/**
 	 * move()
 	 *
 	 * The purpose of this method is to return a list of all

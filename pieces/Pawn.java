@@ -24,7 +24,7 @@ public class Pawn extends Piece
 		firstMove = true;
 	}
 
-	/*
+	/**
 	 * move()
 	 *
 	 * The purpose of this method is to override the Piece's
@@ -71,7 +71,7 @@ public class Pawn extends Piece
 		return moves;
 	}
 
-	/*
+	/**
 	 * setFirstMoveToFalse()
 	 *
 	 * The purpose of this method is to set the pawns
@@ -89,7 +89,7 @@ public class Pawn extends Piece
 		firstMove = false; 
 	}
 
-	/*
+	/**
 	 * setFirstMoveToTrue()
 	 *
 	 * The purpose of this method is to set the pawns
@@ -107,7 +107,7 @@ public class Pawn extends Piece
 		firstMove = true;
 	}
 
-	/*
+	/**
 	 * getFirstMove()
 	 *
 	 * The purpose of this method is getting the value of

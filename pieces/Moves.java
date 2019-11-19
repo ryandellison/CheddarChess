@@ -16,7 +16,7 @@ public class Moves
 	private LinkedList<Pair> moves;	// the linkedlist of Pair moves
 	private boolean isInBounds;	// indicates whether or not the moves are in bounds
 
-	/*
+	/**
 	 * Moves()
 	 *
 	 * The purpose of this constructor is to create an empty list of moves
@@ -30,7 +30,7 @@ public class Moves
 		isInBounds = false;
 	}
 
-	/*
+	/**
 	 * addMove()
 	 *
 	 * The purpose of this method is to add a move (Pair) to the list of moves. This appends
@@ -50,7 +50,7 @@ public class Moves
 		isInBounds = false;
 	}
 
-	/*
+	/**
 	 * removeMove()
 	 *
 	 * The purpose of this method is to remove a move (Pair) from the list of moves.
@@ -68,7 +68,7 @@ public class Moves
 		moves.remove(location);
 	}
 
-	/*
+	/**
 	 * getMoves()
 	 *
 	 * The purpose of this method is to return the list of moves.
@@ -87,7 +87,7 @@ public class Moves
 	}
 
 
-	/*
+	/**
 	 * getSize()
 	 *
 	 * The purpose of this method is to return the size of the list of moves.
@@ -105,7 +105,7 @@ public class Moves
 		return moves.size();
 	}
 
-    /*
+    /**
      * getPair()
      *
      * The purpose of this method is to return the Pair at a given index of the list of moves.
@@ -123,7 +123,7 @@ public class Moves
         return this.moves.get(index);
     }
 
-	/*
+	/**
 	 * getInBounds()
 	 *
 	 * The purpose of this method is to return the validity of
@@ -142,7 +142,7 @@ public class Moves
 		return isInBounds;
 	}
 
-	/*
+	/**
 	 * checkBounds()
 	 *
 	 * The purpose of this method is to make sure the current moves are in bounds.
@@ -182,7 +182,7 @@ public class Moves
 		isInBounds = true;
 	}
 
-	/*
+	/**
 	 * findPair()
 	 *
 	 * The purpose of this method is to find a Pair with the given

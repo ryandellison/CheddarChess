@@ -16,7 +16,7 @@ public class Bishop extends Piece
     	}
 
 
-	/*
+	/**
 	 * move()
 	 *
 	 * The purpose of this method is to get a list of Pair

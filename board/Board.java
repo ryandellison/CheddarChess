@@ -32,31 +32,44 @@ public class Board
 {
 	private Square[][] board;	// our board, a 2-D array of Squares
 
+	/**
+	 * Main constructor that initializes the board
+	 */
 	public Board()
 	{
 		board = new Square[8][8];
-
+		// fill the board with default piece positioning
 		fillBoard();
 	}
+
+	/**
+	 * Used for initialized a board that is loaded from a file
+	 * @param data
+	 */
 	public Board(ArrayList<String[]> data)
 	{
 		board = new Square[8][8];
-		fillSavedBoard(data);
+		fillSavedBoard(data); // Loaded data used to fill the board
 	}
 
+	/**
+	 * Fills the board with saved data
+	 * @param data Saved data
+	 */
 	private void fillSavedBoard(ArrayList<String[]> data)
 	{
 		String alias,pieceColor,tileColor,piece,enable;
 		int index = 0;
 		for(int i = 0; i < 8; i++){
 			for(int j = 0; j < 8; j++){
-				alias = data.get(index)[0];
+				alias = data.get(index)[0]; // A1,A2...
 				pieceColor = data.get(index)[3];
 				tileColor = data.get(index)[2];
 				piece = data.get(index)[1];
-				enable = data.get(index)[4];
+				enable = data.get(index)[4]; // if it is enables
+				// create new square in this particular location based on file data
 				board[i][j] = new Square(alias, convertColor(tileColor),convertToPiece(piece,pieceColor));
-				if(enable.equals("false"))
+				if(enable.equals("false")) // enable based on whose turn it is
 					board[i][j].disable();
 				else
 					board[i][j].enable();
@@ -64,16 +77,28 @@ public class Board
 			}
 		}
 	}
+
+	/**
+	 * Converts the string value of color to a boolean value
+	 * @param value true/false
+	 * @return boolean rep of the string value
+	 */
 	private boolean convertColor(String value)
 	{
 		return value.equals("true")  ? LIGHT : DARK;
 	}
 
+	/**
+	 * Converts the string rep of piece to a piece object
+	 * @param name Name of piece
+	 * @param colorValue Color of piece
+	 * @return Piece
+	 */
 	private Piece convertToPiece(String name, String colorValue)
 	{
 		Piece piece;
-		boolean color = convertColor(colorValue);
-		switch (name){
+		boolean color = convertColor(colorValue); // get color of the piece
+		switch (name){ // based on the name of the piece
 			case "Pawn":
 				piece = new Pawn(color,name);
 				break;
@@ -99,7 +124,7 @@ public class Board
 		return piece;
 	}
 
-	/*
+	/**
 	 * fillBoard()
 	 *
 	 * The purpose of this method is to fill the board to it's default, starting
@@ -191,7 +216,7 @@ public class Board
 
 	}
 
-	/*
+	/**
 	 * enableSquares()
 	 *
 	 * The purpose of this method is to enable the squares
@@ -222,7 +247,7 @@ public class Board
 		}
 	}
 
-	/*
+	/**
 	 * disableAllSquares()
 	 *
 	 * The purpose of this method is to disable all of the
@@ -245,7 +270,7 @@ public class Board
 				board[i][j].disable();
 	}
 
-	/*
+	/**
 	 * findKing()
 	 *
 	 * The purpose of this method is to find the location of
@@ -281,7 +306,7 @@ public class Board
 		return ans;
 	}
 
-	/*
+	/**
 	 * highlightSquares()
 	 *
 	 * The purpose of this method is to highlight the squares
@@ -313,7 +338,7 @@ public class Board
 
 	}
 
-	/*
+	/**
 	 * unhighlightAllSquares()
 	 *
 	 * The purpose of this method is to unhighlight all
@@ -337,7 +362,7 @@ public class Board
 
 	}
 
-	/*
+	/**
 	 * highlightEnableBottomRows()
 	 *
 	 * The purpose of this method is to highlight and enable
@@ -371,7 +396,7 @@ public class Board
 		}
 	}
 
-	/*
+	/**
 	 * highlightEnableTopRows()
 	 *
 	 * The purpose of this method is to highlight and enable
@@ -405,7 +430,7 @@ public class Board
 		}
 	}
 
-	/*
+	/**
 	 * getSquare()
 	 *
 	 * The purpose of this method is to get the square
@@ -436,7 +461,7 @@ public class Board
 		
 	}
 
-	/*
+	/**
 	 * getSquare()
 	 *
 	 * The purpose of this method is to get the square
@@ -461,7 +486,7 @@ public class Board
 		return null;
 	}
 
-	/*
+	/**
 	 * enablePiecesByColor()
 	 *
 	 * The purpose of this method is to enable the pieces
@@ -499,7 +524,7 @@ public class Board
 		}
 	}
 
-    	/*
+    	/**
          * getValidMoves()
 	 *
          * The purpose of this method is to validate the moves of the piece at a Pair location.

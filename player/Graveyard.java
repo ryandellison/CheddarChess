@@ -30,7 +30,7 @@ public class Graveyard
 		graveyard = new ArrayList<Piece>();
 	}
 
-	/*
+	/**
 	 * addToGraveyard()
 	 *
 	 * The purpose of this method is to add a Piece
@@ -48,7 +48,7 @@ public class Graveyard
 		graveyard.add(p);
 	}
 
-	/*
+	/**
 	 * getNumPieces()
 	 *
 	 * The purpose of this method is to get the number of pieces
@@ -66,7 +66,7 @@ public class Graveyard
 		return graveyard.size();
 	}
 
-	/*
+	/**
 	 * getPiece()
 	 *
 	 * The purpose of this method is to return a piece at
@@ -91,7 +91,7 @@ public class Graveyard
 		return null;
 	}
 
-	/*
+	/**
 	 * removePiece()
 	 *
 	 * The purpose of this method is to remove a piece at
@@ -115,7 +115,7 @@ public class Graveyard
 		System.out.printf("ERROR in Graveyard.removePiece(): Index out of bounds of %d\n", index);
 	}
 
-	/*
+	/**
 	 * getCost()
 	 *
 	 * Gets the cost of a piece given the piece passed based
