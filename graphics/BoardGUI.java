@@ -97,6 +97,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 		inCheckMate = false;
 	}
 
+    /**
+     * Constructor used for loading game
+     * @param player1 Object received from the saved game
+     * @param player2 Object received from the saved game
+     * @param currentPlayer the current turn received from saved game
+     */
 	public BoardGUI(Player player1, Player player2, boolean currentPlayer )
 	{
 		boardSpots = new BoardSpot[8][8];
@@ -142,6 +148,11 @@ public class BoardGUI extends JFrame implements ActionListener {
 		//history = new MovesHistory(board);
 	}
 
+    /**
+     * Runs the saved game based on values returned from the gamedata.txt file
+     * @param board Object received from the file
+     * @param isAlreadyLoaded True if the game is already loaded, prevents duplication
+     */
 	public void runSavedGame(Board board, boolean isAlreadyLoaded)
 	{
 		this.board = board;
