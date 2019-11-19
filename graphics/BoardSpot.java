@@ -7,7 +7,9 @@ import javax.swing.SwingConstants;
 import static constant.Colors.LIGHT;
 import static constant.Colors.DARK;
 
-
+/**
+ * Class that represents the board spots as buttons
+ */
 @SuppressWarnings("WeakerAccess")
 public class BoardSpot extends JButton {
 
@@ -19,6 +21,10 @@ public class BoardSpot extends JButton {
 	private boolean isEmpty;
 	private String piece;
 
+	/**
+	 * Sets the spot with a piece
+	 * @param piece Name of the piece
+	 */
 	public BoardSpot(String piece)
 	{
 		super(piece);
@@ -29,24 +35,30 @@ public class BoardSpot extends JButton {
 
 	}
 
+	/**
+	 * Based on the current spot, set the color of the tile
+	 * @param index col value
+	 * @param row row value
+	 * @param highlight if this spot is a potential move
+	 */
 	public void set(int index, int row, boolean highlight)
 	{
 		setOpaque(true);
 		if(highlight)
-			setBackground(HIGHLIGHTED_SPOT);
+			setBackground(HIGHLIGHTED_SPOT); // highlight if potential move
 		else
-			setBackground((index+row) % 2 == 0 ? DARK_SPOT : LIGHT_SPOT);
+			setBackground((index+row) % 2 == 0 ? DARK_SPOT : LIGHT_SPOT); // Background of tile
 		setHorizontalAlignment(SwingConstants.CENTER );
 	}
-
-	public void highlight()
-	{
-		setBackground(HIGHLIGHTED_SPOT);
-	}
-
-	boolean isEmpty()
-	{
-		return isEmpty;
-	}
+// NOT USED ANYWHERE DELETE?
+//	public void highlight()
+//	{
+//		setBackground(HIGHLIGHTED_SPOT);
+//	}
+//
+//	boolean isEmpty()
+//	{
+//		return isEmpty;
+//	}
 
 }
