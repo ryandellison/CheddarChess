@@ -179,7 +179,6 @@ public class BoardGUI extends JFrame implements ActionListener
 		if (this.inCheck) {
 			String player = (this.currentPlayer ? "Light" : "Dark");
 			setTitle(player + " is in check");
-			JOptionPane.showMessageDialog(contentPane,player+ " is in check");
 		}
 		this.isAlreadyLoaded = !isAlreadyLoaded;
 	}
