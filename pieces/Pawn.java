@@ -74,6 +74,11 @@ public class Pawn extends Piece
 		firstMove = false; 
 	}
 
+	public void setFirstMoveToTrue()
+	{
+		firstMove = true;
+	}
+
 	public boolean getFirstMove()
 	{ 
 		return firstMove; 

@@ -570,7 +570,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			handleCapturedPiece(destPiece);
 		}
 
-		pieceForCheck = board.getSquare(dest).getPiece();
+		pieceForCheck = destPiece;
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
 
@@ -584,6 +584,9 @@ public class BoardGUI extends JFrame implements ActionListener {
 			}
 			board.getSquare(dest).setPiece(pieceForCheck);
 			board.getSquare(sourcePair).setPiece(sourcePiece);
+			if(sourcePiece instanceof Pawn){
+			    ((Pawn) sourcePiece).setFirstMoveToTrue();
+            }
 			dontSwitchTurn = true;
 			message = player + " moved themselves into check, choose a different move";
 			setTitle(message);
