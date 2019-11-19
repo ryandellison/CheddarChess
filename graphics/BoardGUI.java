@@ -210,7 +210,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			gameState = new GameState(true);
 			System.out.println("loading game");
 			board = gameState.getBoard();
-			gameState.getPlayerData(player1, player2);
+			currentPlayer = gameState.getPlayerData(player1, player2);
 			gameState.close();
 			display();
 			isAlreadyLoaded = !isAlreadyLoaded;

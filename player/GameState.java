@@ -90,11 +90,12 @@ public class GameState
      * @param player1 Data for Player1/LIGHT
      * @param player2 Data for Player2/DARK
      */
-    public void getPlayerData(Player player1, Player player2)
+    public boolean getPlayerData(Player player1, Player player2)
     {
         getPlayer(player1);
+        scanner.nextLine();
         getPlayer(player2);
-
+        return Boolean.parseBoolean(scanner.nextLine());
     }
 
     /**
@@ -111,9 +112,7 @@ public class GameState
             pieceData = scanner.nextLine().split(",");
             graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1]));
         }
-        if(scanner.hasNextLine()){
-            scanner.nextLine();
-        }
+        scanner.nextLine();
     }
 
     /**
