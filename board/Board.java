@@ -737,7 +737,7 @@ public class Board
 					}
 					
 					// Check the second diagonal if possible
-					if (c - 1 > 0)
+					if (c - 1 >= 0)
 					{
 						currentPiece = getSquare(r - 1, c - 1).getPiece();
 						if(currentPiece != null && currentPiece.getColor() != LIGHT) 
@@ -766,7 +766,7 @@ public class Board
 					}
 
 					// Check the second diagonal if possible
-					if(c - 1 > 0)
+					if(c - 1 >= 0)
 					{
 						currentPiece = this.getSquare(r + 1, c - 1).getPiece();
 						if(currentPiece != null && currentPiece.getColor() != DARK)

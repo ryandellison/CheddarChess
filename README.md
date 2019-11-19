@@ -19,15 +19,16 @@ A twist on classic chess written in Java for portability.
 - [x] pieces.Pair
 - [ ] pieces.Moves
 - [ ] pieces.MovesHistory
-- [ ] pieces.Piece
-- [ ] pieces.Pawn
-- [ ] pieces.Rook
-- [ ] pieces.Knight
-- [ ] pieces.Bishop
-- [ ] pieces.Queen
-- [ ] pieces.King
+- [x] pieces.Piece
+- [x] pieces.Pawn
+- [x] pieces.Rook
+- [x] pieces.Knight
+- [x] pieces.Bishop
+- [x] pieces.Queen
+- [x] pieces.King
 - [x] player.Player
-- [ ] player.Graveyard
+- [x] player.Graveyard
+- [ ] player.GameState
 - [x] constant.Colors
 - [x] constant.Points
 

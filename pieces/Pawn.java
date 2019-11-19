@@ -48,18 +48,20 @@ public class Pawn extends Piece
 		int row = current.getRow();
 		int col = current.getCol();
 		
-		if(getColor() == LIGHT){
-			if(firstMove){
+		if(getColor() == LIGHT) // Light colored pawn
+		{
+			// If it's the pawn first move, it can move 2 spaces forward
+			if(firstMove)
 				moves.addMove(new Pair(row - 2, col));
-				//firstMove = false;
-			}
+
 			moves.addMove(new Pair(row-1, col));
 		}
-		else{
-			if(firstMove){
+		else // Dark colored pawn
+		{
+			// If it's the pawns first move, it can move 2 spaces forward
+			if(firstMove)
 				moves.addMove(new Pair(row+2, col));
-				//firstMove = false;
-			}
+			
 			moves.addMove(new Pair(row+1, col));
 		}
 
@@ -69,31 +71,59 @@ public class Pawn extends Piece
 		return moves;
 	}
 
+	/*
+	 * setFirstMoveToFalse()
+	 *
+	 * The purpose of this method is to set the pawns
+	 * firstMove value to false.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	N/A
+	 */
+
 	public void setFirstMoveToFalse()
 	{ 
 		firstMove = false; 
 	}
+
+	/*
+	 * setFirstMoveToTrue()
+	 *
+	 * The purpose of this method is to set the pawns
+	 * firstMove value to true.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	N/A
+	 */
 
 	public void setFirstMoveToTrue()
 	{
 		firstMove = true;
 	}
 
+	/*
+	 * getFirstMove()
+	 *
+	 * The purpose of this method is getting the value of
+	 * firstMove.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	boolean firstMove	// the value of firstMove
+	 */
+
 	public boolean getFirstMove()
 	{ 
 		return firstMove; 
 	}
 
-	public String getUnicode(){
-		
-		if(this.getColor() == true)
-		{
-			return "\u2659";
-		}
-		else
-		{
-			return "\u265f";
-		}
-	}
-
 }
+

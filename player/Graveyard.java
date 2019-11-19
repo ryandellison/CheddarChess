@@ -30,32 +30,103 @@ public class Graveyard
 		graveyard = new ArrayList<Piece>();
 	}
 
+	/*
+	 * addToGraveyard()
+	 *
+	 * The purpose of this method is to add a Piece
+	 * to the graveyard.
+	 *
+	 * Input:
+	 * 	Piece p	// the piece to add
+	 *
+	 * Output:
+	 * 	N/A
+	 */
+
 	public void addToGraveyard(Piece p)
 	{
 		graveyard.add(p);
 	}
+
+	/*
+	 * getNumPieces()
+	 *
+	 * The purpose of this method is to get the number of pieces
+	 * in the graveyard.
+	 *
+	 * Input:
+	 * 	N/A
+	 *
+	 * Output:
+	 * 	int numPieces	// number of pieces in graveyard
+	 */
 
 	public int getNumPieces()
 	{
 		return graveyard.size();
 	}
 
+	/*
+	 * getPiece()
+	 *
+	 * The purpose of this method is to return a piece at
+	 * the given index (which is first validated) in the
+	 * graveyard.
+	 *
+	 * Input:
+	 * 	int index	// location of piece
+	 *
+	 * Output:
+	 * 	Piece p		// piece at that location
+	 */
+
 	public Piece getPiece(int index)
 	{
+		// Return the piece if the index is valid
 		if((index >= 0) && (index <= graveyard.size()))
 			return graveyard.get(index);
 		
+		// If not, print error message and return null
 		System.out.printf("ERROR in Graveyard.getPiece(): Index out of bounds of %d\n", index);
 		return null;
 	}
 
+	/*
+	 * removePiece()
+	 *
+	 * The purpose of this method is to remove a piece at
+	 * the given index (which is first validated) in the
+	 * graveyard.
+	 *
+	 * Input:
+	 * 	int index	// location of piece
+	 *
+	 * Output:
+	 * 	N/A
+	 */
+
 	public void removePiece(int index)
 	{
+		// Remove the piece if the index is valid
 		if((index >= 0) && (index <= graveyard.size()))
 			graveyard.remove(index);
 
+		// Print error message if not
 		System.out.printf("ERROR in Graveyard.removePiece(): Index out of bounds of %d\n", index);
 	}
+
+	/*
+	 * getCost()
+	 *
+	 * Gets the cost of a piece given the piece passed based
+	 * on the imported constants for piece values.
+	 *
+	 * Input:
+	 * 	Piece piece	// piece to get cost of
+	 *
+	 * Output:
+	 * 	int cost	// cost of the piece
+	 */
 
 	public static int getCost(Piece piece)
 	{
@@ -70,7 +141,6 @@ public class Graveyard
 
 		return 0;
 	}
-
 
 }
 
