@@ -522,7 +522,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 			handleCapturedPiece(destPiece);
 		}
 
-		pieceForCheck = board.getSquare(dest).getPiece();
+		pieceForCheck = destPiece;
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
 
