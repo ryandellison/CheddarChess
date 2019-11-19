@@ -16,7 +16,7 @@ fi
 
 compile ()
 {
-	$JAVAC -g *.java board/*.java player/*.java pieces/*.java graphics/*.java constant/*.java
+	javac -g *.java board/*.java player/*.java pieces/*.java graphics/*.java constant/*.java
 }
 
 clean ()
