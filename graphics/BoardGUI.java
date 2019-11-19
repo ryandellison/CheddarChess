@@ -163,7 +163,6 @@ public class BoardGUI extends JFrame implements ActionListener
 		board.enablePiecesByColor(currentPlayer);
 
 		display();
-		//history = new MovesHistory(board);
 	}
 
     /**
