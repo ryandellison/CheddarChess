@@ -319,7 +319,7 @@ public class BoardGUI extends JFrame implements ActionListener
 
 		topPanel.add(nameLabel);
 
-		topPanel.setBackground(new Color(34, 107, 214));
+		topPanel.setBackground(new Color(215, 153, 20));
 
 		addToGraveyard(topPanel, playerGraveyardSpots);
 
