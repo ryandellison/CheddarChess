@@ -305,7 +305,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		panel.setOpaque(true);
 
 		JPanel topPanel = new JPanel();
-		GridLayout grave = new GridLayout(8,1);
+		GridLayout grave = new GridLayout(9,1);
 		topPanel.setLayout(grave);
 		topPanel.setOpaque(true);
 		topPanel.setPreferredSize(new Dimension(150,Toolkit.getDefaultToolkit().getScreenSize().height));
