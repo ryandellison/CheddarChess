@@ -27,7 +27,7 @@ A twist on classic chess written in Java for portability.
 - [x] pieces.King
 - [x] player.Player
 - [x] player.Graveyard
-- [ ] player.GameState
+- [x] player.GameState
 - [x] constant.Colors
 - [x] constant.Points
 
