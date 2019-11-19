@@ -112,7 +112,6 @@ public class GameState
             pieceData = scanner.nextLine().split(",");
             graveyard.addToGraveyard(convertToPiece(pieceData[0],pieceData[1]));
         }
-        scanner.nextLine();
     }
 
     /**
@@ -157,7 +156,7 @@ public class GameState
      * @param player1 Player object
      * @param player2 Player object
      */
-    public void writeToFile(Board board, Player player1, Player player2)
+    public void writeToFile(Board board, Player player1, Player player2, boolean current)
     {
         String text;
         for(int i = 0; i < 8;i++){
@@ -171,6 +170,7 @@ public class GameState
         writeGraveyardToFile(player1);
         printWriter.append("Player 2\n");
         writeGraveyardToFile(player2);
+        printWriter.append(Boolean.toString(current)).append("\n");
     }
 
     /**

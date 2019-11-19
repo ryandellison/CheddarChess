@@ -97,6 +97,35 @@ public class BoardGUI extends JFrame implements ActionListener {
 		inCheckMate = false;
 	}
 
+	public BoardGUI(Player player1, Player player2, boolean currentPlayer )
+	{
+		boardSpots = new BoardSpot[8][8];
+
+		lightGraveyardSpots = new ArrayList<BoardSpot>();
+		darkGraveyardSpots = new ArrayList<BoardSpot>();
+
+		this.currentPlayer = currentPlayer;
+		sourceLocation = null;
+
+		playerOnePanel = new JPanel();
+		playerTwoPanel = new JPanel();
+
+		if(this.currentPlayer)
+			setTitle("JChess - Light's Turn");
+		else
+			setTitle("JChess - Dark's Turn");
+		setDimensions();
+		setVisible(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.player1 = player1;
+		this.player2 = player2;
+
+		bringingBackTheDead = false;
+		deadPiece = null;
+
+		inCheckMate = false;
+	}
+
 	private void setDimensions()
 	{
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -111,6 +140,20 @@ public class BoardGUI extends JFrame implements ActionListener {
 
 		display();
 		//history = new MovesHistory(board);
+	}
+
+	public void runSavedGame(Board board, boolean isAlreadyLoaded)
+	{
+		this.board = board;
+		this.board.enablePiecesByColor(this.currentPlayer);
+		display();
+		this.inCheck = isInCheck(this.currentPlayer);
+		if (this.inCheck) {
+			String player = (this.currentPlayer ? "Light" : "Dark");
+			setTitle(player + " is in check");
+			JOptionPane.showMessageDialog(contentPane,player+ " is in check");
+		}
+		this.isAlreadyLoaded = !isAlreadyLoaded;
 	}
 
 	/*
@@ -207,13 +250,15 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private void loadGame()
 	{
 		if(!isAlreadyLoaded) {
+			dispose();
 			gameState = new GameState(true);
-			System.out.println("loading game");
 			board = gameState.getBoard();
 			currentPlayer = gameState.getPlayerData(player1, player2);
 			gameState.close();
-			display();
-			isAlreadyLoaded = !isAlreadyLoaded;
+
+			BoardGUI boardGUI = new BoardGUI(player1,player2,currentPlayer);
+			boardGUI.runSavedGame(board,isAlreadyLoaded);
+
 		}
 	}
 
@@ -223,7 +268,7 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private void saveGame()
 	{
 		gameState = new GameState(false);
-		gameState.writeToFile(board,player1,player2);
+		gameState.writeToFile(board,player1,player2, currentPlayer);
 		gameState.close();
 	}
 
@@ -331,9 +376,12 @@ public class BoardGUI extends JFrame implements ActionListener {
 	private void showGameDialog(String player)
 	{
 		isGameOver = true;
-		int result = JOptionPane.showConfirmDialog(contentPane,player + " wins!","CHECK MATE", JOptionPane.YES_NO_OPTION);
+		int result = JOptionPane.showConfirmDialog(contentPane,player + " wins!   REMATCH ?"
+				,"CHECK MATE", JOptionPane.YES_NO_OPTION);
 		if(result == 0)
 			rematch();
+		else
+			System.exit(0);
 	}
 
 
