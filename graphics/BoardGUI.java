@@ -72,16 +72,20 @@ public class BoardGUI extends JFrame implements ActionListener
 	private Piece deadPiece;
 	private int locationOfDead;
 
+	/**
+	 * Initializes the BoardGUI class and its variables, creates the main panel
+	 */
 	public BoardGUI()
 	{
 		boardSpots = new BoardSpot[8][8];
 
+		// Dead Pieces
 		lightGraveyardSpots = new ArrayList<BoardSpot>();
 		darkGraveyardSpots = new ArrayList<BoardSpot>();
 
 		currentPlayer = LIGHT;
 		sourceLocation = null;
-
+		// Graveyard panels
 		playerOnePanel = new JPanel();
 		playerTwoPanel = new JPanel();
 
@@ -89,9 +93,11 @@ public class BoardGUI extends JFrame implements ActionListener
 		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// The two players, light is player1 and dark is player 2
 		lightPlayer = new Player(LIGHT);
 		darkPlayer = new Player(DARK);
 
+		// we are not bringing the dead back yet
 		bringingBackTheDead = false;
 		deadPiece = null;
 
@@ -100,7 +106,7 @@ public class BoardGUI extends JFrame implements ActionListener
 	}
 
     /**
-     * Constructor used for loading game
+     * Constructor used for when loading game
      * @param lightPlayer Object received from the saved game
      * @param darkPlayer Object received from the saved game
      * @param currentPlayer the current turn received from saved game
@@ -109,12 +115,14 @@ public class BoardGUI extends JFrame implements ActionListener
 	{
 		boardSpots = new BoardSpot[8][8];
 
+		// Contains the dead pieces
 		lightGraveyardSpots = new ArrayList<BoardSpot>();
 		darkGraveyardSpots = new ArrayList<BoardSpot>();
 
 		this.currentPlayer = currentPlayer;
 		sourceLocation = null;
 
+		// Panels that will contain each players graveyard
 		playerOnePanel = new JPanel();
 		playerTwoPanel = new JPanel();
 
@@ -125,6 +133,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		// Initializes the players based on the file data
 		this.lightPlayer = lightPlayer;
 		this.darkPlayer = darkPlayer;
 
@@ -156,12 +165,15 @@ public class BoardGUI extends JFrame implements ActionListener
 		setSize(screenSize.width,screenSize.height);
 	}
 
+	/**
+	 * Runs the game
+	 */
 	public void run()
 	{
 		board = new Board();
-
+		// Enables the light pieces because it is the start of the game
 		board.enablePiecesByColor(currentPlayer);
-
+		// Shows the board
 		display();
 	}
 
@@ -172,15 +184,15 @@ public class BoardGUI extends JFrame implements ActionListener
      */
 	private void runSavedGame(Board board, boolean isAlreadyLoaded)
 	{
-		this.board = board;
+		this.board = board; // Board from file
 		this.board.enablePiecesByColor(this.currentPlayer);
 		display();
-		this.inCheck = isInCheck(this.currentPlayer);
+		this.inCheck = isInCheck(this.currentPlayer); // checks is the current player is in check
 		if (this.inCheck) {
 			String player = (this.currentPlayer ? "Light" : "Dark");
 			setTitle(player + " is in check");
 		}
-		this.isAlreadyLoaded = !isAlreadyLoaded;
+		this.isAlreadyLoaded = !isAlreadyLoaded; // sets it to opposite so it wont load twice
 	}
 
 	/*
@@ -205,22 +217,23 @@ public class BoardGUI extends JFrame implements ActionListener
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.removeAll();
-
+		// Sets the main chess board with all the pieces
 		setGridPanel();
-
+		// Sets the graveyard with peices, if any
 		setGraveyardSpots(lightPlayer);
 		setGraveyardSpots(darkPlayer);
 
 		playerOnePanel = new JPanel();
 		playerTwoPanel = new JPanel();
-
+		// Creates the two player grave panels and adds captured pieces, if any
 		setPlayerGraveYardPanel(playerOnePanel,lightPlayer, lightGraveyardSpots);
 		setPlayerGraveYardPanel(playerTwoPanel,darkPlayer, darkGraveyardSpots);
 
+		// Adds the chess board and the two graveyards to the main panel
 		contentPane.add(boardPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
-
+		// adds menu bar to the main panel
 		contentPane.add(addMenuBar(), BorderLayout.NORTH);
 
 		setVisible(true);
@@ -229,19 +242,19 @@ public class BoardGUI extends JFrame implements ActionListener
 
 	/**
 	 * Creates an option menu
-	 * @return JMenuBar
+	 * @return JMenuBar Menubar
 	 */
 	private JMenuBar addMenuBar()
 	{
 		JMenuBar menuBar;
-		JMenuItem menuItem, menuItem2, menuItem3;
+		JMenuItem menuItem, menuItem2, menuItem3; // different options
 		menuBar = new JMenuBar();
 		menu = new JMenu("Options");
 		menu.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem = new JMenuItem("Save Game");
 		menuItem2 = new JMenuItem("Load Game");
 		menuItem3 = new JMenuItem("Rematch");
-
+		// Adding event listeners to the menu items
 		menuItem.addActionListener((event) -> saveGame());
 		menuItem2.addActionListener((event) -> loadGame());
 		menuItem3.addActionListener((event) -> rematch());
@@ -249,7 +262,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem3.setFont(new Font("Ariel",Font.BOLD,12));
-
+		// Adding each item to the menu
 		menu.add(menuItem);
 		menu.add(menuItem2);
 		menu.add(menuItem3);
@@ -275,13 +288,14 @@ public class BoardGUI extends JFrame implements ActionListener
 	 */
 	private void loadGame()
 	{
+		// Only load the game if it is not already loaded from the data file
 		if(!isAlreadyLoaded) {
-			dispose();
+			dispose(); // Gets rid of the old board
 			gameState = new GameState(true);
 			board = gameState.getBoard();
 			currentPlayer = gameState.getPlayerData(lightPlayer, darkPlayer);
 			gameState.close();
-
+			// Creates a new instance of the BoardGUI with the parsed data and runs that
 			BoardGUI boardGUI = new BoardGUI(lightPlayer,darkPlayer,currentPlayer);
 			boardGUI.runSavedGame(board,isAlreadyLoaded);
 
@@ -293,9 +307,9 @@ public class BoardGUI extends JFrame implements ActionListener
 	 */
 	private void saveGame()
 	{
-		gameState = new GameState(false);
-		gameState.writeToFile(board,lightPlayer,darkPlayer, currentPlayer);
-		gameState.close();
+		gameState = new GameState(false); // we are writing not reading
+		gameState.writeToFile(board,lightPlayer,darkPlayer, currentPlayer); // write all pertinent info
+		gameState.close(); // close file
 	}
 
 	// Creates graveyard, shows points and player number
@@ -303,7 +317,7 @@ public class BoardGUI extends JFrame implements ActionListener
 	{
 		panel.setLayout(new BorderLayout());
 		panel.setOpaque(true);
-
+		// topPanel contains the graveyard
 		JPanel topPanel = new JPanel();
 		GridLayout grave = new GridLayout(9,1);
 		topPanel.setLayout(grave);
@@ -315,18 +329,22 @@ public class BoardGUI extends JFrame implements ActionListener
 		nameLabel.setFont(new Font("Sans Serif", Font.BOLD,17));
 
 		nameLabel.setPreferredSize(new Dimension(150,25));
-
+		// adds name of the player to the panel
 		topPanel.add(nameLabel);
 
 		topPanel.setBackground(new Color(215, 153, 20));
-
+		// Add dead pieces if any to graveyard
 		addToGraveyard(topPanel, playerGraveyardSpots);
-
+		// Add finished panel to the main panel
 		panel.add(topPanel,BorderLayout.NORTH); // IT WILL ALWAYS FILL FROM THE TOP TO BOTTOM
 
 	}
 
-	// Adds pieces to the graveyard, if any.
+	/**
+	 * Gets the graveyard pieces and adds to the panel
+	 * @param playerPanel Panel that contains the pieces
+	 * @param playerGraveyardSpots List that contains the pieces
+	 */
 	private void addToGraveyard(JPanel playerPanel, ArrayList<BoardSpot> playerGraveyardSpots)
 	{
 		int size;
@@ -372,7 +390,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		else{
 			player = "Light";
 		}
-
+		// Check if in checkmate
 		if(inCheckMate)
 		{
 			if(currentPlayer != DARK){
@@ -386,7 +404,7 @@ public class BoardGUI extends JFrame implements ActionListener
 			board.disableAllSquares();
 			showGameDialog(player);
 		}
-		else {
+		else { // Check if the player is in check
 			if (inCheck) {
 				setTitle(player + " is in check");
 				// JOptionPane.showMessageDialog(contentPane,player+ " is in check");
@@ -399,18 +417,24 @@ public class BoardGUI extends JFrame implements ActionListener
 
 	}
 
+	/**
+	 * Shows the message of game over
+	 * @param player Player that won
+	 */
 	private void showGameDialog(String player)
 	{
 		isGameOver = true;
 		int result = JOptionPane.showConfirmDialog(contentPane,player + " wins!   REMATCH ?"
 				,"CHECK MATE", JOptionPane.YES_NO_OPTION);
 		if(result == 0)
-			rematch();
+			rematch(); // If the user clicks yes
 		else
-			System.exit(0);
+			System.exit(0); // Otherwise exits the game
 	}
 
-
+	/**
+	 * Sets the main chess board with pieces
+	 */
 	private void setGridPanel()
 	{
 		boardPanel = new JPanel();
@@ -422,11 +446,15 @@ public class BoardGUI extends JFrame implements ActionListener
 		{
 			for(col = 0; col < 8; col++)
 			{
-				boardPanel.add(boardSpots[row][col]);
+				boardPanel.add(boardSpots[row][col]); // Adds pieces to each spot
 			}
 		}
 	}
 
+	/**
+	 * Handles the user input on the chessboard
+	 * @param e User input
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		Piece p;
@@ -501,6 +529,10 @@ public class BoardGUI extends JFrame implements ActionListener
 
 	}
 
+	/**
+	 * Handles the destination location of the buy back pieces
+	 * @param dest Spot where the player wants to put the revived piece
+	 */
 	public void handleGraveyardPieceDestSelection(Pair dest)
 	{
 		int cost;
@@ -529,9 +561,9 @@ public class BoardGUI extends JFrame implements ActionListener
 		}
 	}
 
-
-
-
+	/**
+	 * Handles the case where user clicks on a dead pieces on the graveyard
+	 */
 	public void handleGraveyardPieceSourceSelection()
 	{
 		if(currentPlayer == LIGHT)
@@ -548,6 +580,10 @@ public class BoardGUI extends JFrame implements ActionListener
 		display();
 	}
 
+	/**
+	 * Handles the user input when they click on a main piece on the board
+	 * @param source Location of the selected piece
+	 */
 	public void handlePieceSourceSelection(Pair source)
 	{
 		Moves moves;
@@ -570,6 +606,10 @@ public class BoardGUI extends JFrame implements ActionListener
 
 	}
 
+	/**
+	 * Handles the final location of the selected piece
+	 * @param dest location where the player wants to move the piece
+	 */
 	public void handlePieceDestinationSelection(Pair dest)
 	{//self documenting
 		String name = "";
@@ -599,7 +639,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		pieceForCheck = destPiece;
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
-
+		// Verify if the player is in check
 		if(isInCheck(currentPlayer)){
 			String player;
 			if(currentPlayer == DARK){
@@ -639,6 +679,10 @@ public class BoardGUI extends JFrame implements ActionListener
 		currentlyMoving = false;
 	}
 
+	/**
+	 * Adds points and pieces to the player's graveyard after capturing a piece
+	 * @param captured Captured piece
+	 */
 	private void handleCapturedPiece(Piece captured)
 	{
 		if(currentPlayer == LIGHT && captured != null)
@@ -745,6 +789,10 @@ public class BoardGUI extends JFrame implements ActionListener
 		return ans;
 	}
 
+	/**
+	 * Disables graveyard pieces to not allow player to buy them back when in check
+	 * @param player Current player
+	 */
 	private void disableGraveyardSpots(Player player)
 	{
 		if(player == lightPlayer)
@@ -762,6 +810,10 @@ public class BoardGUI extends JFrame implements ActionListener
 		}
 	}
 
+	/**
+	 * Sets the graveyard spots and fills them with dead pieces
+	 * @param player Player whose grave is being filled
+	 */
 	private void setGraveyardSpots(Player player)
 	{
 		Piece currentPiece;
@@ -781,7 +833,7 @@ public class BoardGUI extends JFrame implements ActionListener
 				numPoints = lightPlayer.getNumPoints();
 				currentPiece = graveyard.getPiece(i);
 				pieceName = currentPiece.getName();
-
+				// Based on the piece
 				switch(pieceName)
 				{
 					case "Rook":
@@ -817,7 +869,7 @@ public class BoardGUI extends JFrame implements ActionListener
 
 
 		}
-		else
+		else // Dark player
 		{
 			darkGraveyardSpots = new ArrayList<BoardSpot>();
 			graveyard = player.getGraveyard();
@@ -862,6 +914,9 @@ public class BoardGUI extends JFrame implements ActionListener
 		}
 	}
 
+	/**
+	 * Sets the initial or loaded board spots based on the pieces
+	 */
 	public void setBoardSpots()
 	{
 		int i, j;
