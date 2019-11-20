@@ -3,6 +3,7 @@
 ## About
 
 CheddarChess is a chess game with a twist.
+
 This game was created for CS321 @ George Mason.
 
 ## Rules
