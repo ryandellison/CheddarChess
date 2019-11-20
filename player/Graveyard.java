@@ -49,6 +49,24 @@ public class Graveyard
 	}
 
 	/**
+	 * removeFromGraveyard()
+	 *
+	 * The purpose of this method is to remove a Piece
+	 * from the graveyard.
+	 *
+	 * Input:
+	 * 	Piece p	// the piece to remove
+	 *
+	 * Output:
+	 * 	N/A
+	 */
+
+	public void removeFromGraveyard(Piece p)
+	{
+		graveyard.remove(p);
+	}
+
+	/**
 	 * getNumPieces()
 	 *
 	 * The purpose of this method is to get the number of pieces

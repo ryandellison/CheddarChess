@@ -629,6 +629,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		Piece destPiece = destSquare.getPiece();
 		Piece pieceForCheck;
 		boolean dontSwitchTurn = false;
+		boolean capturedPiece = false;
 
 		Pair sourcePair = sourceLocation;
 		Piece sourcePiece = board.getSquare(sourcePair).getPiece();
@@ -641,6 +642,7 @@ public class BoardGUI extends JFrame implements ActionListener
 			destPiece = destSquare.popPiece();
 			name = destPiece.getName();
 			handleCapturedPiece(destPiece);
+			capturedPiece = true;
 		}
 
 		pieceForCheck = destPiece;
@@ -658,6 +660,15 @@ public class BoardGUI extends JFrame implements ActionListener
 
 			board.getSquare(dest).setPiece(pieceForCheck);
 			board.getSquare(sourcePair).setPiece(sourcePiece);
+			if(capturedPiece && pieceForCheck != null){
+				if(currentPlayer == LIGHT)
+				{
+					if(pieceForCheck instanceof Pawn)
+						lightPlayer.removePoints(PAWN_VALUE);
+					else
+						darkPlayer.getGraveyard().removeFromGraveyard(pieceForCheck);
+				}
+			}
 			if(sourcePiece instanceof Pawn)
 			    ((Pawn) sourcePiece).setFirstMoveToTrue();
 			dontSwitchTurn = true;
