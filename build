@@ -2,7 +2,7 @@
 
 # A script used for building JChess on Unix-based machines with
 # bash.
-# Tested on MacOS.
+# Tested on MacOS and Ubuntu.
 #
 # Author: Ryan Ellison
 
@@ -27,7 +27,7 @@ clean ()
 generate_jar ()
 {
 	compile
-	jar -cvfm0 JChess.jar manifest-additions *.java *.class board/ player/ pieces/ graphics/ constant/
+	jar -cvfm0 CheddarChess.jar manifest-additions *.java *.class board/ player/ pieces/ graphics/ constant/
 }
 
 print_help()

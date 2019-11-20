@@ -1,5 +1,5 @@
 /*
- * Chess
+ * CheddarChess
  *
  * This is the main driver class for the Chess game, which contains
  * the main() method.
@@ -8,7 +8,7 @@
 
 import graphics.*;
 
-public class JChess
+public class CheddarChess
 {
 	public static void main(String[] args)
 	{
