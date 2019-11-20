@@ -27,7 +27,7 @@ This shows the game running on MacOS:
 
 This shows the game running on Ubuntu Linux:
 
-![Game_On_Linux](images/game-on-linux.jpg?raw=true "Game on Linux")
+![Game_On_Linux](images/game-on-linux?raw=true "Game on Linux")
 
 ## Building
 
