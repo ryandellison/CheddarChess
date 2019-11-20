@@ -19,7 +19,15 @@ The main rules to CheddarChess are as follows:
 - Getting your pawn to the other side of the board does nothing, don't waste your time.
 - You cannot castle or do any other fancy chess moves.
 
+## Pictures
+
+This shows the game running on MacOS:
+
 ![Default screen](images/game-on-mac.png?raw=true "Default Screen")
+
+This shows the game running on Ubuntu Linux:
+
+![Game_On_Linux](images/game-on-linux.jpg?raw=true "Game on Linux")
 
 ## Building
 
