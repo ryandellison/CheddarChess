@@ -18,12 +18,13 @@ import java.util.Scanner;
 public class GameState
 {
     // Hardcoded file path
-    private static final String filePath = "GameData.txt";
+    private static final String filePath = "SaveData.txt";
     private PrintWriter printWriter;
     private FileWriter fileWriter;
     private Scanner scanner;
     //Will board data
     private ArrayList<String[]> data;
+    private boolean gameDataExists = false;
 
     /**
      * Creates a new gameState that either reads or writes to file
@@ -60,7 +61,7 @@ public class GameState
         try {
             scanner = new Scanner(new File(filePath));
         } catch (IOException e) {
-            e.printStackTrace();
+            gameDataExists = false;
         }
     }
 
@@ -87,9 +88,14 @@ public class GameState
     public Board getBoard()
     {
         readFile();
+        gameDataExists = true;
         return new Board(data); // New Board that will be used to load the game
     }
 
+    public boolean isSaveDataExists()
+    {
+        return gameDataExists;
+    }
     /**
      * Gets Player data from the file
      * @param player1 Data for Player1/LIGHT
