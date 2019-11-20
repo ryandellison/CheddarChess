@@ -669,8 +669,9 @@ public class BoardGUI extends JFrame implements ActionListener
 						darkPlayer.getGraveyard().removeFromGraveyard(pieceForCheck);
 				}
 			}
-			if(sourcePiece instanceof Pawn)
-			    ((Pawn) sourcePiece).setFirstMoveToTrue();
+			if(sourcePiece instanceof Pawn && (sourcePair.getRow() == 1 || sourcePair.getRow() == 6)) {
+				((Pawn) sourcePiece).setFirstMoveToTrue();
+			}
 			dontSwitchTurn = true;
 			message = player + " is in check, choose a different move.";
 			
