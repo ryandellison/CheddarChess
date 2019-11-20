@@ -198,6 +198,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		{
 			String player = (this.currentPlayer ? "Light" : "Dark");
 			setTitle(player + " is in check");
+			JOptionPane.showMessageDialog(contentPane,player+ " is in check");
 		}
 
 		this.isAlreadyLoaded = !isAlreadyLoaded; // sets it to opposite so it wont load twice
@@ -423,7 +424,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		else { // Check if the player is in check
 			if (inCheck) {
 				setTitle(player + " is in check");
-				// JOptionPane.showMessageDialog(contentPane,player+ " is in check");
+				JOptionPane.showMessageDialog(contentPane,player+ " is in check");
 			} else if (currentPlayer == LIGHT) {
 				setTitle("CheddarChess - Light's Turn");
 			} else {
