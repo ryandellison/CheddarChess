@@ -181,7 +181,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		display();
 	}
 
-       /**
+	/**
 	* Runs the saved game based on values returned from the gamedata.txt file
 	* @param board Object received from the file
 	* @param isAlreadyLoaded True if the game is already loaded, prevents duplication
@@ -671,6 +671,13 @@ public class BoardGUI extends JFrame implements ActionListener
 					else
 						darkPlayer.getGraveyard().removeFromGraveyard(pieceForCheck);
 				}
+				else
+				{
+					if(pieceForCheck instanceof Pawn)
+						darkPlayer.removePoints(PAWN_VALUE);
+					else
+						lightPlayer.getGraveyard().removeFromGraveyard(pieceForCheck);
+				}
 			}
 			if(sourcePiece instanceof Pawn && (sourcePair.getRow() == 1 || sourcePair.getRow() == 6)) {
 				((Pawn) sourcePiece).setFirstMoveToTrue();
@@ -925,9 +932,6 @@ public class BoardGUI extends JFrame implements ActionListener
 		}
 	}
 
-	/**
-	 * Sets the initial or loaded board spots based on the pieces
-	 */
 
 	public void setBoardSpots()
 	{
