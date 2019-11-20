@@ -473,7 +473,7 @@ public class BoardGUI extends JFrame implements ActionListener
 	 * @param e User input
 	 */
 
-	private void actionPerformed(ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
 		Piece p;
 		BoardSpot deadPieceSpot;
@@ -667,11 +667,6 @@ public class BoardGUI extends JFrame implements ActionListener
 			board.disableAllSquares();
 			board.enablePiecesByColor(currentPlayer);
 		}
-
-		// REMOVE
-		if(destSquare1 == null) destSquare1 = board.getSquare(dest.getRow(), dest.getCol());
-		else destSquare2 = board.getSquare(dest.getRow(), dest.getCol());
-
 
 		board.unhighlightAllSquares();
 
