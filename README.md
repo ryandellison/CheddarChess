@@ -1,12 +1,22 @@
 # CheddarChess
 
-A twist on classic chess written in Java for portability.
+## About
 
-## Authors
+CheddarChess is a chess game with a twist.
+This game was created for CS321 @ George Mason.
 
-- Ryan Ellison ([ryandellison](https://github.com/ryandellison))
-- Scott Morgan ([scottyboimorgan](https://github.com/scottyboimorgan))
-- Mani Shah ([Mani9723](https://github.com/Mani9723))
+## Rules
+
+The main rules to CheddarChess are as follows:
+
+- Capturing an opponents pawn rewards you with one point, for a total of 8 points! (Protect your pawns!)
+- Points can be spent bringing back a players piece that has been captured and put in its graveyard.
+  - KNIGHTS: Cost 3pts
+  - ROOKS & BISHOPS: Cost 4pts
+  - QUEENS: Cost 8pts (Save up!)
+- A piece that has been brought back can be put on any open space on the players first two rows.
+- Getting your pawn to the other side of the board does nothing, don't waste your time.
+- You cannot castle or do any other fancy chess moves.
 
 ![Default screen](images/game-on-mac.png?raw=true "Default Screen")
 
@@ -21,4 +31,10 @@ Use the following to compile CheddarChess from source:
 To compile CheddarChess and create a jar file for it, use the following command:
 
 ``` $ ./build jar ```
+
+## Authors
+
+- Ryan Ellison ([ryandellison](https://github.com/ryandellison))
+- Scott Morgan ([scottyboimorgan](https://github.com/scottyboimorgan))
+- Mani Shah ([Mani9723](https://github.com/Mani9723))
 
