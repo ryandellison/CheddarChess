@@ -60,6 +60,7 @@ public class GameState
         //opens file
         try {
             scanner = new Scanner(new File(filePath));
+            gameDataExists = true;
         } catch (IOException e) {
             gameDataExists = false;
         }
