@@ -23,7 +23,7 @@ import static constant.Colors.DARK;
 import static constant.Points.PAWN_VALUE;
 
 @SuppressWarnings("Duplicates")
-public class BoardGUI extends JFrame implements ActionListener 
+public class BoardGUI extends JFrame implements ActionListener
 {
 
 	// UNICODE CONSTANTS FOR CHESS PIECES
@@ -69,7 +69,7 @@ public class BoardGUI extends JFrame implements ActionListener
 	private boolean inCheckMate;			// indicates whether someone's in check-mate or not
 
 	private boolean bringingBackTheDead;		// indicates whether or not someone is trying to bring back a graveyard piece
-							// (they clicked a piece in the graveyard)
+	// (they clicked a piece in the graveyard)
 	private Piece deadPiece;			// the piece they're trying to bring back
 	private int locationOfDead;			// the location in their graveyard of the piece
 
@@ -95,7 +95,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		setDimensions();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
+
 		// Initialize the players
 		lightPlayer = new Player(LIGHT);
 		darkPlayer = new Player(DARK);
@@ -108,12 +108,12 @@ public class BoardGUI extends JFrame implements ActionListener
 		inCheckMate = false;
 	}
 
-    /**
-     * Constructor used for when loading game
-     * @param lightPlayer Object received from the saved game
-     * @param darkPlayer Object received from the saved game
-     * @param currentPlayer the current turn received from saved game
-     */
+	/**
+	 * Constructor used for when loading game
+	 * @param lightPlayer Object received from the saved game
+	 * @param darkPlayer Object received from the saved game
+	 * @param currentPlayer the current turn received from saved game
+	 */
 	private BoardGUI(Player lightPlayer, Player darkPlayer, boolean currentPlayer )
 	{
 		boardSpots = new BoardSpot[8][8];
@@ -163,7 +163,7 @@ public class BoardGUI extends JFrame implements ActionListener
 	{
 		// Get the screen size
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		
+
 		// Set the board size
 		setSize(screenSize.width,screenSize.height);
 	}
@@ -182,10 +182,10 @@ public class BoardGUI extends JFrame implements ActionListener
 	}
 
 	/**
-	* Runs the saved game based on values returned from the gamedata.txt file
-	* @param board Object received from the file
-	* @param isAlreadyLoaded True if the game is already loaded, prevents duplication
-	*/
+	 * Runs the saved game based on values returned from the gamedata.txt file
+	 * @param board Object received from the file
+	 * @param isAlreadyLoaded True if the game is already loaded, prevents duplication
+	 */
 
 	private void runSavedGame(Board board, boolean isAlreadyLoaded)
 	{
@@ -193,8 +193,8 @@ public class BoardGUI extends JFrame implements ActionListener
 		this.board.enablePiecesByColor(this.currentPlayer);
 		display();
 		this.inCheck = isInCheck(this.currentPlayer); // checks is the current player is in check
-		
-		if (this.inCheck) 
+
+		if (this.inCheck)
 		{
 			String player = (this.currentPlayer ? "Light" : "Dark");
 			setTitle(player + " is in check");
@@ -226,17 +226,17 @@ public class BoardGUI extends JFrame implements ActionListener
 		contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.removeAll();
-		
+
 		// Sets the main chess board with all the pieces
 		setGridPanel();
-		
+
 		// Sets the graveyard with peices, if any
 		setGraveyardSpots(lightPlayer);
 		setGraveyardSpots(darkPlayer);
 
 		playerOnePanel = new JPanel();
 		playerTwoPanel = new JPanel();
-		
+
 		// Creates the two player grave panels and adds captured pieces, if any
 		setPlayerGraveYardPanel(playerOnePanel,lightPlayer, lightGraveyardSpots);
 		setPlayerGraveYardPanel(playerTwoPanel,darkPlayer, darkGraveyardSpots);
@@ -245,7 +245,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		contentPane.add(boardPanel,BorderLayout.CENTER);
 		contentPane.add(playerOnePanel, BorderLayout.WEST);
 		contentPane.add(playerTwoPanel, BorderLayout.EAST);
-		
+
 		// adds menu bar to the main panel
 		contentPane.add(addMenuBar(), BorderLayout.NORTH);
 
@@ -268,7 +268,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		menuItem = new JMenuItem("Save Game");
 		menuItem2 = new JMenuItem("Load Game");
 		menuItem3 = new JMenuItem("Rematch");
-		
+
 		// Adding event listeners to the menu items
 		menuItem.addActionListener((event) -> saveGame());
 		menuItem2.addActionListener((event) -> loadGame());
@@ -277,7 +277,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		menuItem.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem2.setFont(new Font("Ariel",Font.BOLD,12));
 		menuItem3.setFont(new Font("Ariel",Font.BOLD,12));
-		
+
 		// Adding each item to the menu
 		menu.add(menuItem);
 		menu.add(menuItem2);
@@ -309,17 +309,13 @@ public class BoardGUI extends JFrame implements ActionListener
 		// Only load the game if it is not already loaded from the data file
 		if(!isAlreadyLoaded) {
 			gameState = new GameState(true);
-			if(gameState.isSaveDataExists()) {
-				dispose(); // Gets rid of the old board
-				board = gameState.getBoard();
-				currentPlayer = gameState.getPlayerData(lightPlayer, darkPlayer);
-				gameState.close();
-				// Creates a new instance of the BoardGUI with the parsed data and runs that
-				BoardGUI boardGUI = new BoardGUI(lightPlayer, darkPlayer, currentPlayer);
-				boardGUI.runSavedGame(board, isAlreadyLoaded);
-			}else{ // Saved File does not exist
-				JOptionPane.showMessageDialog(contentPane,"No Game Saved");
-			}
+			dispose(); // Gets rid of the old board
+			board = gameState.getBoard();
+			currentPlayer = gameState.getPlayerData(lightPlayer, darkPlayer);
+			gameState.close();
+			// Creates a new instance of the BoardGUI with the parsed data and runs that
+			BoardGUI boardGUI = new BoardGUI(lightPlayer, darkPlayer, currentPlayer);
+			boardGUI.runSavedGame(board, isAlreadyLoaded);
 		}
 	}
 
@@ -520,7 +516,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		{
 			for(j = 0; j < 8; j++)
 			{
-				if(boardSpots[i][j] == e.getSource()) 
+				if(boardSpots[i][j] == e.getSource())
 				{
 					p = board.getSquare(i, j).getPiece();
 					clicked = new Pair(i,j);
@@ -533,7 +529,7 @@ public class BoardGUI extends JFrame implements ActionListener
 						handlePieceDestinationSelection(clicked);
 					else
 						handlePieceSourceSelection(clicked);
-					
+
 					// Escape the for-loop
 					j = 8;
 					i = 8;
@@ -651,7 +647,7 @@ public class BoardGUI extends JFrame implements ActionListener
 		pieceForCheck = destPiece;
 		board.getSquare(dest).setPiece(sourcePiece);
 		board.getSquare(sourcePair).setPiece(null);
-		
+
 		// Verify if the player is in check
 		if(isInCheck(currentPlayer))
 		{
@@ -684,7 +680,7 @@ public class BoardGUI extends JFrame implements ActionListener
 			}
 			dontSwitchTurn = true;
 			message = player + " is in check, choose a different move.";
-			
+
 			setTitle(message);
 			JOptionPane.showMessageDialog(contentPane,message);
 			board.disableAllSquares();
@@ -695,13 +691,13 @@ public class BoardGUI extends JFrame implements ActionListener
 
 		inCheck = isInCheck(!currentPlayer);
 		inCheckMate = isInCheckMate(!currentPlayer);
-		if(!dontSwitchTurn) 
+		if(!dontSwitchTurn)
 		{
 			board.disableAllSquares();
 			switchTurn();
 		}
-		
-		if(!isGameOver) 
+
+		if(!isGameOver)
 			display();
 
 		currentlyMoving = false;
@@ -756,13 +752,13 @@ public class BoardGUI extends JFrame implements ActionListener
 			for(int j = 0; j < 8; j++)
 			{
 				p = board.getSquare(i,j).getPiece();
-				
+
 				if((p != null) && (p.getColor() != kingColor))
-				{	
+				{
 					// If the piece on this spot has a valid move to where the king is located, we go into check
 					m = board.getValidMoves(new Pair(i, j));
-					if(m != null) 
-						if (m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1) 
+					if(m != null)
+						if (m.findPair(kingLoc.getRow(), kingLoc.getCol()) != -1)
 							ans = true;
 				}
 			}
@@ -790,27 +786,27 @@ public class BoardGUI extends JFrame implements ActionListener
 			ans = true;
 
 			// Go through every square on the board
-			for (int i = 0; i < 8; i++) 
+			for (int i = 0; i < 8; i++)
 			{
-				for (int j = 0; j < 8; j++) 
+				for (int j = 0; j < 8; j++)
 				{
 					pair = new Pair(i, j);
 					alt = board.getSquare(pair).getPiece();
-					
+
 					if(alt != null && alt.getColor() == kingColor)
 					{
 						altMoves = board.getValidMoves(pair);
-						
+
 						//gets a piece and its moveset of the same color we are evaluating
-						for (int k = 0; k < altMoves.getSize(); k++) 
+						for (int k = 0; k < altMoves.getSize(); k++)
 						{
 							other = board.getSquare(altMoves.getPair(k)).getPiece();
 							board.getSquare(altMoves.getPair(k)).setPiece(alt);
-							
+
 							//if we place that piece and it takes us out of check, we are not in checkmate
 							if(!isInCheck(kingColor))
 								ans = false;
-							
+
 							//we dont want to actually place these pieces so we need to reset the potential moves
 							board.getSquare(altMoves.getPair(k)).setPiece(other);
 						}
