@@ -7,8 +7,7 @@ import pieces.Moves;
 import pieces.Pair;
 import pieces.Rook;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /*
     This class tests the getValidMoves method in Board.java for the Rook piece
@@ -73,4 +72,37 @@ public class RookTests {
         assertTrue(rookMoves.contains(new Pair(1,0)));
     }
 
+    /*
+        This test makes sure that the rook can move from one corner to the other 2 corresponding
+        corners
+     */
+    @Test
+    public void testRookInCorner(){
+        Board testBoard = new Board(true);
+        testBoard.getSquare(new Pair(0,0)).setPiece(new Rook(true,"Name"));
+
+        Moves rookMoves = testBoard.getValidMoves(new Pair(0,0));
+        assertEquals(14,rookMoves.getSize());
+        assertTrue(rookMoves.contains(new Pair(0,7)));
+        assertTrue(rookMoves.contains(new Pair(7,0)));
+    }
+
+    /*
+        This test makes sure that the rook can capture pieces of the opposing color but not jump
+        over them when they are not right next to it
+     */
+    @Test
+    public void testRookCapture(){
+        Board testBoard = new Board(true);
+        testBoard.getSquare(new Pair(0,0)).setPiece(new Rook(true,"Name"));
+        testBoard.getSquare(new Pair(0,4)).setPiece(new Pawn(false,"other"));
+        testBoard.getSquare(new Pair(1,0)).setPiece(new Pawn(true,"other"));
+
+        Moves rookMoves = testBoard.getValidMoves(new Pair(0, 0));
+
+        assertEquals(4, rookMoves.getSize());
+        assertTrue(rookMoves.contains(new Pair(0, 4)));
+        assertTrue(rookMoves.contains(new Pair(0, 2)));
+        assertFalse(rookMoves.contains(new Pair(1,0)));
+    }
 }
