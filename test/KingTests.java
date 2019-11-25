@@ -10,6 +10,10 @@ import pieces.Rook;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/*
+    This class tests the getValidMoves method in Board.java for the King piece
+ */
+
 public class KingTests {
 
     /*
