@@ -219,4 +219,12 @@ public class Moves
 		return index;
 
 	}
+
+	public boolean contains(Pair p){
+		int x = this.findPair(p.getRow(), p.getCol());
+		if(x != -1){
+			return true;
+		}
+		return false;
+	}
 }
