@@ -18,6 +18,9 @@ public class PawnTests
     private Pawn testPawn;
     private Moves calculatedMoves;
 
+    /**
+     * Initializes a new board before runnning the test
+     */
     @Before
     public void initializeBoard()
     {
