@@ -42,6 +42,18 @@ public class Board
 		fillBoard();
 	}
 
+	public Board(boolean testing)
+	{
+		board = new Square[8][8];
+
+		fillBoard();
+
+		// Remove all of the pieces from the board, keep everything else
+		for(int row = 0; row < 8; row++)
+			for(int col = 0; col < 8; col++)
+				board[row][col].setPiece(null);
+	}
+
 	/**
 	 * Used for initialized a board that is loaded from a file
 	 * @param data
