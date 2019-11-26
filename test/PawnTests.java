@@ -39,6 +39,7 @@ public class PawnTests
     {
         board.getSquare(6,1).setPiece(lightPawn);
         calculatedMoves = board.getValidMoves(new Pair(6,1));
+        assertEquals(2,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(5,1),new Pair(4,1)};
         for (Pair actualMove : actualMoves) {
             assertTrue(calculatedMoves.contains(actualMove));
@@ -52,6 +53,7 @@ public class PawnTests
     {
         board.getSquare(1,1).setPiece(darkPawn);
         calculatedMoves = board.getValidMoves(new Pair(1,1));
+        assertEquals(2,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(2,1),new Pair(3,1)};
         for (Pair actualMove : actualMoves) {
             assertTrue(calculatedMoves.contains(actualMove));
@@ -67,6 +69,7 @@ public class PawnTests
         board.getSquare(5,2).setPiece(lightPawn);
         lightPawn.setFirstMoveToFalse();
         calculatedMoves = board.getValidMoves(new Pair(5,2));
+        assertEquals(1,calculatedMoves.getSize());
         Pair destPair = new Pair(4,2);
         assertTrue(calculatedMoves.contains(destPair));
     }
@@ -96,6 +99,7 @@ public class PawnTests
         board.getSquare(4,2).setPiece(pawnToCapture);
         lightPawn.setFirstMoveToFalse(); pawnToCapture.setFirstMoveToFalse();
         calculatedMoves = board.getValidMoves(new Pair(5,3));
+        assertEquals(2 ,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(4,2),new Pair(4,3)};
         for(Pair currentMove : actualMoves){
             assertTrue(calculatedMoves.contains(currentMove));
@@ -114,6 +118,7 @@ public class PawnTests
         board.getSquare(4,4).setPiece(new Knight(false,"Knight"));
         lightPawn.setFirstMoveToFalse();
         calculatedMoves = board.getValidMoves(new Pair(5,3));
+        assertEquals(3,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(4,2),new Pair(4,3)
                 ,new Pair(4,4)};
         for(Pair currentMove : actualMoves){
@@ -134,6 +139,7 @@ public class PawnTests
         board.getSquare(3,7).setPiece(new Bishop(true,"Bishop"));
         darkPawn.setFirstMoveToFalse();
         calculatedMoves = board.getValidMoves(new Pair(2,7));
+        assertEquals(1,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(3,6)};
         assertTrue(calculatedMoves.contains(actualMoves[0]));
     }
@@ -149,6 +155,7 @@ public class PawnTests
         board.getSquare(3,0).setPiece(new Bishop(true,"Bishop"));
         darkPawn.setFirstMoveToFalse();
         calculatedMoves = board.getValidMoves(new Pair(2,0));
+        assertEquals(1,calculatedMoves.getSize());
         actualMoves = new Pair[]{new Pair(3,1)};
         assertTrue(calculatedMoves.contains(actualMoves[0]));
     }
