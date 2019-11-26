@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 public class BishopTests
 {
+    @Test
     public void testBishopAlone()
     {
         Board board = new Board(true);
