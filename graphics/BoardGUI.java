@@ -309,13 +309,17 @@ public class BoardGUI extends JFrame implements ActionListener
 		// Only load the game if it is not already loaded from the data file
 		if(!isAlreadyLoaded) {
 			gameState = new GameState(true);
-			dispose(); // Gets rid of the old board
-			board = gameState.getBoard();
-			currentPlayer = gameState.getPlayerData(lightPlayer, darkPlayer);
-			gameState.close();
-			// Creates a new instance of the BoardGUI with the parsed data and runs that
-			BoardGUI boardGUI = new BoardGUI(lightPlayer, darkPlayer, currentPlayer);
-			boardGUI.runSavedGame(board, isAlreadyLoaded);
+			if(gameState.isSaveDataExists()) {
+				dispose(); // Gets rid of the old board
+				board = gameState.getBoard();
+				currentPlayer = gameState.getPlayerData(lightPlayer, darkPlayer);
+				gameState.close();
+				// Creates a new instance of the BoardGUI with the parsed data and runs that
+				BoardGUI boardGUI = new BoardGUI(lightPlayer, darkPlayer, currentPlayer);
+				boardGUI.runSavedGame(board, isAlreadyLoaded);
+			}else{
+				JOptionPane.showMessageDialog(contentPane,"No Saved Games");
+			}
 		}
 	}
 
